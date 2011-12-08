@@ -8,30 +8,30 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import br.com.while42.model.Aluno;
+import br.com.while42.model.Student;
 
-public class AlunoDAO extends SQLiteOpenHelper {
+public class StudentDAO extends SQLiteOpenHelper {
 
-	static final int VERSION = 2;
-	static final String TABELA = "aluno";
-	static final String[] COLS = {"id", "nome", "endereco", "telefone", "email", "twitter", "nota"};	
+	static final int VERSION = 3;
+	static final String TABLE = "student";
+	static final String[] COLS = {"id", "name", "address", "phone", "email", "twitter", "score"};	
 	
-	public AlunoDAO(Context context) {
-		super(context, TABELA, null, VERSION);
+	public StudentDAO(Context context) {
+		super(context, TABLE, null, VERSION);
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		
 		StringBuilder sb = new StringBuilder();		
-		sb.append("CREATE TABLE ").append(TABELA).append(" (");
+		sb.append("CREATE TABLE ").append(TABLE).append(" (");
 		sb.append("id INTEGER PRIMARY KEY, ");
-		sb.append("nome TEXT UNIQUE NOT NULL, ");
-		sb.append("endereco TEXT, ");
-		sb.append("telefone TEXT, ");
+		sb.append("name TEXT UNIQUE NOT NULL, ");
+		sb.append("address TEXT, ");
+		sb.append("phone TEXT, ");
 		sb.append("email TEXT, ");
 		sb.append("twitter TEXT, ");
-		sb.append("nota REAL");
+		sb.append("score REAL");
 		sb.append(")");
 		
 		db.execSQL(sb.toString());
@@ -41,23 +41,37 @@ public class AlunoDAO extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("DROP TABLE IF EXISTS ").append(TABELA);
+		sb.append("DROP TABLE IF EXISTS ").append(TABLE);
 		db.execSQL(sb.toString());
 		
 		onCreate(db);
 	}
 	
-	public void add(Aluno a) {
+	public void save(Student student) {			
 		
-		ContentValues values = toValues(a);				
-		getWritableDatabase().insert(TABELA, null, values);
+		ContentValues values = toValues(student);
+				
+		if (!student.isPersistent()) {
+			
+			long insert = getWritableDatabase().insert(TABLE, null, values);
+			student.setId(insert);
+			
+		} else {
+			String[] whereArgs = new String[] { Long.toString(student.getId()) };
+			getWritableDatabase().update(TABLE, values, "id=?", whereArgs );
+		}
+	}
+		
+	public void delete(Student student) {		
+		
+		String[] whereArgs = new String[] { Long.toString(student.getId()) };
+		getWritableDatabase().delete(TABLE, "id=?", whereArgs);		
 	}
 	
-	public List<Aluno> getList() {
+	public List<Student> getList() {			
 		
-		List<Aluno> alunos = new ArrayList<Aluno>();
-		
-		Cursor cursor = getWritableDatabase().query(TABELA, 
+		List<Student> students = new ArrayList<Student>();		
+		Cursor cursor = getWritableDatabase().query(TABLE, 
 				COLS,    // Colunas 
 				null,    // where
 				null,    // values
@@ -67,33 +81,39 @@ public class AlunoDAO extends SQLiteOpenHelper {
 		
 		while (cursor.moveToNext()) {
 			
-			Aluno aluno = new Aluno();
+			Student student = new Student();
 			
-			aluno.setId(cursor.getInt(0));
-			aluno.setNome(cursor.getString(1));
-			aluno.setEndereco(cursor.getString(2));
-			aluno.setTelefone(cursor.getString(3));
-			aluno.setEmail(cursor.getString(4));
-			aluno.setTwitter(cursor.getString(5));
-			aluno.setNota(cursor.getDouble(6));
+			student.setId(cursor.getInt(0));
+			student.setName(cursor.getString(1));
+			student.setAddress(cursor.getString(2));
+			student.setPhone(cursor.getString(3));
+			student.setEmail(cursor.getString(4));
+			student.setTwitter(cursor.getString(5));
+			student.setScore(cursor.getDouble(6));
 			
-			alunos.add(aluno);
+			students.add(student);
 		}
 		
 		cursor.close(); // !!!
 		
-		return alunos;
+		return students;
 	}
 	
-	public ContentValues toValues(Aluno a) {
+	public ContentValues toValues(Student student) {
 		
 		ContentValues values = new ContentValues();
-		values.put("nome", a.getNome());
-		values.put("endereco", a.getEndereco());
-		values.put("telefone", a.getTelefone());
-		values.put("email", a.getEmail());
-		values.put("twitter", a.getTwitter());
-		values.put("nota", a.getNota());
+		
+		if (student.isPersistent())
+		{
+			values.put("id", student.getId());
+		}
+		
+		values.put("name", student.getName());
+		values.put("address", student.getAddress());
+		values.put("phone", student.getPhone());
+		values.put("email", student.getEmail());
+		values.put("twitter", student.getTwitter());
+		values.put("score", student.getScore());
 		
 		return values;
 	}

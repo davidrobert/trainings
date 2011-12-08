@@ -17,30 +17,30 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import br.com.while42.model.Aluno;
-import br.com.while42.persist.AlunoDAO;
+import br.com.while42.model.Student;
+import br.com.while42.persist.StudentDAO;
 
-public class ListaAlunos extends Activity {
+public class ListStudents extends Activity {
 
-	private Aluno selectedItem;
-	private List<Aluno> alunos = new ArrayList<Aluno>();
-	private ArrayAdapter<Aluno> adapter;
+	private Student selectedItem;
+	private List<Student> alunos = new ArrayList<Student>();
+	private ArrayAdapter<Student> adapter;
 	private ListView listaAlunos;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		MenuItem novo = menu.add(0, 0, 0, "Novo");
+		MenuItem newStudent = menu.add(0, 0, 0, "Novo");
 		MenuItem sync = menu.add(0, 1, 0, "Sicronizar");
 		MenuItem album = menu.add(0, 2, 0, "Galeria");
 		MenuItem map = menu.add(0, 3, 0, "Map");		
 
-		novo.setIcon(R.drawable.novo);
+		newStudent.setIcon(R.drawable.novo);
 		sync.setIcon(R.drawable.smile);
 		album.setIcon(R.drawable.foto);
 		map.setIcon(R.drawable.mapa);
 
-		novo.setIntent(new Intent(this, Formulario.class));
+		newStudent.setIntent(new Intent(this, FormStudent.class));
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -64,18 +64,21 @@ public class ListaAlunos extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		if (item.getItemId() == 0) {
-			Toast.makeText(ListaAlunos.this, "Novo Aluno", Toast.LENGTH_SHORT).show();
-		}
-
 		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		//	
-		//		Toast.makeText(ListaAlunos.this, item.getTitle(), Toast.LENGTH_SHORT).show();
-		//		
+
+		if (item.getItemId() == 4) {
+			StudentDAO dao = new StudentDAO(this);
+			dao.delete(selectedItem);
+			alunos.remove(selectedItem);
+			dao.close();
+			
+			adapter.notifyDataSetChanged();
+		}
+		
 		return super.onContextItemSelected(item);
 	}
 
@@ -88,7 +91,7 @@ public class ListaAlunos extends Activity {
 	protected void onResume() {
 		super.onResume();
 
-		AlunoDAO dao = new AlunoDAO(this);
+		StudentDAO dao = new StudentDAO(this);
 		alunos.clear();
 		alunos.addAll(dao.getList());
 		dao.close();
@@ -103,7 +106,7 @@ public class ListaAlunos extends Activity {
 
 		listaAlunos = (ListView) findViewById(R.id_lista.listagem);                                      
 		int layout = android.R.layout.simple_list_item_1; 
-		adapter = new ArrayAdapter<Aluno>(this, layout, alunos);        
+		adapter = new ArrayAdapter<Student>(this, layout, alunos);        
 		//adapter.notifyDataSetChanged();
 
 		listaAlunos.setAdapter(adapter);
@@ -111,11 +114,24 @@ public class ListaAlunos extends Activity {
 
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View v, int posicao, long id) {
-				Toast.makeText(ListaAlunos.this, alunos.get(posicao).toString(), Toast.LENGTH_SHORT).show();				
+				Toast.makeText(ListStudents.this, alunos.get(posicao).toString(), Toast.LENGTH_SHORT).show();				
 			}
 
 		});
 
+		listaAlunos.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View v,
+					int posicao, long id) {
+
+				Intent edit = new Intent(ListStudents.this, FormStudent.class);
+				edit.putExtra("alunoSelecionado", alunos.get(posicao));
+				startActivity(edit);
+				
+			}
+		});
+		
 		listaAlunos.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override

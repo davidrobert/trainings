@@ -1,22 +1,23 @@
 package br.com.while42.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import br.com.while42.model.Aluno;
-import br.com.while42.persist.AlunoDAO;
+import br.com.while42.model.Student;
+import br.com.while42.persist.StudentDAO;
 
-public class Formulario extends Activity {
+public class FormStudent extends Activity {
     	
+	private Student student;	
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.formulario);
+        setContentView(R.layout.formulario);                
         
         final EditText nome = (EditText) findViewById(R.id.editTextName);
         final EditText telefone = (EditText) findViewById(R.id.editTextPhone);
@@ -27,23 +28,45 @@ public class Formulario extends Activity {
         
         final Button gravar = (Button) findViewById(R.id.buttonRecord);
         
+        student = (Student) getIntent().getSerializableExtra("alunoSelecionado");
+        
+        if (student == null) {
+        	student = new Student();
+        } else {        	
+        	gravar.setText("Alterar");
+        	
+            nome.setText(student.getName());
+            telefone.setText(student.getPhone());
+            email.setText(student.getEmail());
+            twitter.setText(student.getTwitter());
+            endereco.setText(student.getAddress());
+            nota.setRating((float) student.getScore());
+        }               
+        
         gravar.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Aluno a = new Aluno();
-				a.setNome(nome.getText().toString());
-				a.setTelefone(telefone.getText().toString());
-				a.setEmail(email.getText().toString());
-				a.setTwitter(twitter.getText().toString());
-				a.setEndereco(endereco.getText().toString());
-				a.setNota(nota.getRating());
+
+				student.setName(nome.getText().toString());
+				student.setPhone(telefone.getText().toString());
+				student.setEmail(email.getText().toString());
+				student.setTwitter(twitter.getText().toString());
+				student.setAddress(endereco.getText().toString());
+				student.setScore(nota.getRating());
 				
-				AlunoDAO dao = new AlunoDAO(Formulario.this);
-				dao.add(a);		
+				StudentDAO dao = new StudentDAO(FormStudent.this);				
+				dao.save(student);			
 				dao.close();
-								
-				startActivity(new Intent(Formulario.this, ListaAlunos.class));
+				
+				/* Mata a activity corrente e retorna para a activity anterior.
+				 * A activity anterior retorna para o onStart (e ela nao passa pelo onCreate).
+				 * 
+				 * Se em vez do finish fosse chamado o
+				 * startActivity(new Intent(FormStudent.this, ListStudents.class));
+				 * a ativity atual nao morreria
+				 */
+				finish(); 
 			}
 		});
     }

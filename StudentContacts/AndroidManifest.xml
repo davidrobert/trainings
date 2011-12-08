@@ -11,7 +11,7 @@
         android:label="@string/app_name" >
         <activity
             android:label="@string/app_name"
-            android:name=".ListaAlunos" >
+            android:name=".ListStudents" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:label="Novo"
-            android:name=".Formulario" >
+            android:name=".FormStudent" >
         </activity>
     </application>
 

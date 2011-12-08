@@ -1,14 +1,18 @@
 package br.com.while42.model;
 
-public class Aluno {
+import java.io.Serializable;
+
+public class Student implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private long id;	
-	private String nome;
-	private String endereco;	
-	private String telefone;
+	private String name;
+	private String address;	
+	private String phone;
 	private String email;
 	private String twitter;
-	private double nota;
+	private double score;
 	
 	public long getId() {
 		return id;
@@ -16,23 +20,23 @@ public class Aluno {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getTelefone() {
-		return telefone;
+	public String getPhone() {
+		return phone;
 	}
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
-	public String getEndereco() {
-		return endereco;
+	public String getAddress() {
+		return address;
 	}
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public String getEmail() {
 		return email;
@@ -46,15 +50,19 @@ public class Aluno {
 	public void setTwitter(String twitter) {
 		this.twitter = twitter;
 	}
-	public double getNota() {
-		return nota;
+	public double getScore() {
+		return score;
 	}
-	public void setNota(double nota) {
-		this.nota = nota;
+	public void setScore(double score) {
+		this.score = score;
 	}
 	
 	@Override
 	public String toString() {
-		return this.nome;
+		return this.name;
+	}
+
+	public boolean isPersistent() {
+		return getId() != 0;
 	}
 }
