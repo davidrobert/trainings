@@ -37,7 +37,7 @@ public class Formulario extends Activity {
 				a.setEmail(email.getText().toString());
 				a.setTwitter(twitter.getText().toString());
 				a.setEndereco(endereco.getText().toString());
-				//a.setNota(nota.getText().toString());
+				a.setNota(nota.getRating());
 				
 				AlunoDAO dao = new AlunoDAO(Formulario.this);
 				dao.add(a);		
