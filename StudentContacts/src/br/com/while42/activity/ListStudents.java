@@ -5,17 +5,22 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import br.com.while42.model.Student;
 import br.com.while42.persist.StudentDAO;
@@ -25,7 +30,7 @@ public class ListStudents extends Activity {
 	private Student selectedItem;
 	private List<Student> alunos = new ArrayList<Student>();
 	private ArrayAdapter<Student> adapter;
-	private ListView listaAlunos;
+	private ListView listStudents;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -104,13 +109,46 @@ public class ListStudents extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lista);
 
-		listaAlunos = (ListView) findViewById(R.id_lista.listagem);                                      
-		int layout = android.R.layout.simple_list_item_1; 
-		adapter = new ArrayAdapter<Student>(this, layout, alunos);        
-		//adapter.notifyDataSetChanged();
+		listStudents = (ListView) findViewById(R.id_lista.listagem);                                      
+		int layout = android.R.layout.simple_list_item_1;
+		
+		// TODO; Transformar em uma classe qu herde de ArrayAdapter
+		adapter = new ArrayAdapter<Student>(this, layout, alunos) {
+			
+			public int getCount() {			
+				return alunos.size();
+			}
+			
+			public long getItemId(int posicao) {
+				return alunos.get(posicao).getId();
+			}
+			
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				View item = ListStudents.this.getLayoutInflater().inflate(R.layout.student_item, null);
+				
+				ImageView photo = (ImageView) item.findViewById(R.id_student_item.imageViewPhoto);
+				TextView name = (TextView) item.findViewById(R.id_student_item.textViewName);
+				
+				Student student = alunos.get(position);
+				name.setText(student.getName());
+							
+//				if (student.getPhoto()) {
+//				
+//					Bitmap bm = BitmapFactory.decodeFile(student.getPhoto());
+//					bm = Bitmap.createScaledBitmap(bm, 100, 100, true);
+//					photo.setImageBitmap(bm);					
+//					
+//				}
+				
+				
+				return item;
+			}
+			
+		};
 
-		listaAlunos.setAdapter(adapter);
-		listaAlunos.setOnItemClickListener(new OnItemClickListener() {
+		listStudents.setAdapter(adapter);
+		listStudents.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View v, int posicao, long id) {
@@ -119,7 +157,7 @@ public class ListStudents extends Activity {
 
 		});
 
-		listaAlunos.setOnItemClickListener(new OnItemClickListener() {
+		listStudents.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View v,
@@ -132,13 +170,13 @@ public class ListStudents extends Activity {
 			}
 		});
 		
-		listaAlunos.setOnItemLongClickListener(new OnItemLongClickListener() {
+		listStudents.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> adapterView, View v,
 					int posicao, long id) {
 				selectedItem = alunos.get(posicao);
-				registerForContextMenu(listaAlunos);
+				registerForContextMenu(listStudents);
 
 				//Toast.makeText(ListaAlunosActivity.this, "long", Toast.LENGTH_SHORT).show();
 

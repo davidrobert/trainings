@@ -12,9 +12,9 @@ import br.com.while42.model.Student;
 
 public class StudentDAO extends SQLiteOpenHelper {
 
-	static final int VERSION = 3;
+	static final int VERSION = 4;
 	static final String TABLE = "student";
-	static final String[] COLS = {"id", "name", "address", "phone", "email", "twitter", "score"};	
+	static final String[] COLS = {"id", "name", "address", "phone", "email", "twitter", "score", "photo"};	
 	
 	public StudentDAO(Context context) {
 		super(context, TABLE, null, VERSION);
@@ -31,7 +31,8 @@ public class StudentDAO extends SQLiteOpenHelper {
 		sb.append("phone TEXT, ");
 		sb.append("email TEXT, ");
 		sb.append("twitter TEXT, ");
-		sb.append("score REAL");
+		sb.append("score REAL, ");
+		sb.append("photo TEXT");
 		sb.append(")");
 		
 		db.execSQL(sb.toString());
@@ -77,7 +78,7 @@ public class StudentDAO extends SQLiteOpenHelper {
 				null,    // values
 				null,    // group by
 				null,    // having
-				"nome"); // order by
+				"name"); // order by
 		
 		while (cursor.moveToNext()) {
 			
@@ -90,6 +91,7 @@ public class StudentDAO extends SQLiteOpenHelper {
 			student.setEmail(cursor.getString(4));
 			student.setTwitter(cursor.getString(5));
 			student.setScore(cursor.getDouble(6));
+			student.setPhoto(cursor.getString(7));
 			
 			students.add(student);
 		}
@@ -114,6 +116,7 @@ public class StudentDAO extends SQLiteOpenHelper {
 		values.put("email", student.getEmail());
 		values.put("twitter", student.getTwitter());
 		values.put("score", student.getScore());
+		values.put("photo", student.getPhoto());
 		
 		return values;
 	}

@@ -13,6 +13,7 @@ public class Student implements Serializable {
 	private String email;
 	private String twitter;
 	private double score;
+	private String photo;
 	
 	public long getId() {
 		return id;
@@ -55,6 +56,12 @@ public class Student implements Serializable {
 	}
 	public void setScore(double score) {
 		this.score = score;
+	}	
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	public String getPhoto() {
+		return photo;
 	}
 	
 	@Override
@@ -65,4 +72,5 @@ public class Student implements Serializable {
 	public boolean isPersistent() {
 		return getId() != 0;
 	}
+	
 }
