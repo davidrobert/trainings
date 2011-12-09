@@ -19,14 +19,14 @@ public class FormStudent extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.formulario);                
         
-        final EditText nome = (EditText) findViewById(R.id.editTextName);
-        final EditText telefone = (EditText) findViewById(R.id.editTextPhone);
-        final EditText email = (EditText) findViewById(R.id.editTextEmail);
-        final EditText twitter = (EditText) findViewById(R.id.editTextTwitter);
-        final EditText endereco = (EditText) findViewById(R.id.editTextEndereco);
-        final RatingBar nota = (RatingBar) findViewById(R.id.ratingBarScore);
+        final EditText nome = (EditText) findViewById(R.id_form.editTextName);
+        final EditText telefone = (EditText) findViewById(R.id_form.editTextPhone);
+        final EditText email = (EditText) findViewById(R.id_form.editTextEmail);
+        final EditText twitter = (EditText) findViewById(R.id_form.editTextTwitter);
+        final EditText endereco = (EditText) findViewById(R.id_form.editTextEndereco);
+        final RatingBar nota = (RatingBar) findViewById(R.id_form.ratingBarScore);
         
-        final Button gravar = (Button) findViewById(R.id.buttonRecord);
+        final Button gravar = (Button) findViewById(R.id_form.buttonRecord);
         
         student = (Student) getIntent().getSerializableExtra("alunoSelecionado");
         

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -11,81 +10,81 @@
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
+
         <TextView
-            android:id="@+id/textViewName"
+            android:id="@+id_form/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nome:" />
 
         <EditText
-            android:id="@+id/editTextName"
+            android:id="@+id_form/editTextName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:maxLength="20" />
 
         <TextView
-            android:id="@+id/textViewPhone"
+            android:id="@+id_form/textViewPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Telefone:" />
 
         <EditText
-            android:id="@+id/editTextPhone"
+            android:id="@+id_form/editTextPhone"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:maxLength="20" />
 
         <TextView
-            android:id="@+id/textViewEmail"
+            android:id="@+id_form/textViewEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email:" />
 
         <EditText
-            android:id="@+id/editTextEmail"
+            android:id="@+id_form/editTextEmail"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:maxLength="255" />
 
         <TextView
-            android:id="@+id/textViewTwitter"
+            android:id="@+id_form/textViewTwitter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Twitter:" />
 
         <EditText
-            android:id="@+id/editTextTwitter"
+            android:id="@+id_form/editTextTwitter"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:maxLength="255" />
 
         <TextView
-            android:id="@+id/textViewEndereco"
+            android:id="@+id_form/textViewEndereco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Endereco:" />
 
         <EditText
-            android:id="@+id/editTextEndereco"
+            android:id="@+id_form/editTextEndereco"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:maxLength="1000" />
-        
-        
+
         <TextView
-            android:id="@+id/textViewScore"
+            android:id="@+id_form/textViewScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nota:" />
 
         <RatingBar
-            android:id="@+id/ratingBarScore"
+            android:id="@+id_form/ratingBarScore"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_gravity="center_horizontal" />
 
         <Button
-            android:id="@+id/buttonRecord"
+            android:id="@+id_form/buttonRecord"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_gravity="center_horizontal"

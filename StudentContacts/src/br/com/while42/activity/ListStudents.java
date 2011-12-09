@@ -28,7 +28,7 @@ import br.com.while42.persist.StudentDAO;
 public class ListStudents extends Activity {
 
 	private Student selectedItem;
-	private List<Student> alunos = new ArrayList<Student>();
+	private List<Student> students = new ArrayList<Student>();
 	private ArrayAdapter<Student> adapter;
 	private ListView listStudents;
 
@@ -78,7 +78,7 @@ public class ListStudents extends Activity {
 		if (item.getItemId() == 4) {
 			StudentDAO dao = new StudentDAO(this);
 			dao.delete(selectedItem);
-			alunos.remove(selectedItem);
+			students.remove(selectedItem);
 			dao.close();
 			
 			adapter.notifyDataSetChanged();
@@ -97,8 +97,8 @@ public class ListStudents extends Activity {
 		super.onResume();
 
 		StudentDAO dao = new StudentDAO(this);
-		alunos.clear();
-		alunos.addAll(dao.getList());
+		students.clear();
+		students.addAll(dao.getList());
 		dao.close();
 
 		adapter.notifyDataSetChanged();
@@ -109,18 +109,18 @@ public class ListStudents extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lista);
 
-		listStudents = (ListView) findViewById(R.id_lista.listagem);                                      
+		listStudents = (ListView) findViewById(R.id_list.listagem);                                      
 		int layout = android.R.layout.simple_list_item_1;
 		
 		// TODO; Transformar em uma classe qu herde de ArrayAdapter
-		adapter = new ArrayAdapter<Student>(this, layout, alunos) {
+		adapter = new ArrayAdapter<Student>(this, layout, students) {
 			
 			public int getCount() {			
-				return alunos.size();
+				return students.size();
 			}
 			
 			public long getItemId(int posicao) {
-				return alunos.get(posicao).getId();
+				return students.get(posicao).getId();
 			}
 			
 			@Override
@@ -130,17 +130,23 @@ public class ListStudents extends Activity {
 				ImageView photo = (ImageView) item.findViewById(R.id_student_item.imageViewPhoto);
 				TextView name = (TextView) item.findViewById(R.id_student_item.textViewName);
 				
-				Student student = alunos.get(position);
+				Student student = students.get(position);
 				name.setText(student.getName());
-							
-//				if (student.getPhoto()) {
-//				
-//					Bitmap bm = BitmapFactory.decodeFile(student.getPhoto());
-//					bm = Bitmap.createScaledBitmap(bm, 100, 100, true);
-//					photo.setImageBitmap(bm);					
-//					
-//				}
+						
+				Bitmap bm;
+				if (student.getPhoto() != null) {					
+					bm = BitmapFactory.decodeFile(student.getPhoto());
+					
+				} else if (student.getTwitter() != null) {					
+					// TODO; Carregar de forma correta a imagem do Twitter					
+					bm = BitmapFactory.decodeResource(ListStudents.this.getResources(), R.drawable.noimage);					
+					
+				} else {					
+					bm = BitmapFactory.decodeResource(ListStudents.this.getResources(), R.drawable.noimage);
+				}
 				
+				bm = Bitmap.createScaledBitmap(bm, 70, 70, true);
+				photo.setImageBitmap(bm);
 				
 				return item;
 			}
@@ -152,7 +158,7 @@ public class ListStudents extends Activity {
 
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View v, int posicao, long id) {
-				Toast.makeText(ListStudents.this, alunos.get(posicao).toString(), Toast.LENGTH_SHORT).show();				
+				Toast.makeText(ListStudents.this, students.get(posicao).toString(), Toast.LENGTH_SHORT).show();				
 			}
 
 		});
@@ -164,7 +170,7 @@ public class ListStudents extends Activity {
 					int posicao, long id) {
 
 				Intent edit = new Intent(ListStudents.this, FormStudent.class);
-				edit.putExtra("alunoSelecionado", alunos.get(posicao));
+				edit.putExtra("alunoSelecionado", students.get(posicao));
 				startActivity(edit);
 				
 			}
@@ -175,7 +181,7 @@ public class ListStudents extends Activity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> adapterView, View v,
 					int posicao, long id) {
-				selectedItem = alunos.get(posicao);
+				selectedItem = students.get(posicao);
 				registerForContextMenu(listStudents);
 
 				//Toast.makeText(ListaAlunosActivity.this, "long", Toast.LENGTH_SHORT).show();
