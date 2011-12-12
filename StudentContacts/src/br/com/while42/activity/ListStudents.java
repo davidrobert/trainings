@@ -61,13 +61,12 @@ public class ListStudents extends Activity {
 
 		menu.setHeaderTitle(studentSelected.toString());
 
-		menu.add(0, 0, 0, "Ligar");
-		menu.add(0, 1, 0, "Enviar SMS");
-		menu.add(0, 2, 0, "Achar no Mapa");
-		menu.add(0, 3, 0, "Navegar no site");
-		menu.add(0, 4, 0, "Deletar");
-		menu.add(0, 5, 0, "Enviar E-mail");
-
+		MenuItem call = menu.add(0, 0, 0, "Ligar");
+		MenuItem sms = menu.add(0, 1, 0, "Enviar SMS");
+		MenuItem map = menu.add(0, 2, 0, "Achar no Mapa");
+		MenuItem site = menu.add(0, 3, 0, "Navegar no site");
+		MenuItem del = menu.add(0, 4, 0, "Deletar");
+		MenuItem email = menu.add(0, 5, 0, "Enviar E-mail");
 	}
 
 	@Override
@@ -88,13 +87,13 @@ public class ListStudents extends Activity {
 			
 		case 1: // SMS
 			
+			/*
 			Intent sms = new Intent(Intent.ACTION_VIEW);
 			sms.setData(Uri.parse("sms:" + studentSelected.getPhone()));
 			sms.putExtra("sms_body", "Minha mensagem!");
 			startActivity(sms);
+			*/
 			
-			
-			/*
 			SmsManager smsManager = SmsManager.getDefault();
 			PendingIntent sentIntent = PendingIntent.getActivity(this, 0, null, 0);
 			
@@ -105,7 +104,6 @@ public class ListStudents extends Activity {
 			} else {
 				Toast.makeText(this, "Telefone mal formatado", Toast.LENGTH_LONG).show();
 			}
-			*/
 			
 			break;
 		
@@ -116,9 +114,15 @@ public class ListStudents extends Activity {
 			break;
 			
 		case 3: // Site
-			Intent web = new Intent(Intent.ACTION_VIEW);
-			web.setData(Uri.parse(studentSelected.getSite()));
-			startActivity(web);
+			
+//			Intent web = new Intent(Intent.ACTION_VIEW);
+//			web.setData(Uri.parse(studentSelected.getSite()));
+//			startActivity(web);
+			
+			Intent edit = new Intent(ListStudents.this, WebStudent.class);
+			edit.putExtra("alunoSelecionado", studentSelected);
+			startActivity(edit);
+			
 			break;			
 			
 		case 4: // Deletar 
