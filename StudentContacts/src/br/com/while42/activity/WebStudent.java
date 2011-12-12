@@ -19,7 +19,7 @@ public class WebStudent extends Activity {
 		student = (Student) getIntent().getSerializableExtra("alunoSelecionado");
 		
 		String url = student.getSite();
-		if (!url.startsWith("http//") && !url.startsWith("https://") && !url.startsWith("ftp://")) {
+		if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("ftp://")) {
 			url = "http://" + url;
 		}
 		view.loadUrl(url);		

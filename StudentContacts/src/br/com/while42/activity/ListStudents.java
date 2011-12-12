@@ -16,6 +16,7 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -67,79 +68,96 @@ public class ListStudents extends Activity {
 		MenuItem site = menu.add(0, 3, 0, "Navegar no site");
 		MenuItem del = menu.add(0, 4, 0, "Deletar");
 		MenuItem email = menu.add(0, 5, 0, "Enviar E-mail");
+		
+		call.setOnMenuItemClickListener(new OnMenuItemClickListener() {			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				Intent ligar = new Intent(Intent.ACTION_CALL);
+				ligar.setData(Uri.parse("tel:" + studentSelected.getPhone()));
+				startActivity(ligar);
+				
+				return false;
+			}
+		});
+		
+		sms.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				/*
+				Intent sms = new Intent(Intent.ACTION_VIEW);
+				sms.setData(Uri.parse("sms:" + studentSelected.getPhone()));
+				sms.putExtra("sms_body", "Minha mensagem!");
+				startActivity(sms);
+				*/
+				
+				SmsManager smsManager = SmsManager.getDefault();
+				PendingIntent sentIntent = PendingIntent.getActivity(ListStudents.this, 0, null, 0);
+				
+				if (PhoneNumberUtils.isWellFormedSmsAddress(studentSelected.getPhone())) {
+					String text = "Primeiro SMS!";
+					smsManager.sendTextMessage(studentSelected.getPhone(), null, text, sentIntent, null);
+					Toast.makeText(ListStudents.this, "SMS Enviado", Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(ListStudents.this, "Telefone mal formatado", Toast.LENGTH_LONG).show();
+				}
+				return false;
+			}
+		});
+		
+		map.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				Intent map = new Intent(Intent.ACTION_VIEW);
+				map.setData(Uri.parse("geo:0,0?z=14&q="+studentSelected.getAddress()));
+				startActivity(map);
+				return false;
+			}
+		});
+		
+		site.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+//				Intent web = new Intent(Intent.ACTION_VIEW);
+//				web.setData(Uri.parse(studentSelected.getSite()));
+//				startActivity(web);
+				
+				Intent edit = new Intent(ListStudents.this, WebStudent.class);
+				edit.putExtra("alunoSelecionado", studentSelected);
+				startActivity(edit);
+				return false;
+			}
+		});
+		
+		del.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				StudentDAO dao = new StudentDAO(ListStudents.this);
+				dao.delete(studentSelected);
+				students.remove(studentSelected);
+				dao.close();
+				
+				adapter.notifyDataSetChanged();
+				return false;
+			}
+		});
+		
+		email.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				return false;
+			}
+		});
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-
-		switch (item.getItemId()) {
-		case 0: // Ligar
-			Intent ligar = new Intent(Intent.ACTION_CALL);
-			ligar.setData(Uri.parse("tel:" + studentSelected.getPhone()));
-			startActivity(ligar);
-			break;
-			
-		case 1: // SMS
-			
-			/*
-			Intent sms = new Intent(Intent.ACTION_VIEW);
-			sms.setData(Uri.parse("sms:" + studentSelected.getPhone()));
-			sms.putExtra("sms_body", "Minha mensagem!");
-			startActivity(sms);
-			*/
-			
-			SmsManager smsManager = SmsManager.getDefault();
-			PendingIntent sentIntent = PendingIntent.getActivity(this, 0, null, 0);
-			
-			if (PhoneNumberUtils.isWellFormedSmsAddress(studentSelected.getPhone())) {
-				String text = "Primeiro SMS!";
-				smsManager.sendTextMessage(studentSelected.getPhone(), null, text, sentIntent, null);
-				Toast.makeText(this, "SMS Enviado", Toast.LENGTH_LONG).show();
-			} else {
-				Toast.makeText(this, "Telefone mal formatado", Toast.LENGTH_LONG).show();
-			}
-			
-			break;
-		
-		case 2: // Mapa
-			Intent map = new Intent(Intent.ACTION_VIEW);
-			map.setData(Uri.parse("geo:0,0?z=14&q="+studentSelected.getAddress()));
-			startActivity(map);
-			break;
-			
-		case 3: // Site
-			
-//			Intent web = new Intent(Intent.ACTION_VIEW);
-//			web.setData(Uri.parse(studentSelected.getSite()));
-//			startActivity(web);
-			
-			Intent edit = new Intent(ListStudents.this, WebStudent.class);
-			edit.putExtra("alunoSelecionado", studentSelected);
-			startActivity(edit);
-			
-			break;			
-			
-		case 4: // Deletar 
-			StudentDAO dao = new StudentDAO(this);
-			dao.delete(studentSelected);
-			students.remove(studentSelected);
-			dao.close();
-			
-			adapter.notifyDataSetChanged();
-			break;
-			
-
-		default:
-			break;
-		}
-
-		return super.onContextItemSelected(item);
 	}
 
 	@Override
