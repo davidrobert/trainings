@@ -149,6 +149,13 @@ public class ListStudents extends Activity {
 			
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
+				Intent mail = new Intent(Intent.ACTION_SEND);
+				mail.setType("message/rfc822");
+				mail.putExtra(Intent.EXTRA_EMAIL, "");
+				mail.putExtra(Intent.EXTRA_SUBJECT, "Assunto");
+				mail.putExtra(Intent.EXTRA_TEXT, "Texto do email" );				
+				
+				startActivity(Intent.createChooser(mail, "Seleciona a aplicação de email"));
 				return false;
 			}
 		});
