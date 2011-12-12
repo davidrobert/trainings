@@ -87,13 +87,14 @@ public class ListStudents extends Activity {
 			break;
 			
 		case 1: // SMS
-			/*
+			
 			Intent sms = new Intent(Intent.ACTION_VIEW);
 			sms.setData(Uri.parse("sms:" + studentSelected.getPhone()));
 			sms.putExtra("sms_body", "Minha mensagem!");
 			startActivity(sms);
-			*/
 			
+			
+			/*
 			SmsManager smsManager = SmsManager.getDefault();
 			PendingIntent sentIntent = PendingIntent.getActivity(this, 0, null, 0);
 			
@@ -104,11 +105,14 @@ public class ListStudents extends Activity {
 			} else {
 				Toast.makeText(this, "Telefone mal formatado", Toast.LENGTH_LONG).show();
 			}
+			*/
 			
 			break;
 		
 		case 2: // Mapa
-			
+			Intent map = new Intent(Intent.ACTION_VIEW);
+			map.setData(Uri.parse("geo:0,0?z=14&q="+studentSelected.getAddress()));
+			startActivity(map);
 			break;
 			
 		case 3: // Site
@@ -125,6 +129,7 @@ public class ListStudents extends Activity {
 			
 			adapter.notifyDataSetChanged();
 			break;
+			
 
 		default:
 			break;
