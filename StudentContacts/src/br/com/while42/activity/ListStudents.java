@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
+import android.telephony.SmsManager;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -27,7 +31,7 @@ import br.com.while42.persist.StudentDAO;
 
 public class ListStudents extends Activity {
 
-	private Student selectedItem;
+	private Student studentSelected;
 	private List<Student> students = new ArrayList<Student>();
 	private ArrayAdapter<Student> adapter;
 	private ListView listStudents;
@@ -55,7 +59,7 @@ public class ListStudents extends Activity {
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);		
 
-		menu.setHeaderTitle(selectedItem.toString());
+		menu.setHeaderTitle(studentSelected.toString());
 
 		menu.add(0, 0, 0, "Ligar");
 		menu.add(0, 1, 0, "Enviar SMS");
@@ -75,15 +79,57 @@ public class ListStudents extends Activity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 
-		if (item.getItemId() == 4) {
+		switch (item.getItemId()) {
+		case 0: // Ligar
+			Intent ligar = new Intent(Intent.ACTION_CALL);
+			ligar.setData(Uri.parse("tel:" + studentSelected.getPhone()));
+			startActivity(ligar);
+			break;
+			
+		case 1: // SMS
+			/*
+			Intent sms = new Intent(Intent.ACTION_VIEW);
+			sms.setData(Uri.parse("sms:" + studentSelected.getPhone()));
+			sms.putExtra("sms_body", "Minha mensagem!");
+			startActivity(sms);
+			*/
+			
+			SmsManager smsManager = SmsManager.getDefault();
+			PendingIntent sentIntent = PendingIntent.getActivity(this, 0, null, 0);
+			
+			if (PhoneNumberUtils.isWellFormedSmsAddress(studentSelected.getPhone())) {
+				String text = "Primeiro SMS!";
+				smsManager.sendTextMessage(studentSelected.getPhone(), null, text, sentIntent, null);
+				Toast.makeText(this, "SMS Enviado", Toast.LENGTH_LONG).show();
+			} else {
+				Toast.makeText(this, "Telefone mal formatado", Toast.LENGTH_LONG).show();
+			}
+			
+			break;
+		
+		case 2: // Mapa
+			
+			break;
+			
+		case 3: // Site
+			Intent web = new Intent(Intent.ACTION_VIEW);
+			web.setData(Uri.parse(studentSelected.getSite()));
+			startActivity(web);
+			break;			
+			
+		case 4: // Deletar 
 			StudentDAO dao = new StudentDAO(this);
-			dao.delete(selectedItem);
-			students.remove(selectedItem);
+			dao.delete(studentSelected);
+			students.remove(studentSelected);
 			dao.close();
 			
 			adapter.notifyDataSetChanged();
+			break;
+
+		default:
+			break;
 		}
-		
+
 		return super.onContextItemSelected(item);
 	}
 
@@ -181,7 +227,7 @@ public class ListStudents extends Activity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> adapterView, View v,
 					int posicao, long id) {
-				selectedItem = students.get(posicao);
+				studentSelected = students.get(posicao);
 				registerForContextMenu(listStudents);
 
 				//Toast.makeText(ListaAlunosActivity.this, "long", Toast.LENGTH_SHORT).show();

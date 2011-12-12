@@ -12,6 +12,7 @@ public class Student implements Serializable {
 	private String phone;
 	private String email;
 	private String twitter;
+	private String site;
 	private double score;
 	private String photo;
 	
@@ -50,6 +51,12 @@ public class Student implements Serializable {
 	}
 	public void setTwitter(String twitter) {
 		this.twitter = twitter;
+	}
+	public void setSite(String site) {
+		this.site = site;
+	}
+	public String getSite() {
+		return site;
 	}
 	public double getScore() {
 		return score;

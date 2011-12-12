@@ -23,6 +23,7 @@ public class FormStudent extends Activity {
         final EditText telefone = (EditText) findViewById(R.id_form.editTextPhone);
         final EditText email = (EditText) findViewById(R.id_form.editTextEmail);
         final EditText twitter = (EditText) findViewById(R.id_form.editTextTwitter);
+        final EditText site = (EditText) findViewById(R.id_form.editTextSite);
         final EditText endereco = (EditText) findViewById(R.id_form.editTextEndereco);
         final RatingBar nota = (RatingBar) findViewById(R.id_form.ratingBarScore);
         
@@ -39,6 +40,7 @@ public class FormStudent extends Activity {
             telefone.setText(student.getPhone());
             email.setText(student.getEmail());
             twitter.setText(student.getTwitter());
+            site.setText(student.getSite());
             endereco.setText(student.getAddress());
             nota.setRating((float) student.getScore());
         }               
@@ -52,6 +54,7 @@ public class FormStudent extends Activity {
 				student.setPhone(telefone.getText().toString());
 				student.setEmail(email.getText().toString());
 				student.setTwitter(twitter.getText().toString());
+				student.setSite(site.getText().toString());
 				student.setAddress(endereco.getText().toString());
 				student.setScore(nota.getRating());
 				
