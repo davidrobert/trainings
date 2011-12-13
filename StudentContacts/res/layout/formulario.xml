@@ -10,6 +10,13 @@
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
+        <ImageButton
+            android:id="@+id_form/imageButtonPhoto"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            
+            android:src="@drawable/noimage" />
 
         <TextView
             android:id="@+id_form/textViewName"
@@ -51,8 +58,8 @@
             android:id="@+id_form/textViewTwitter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Twitter:" />        
-        
+            android:text="Twitter:" />
+
         <EditText
             android:id="@+id_form/editTextTwitter"
             android:layout_width="fill_parent"
@@ -64,13 +71,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Site:" />
-        
+
         <EditText
             android:id="@+id_form/editTextSite"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:maxLength="255" />
-        
+
         <TextView
             android:id="@+id_form/textViewEndereco"
             android:layout_width="wrap_content"

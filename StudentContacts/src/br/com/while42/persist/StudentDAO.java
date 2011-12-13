@@ -67,7 +67,7 @@ public class StudentDAO extends SQLiteOpenHelper {
 	public void delete(Student student) {		
 		
 		String[] whereArgs = new String[] { Long.toString(student.getId()) };
-		getWritableDatabase().delete(TABLE, "id_form=?", whereArgs);		
+		getWritableDatabase().delete(TABLE, "id=?", whereArgs);		
 	}
 	
 	public List<Student> getList() {			
