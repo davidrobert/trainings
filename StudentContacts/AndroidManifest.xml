@@ -32,6 +32,11 @@
             android:label="Web"
             android:name=".WebStudent" >
         </activity>
+        <activity
+            android:label="Gallery"
+            android:name=".GalleryStudents" >
+        </activity>
+        
     </application>
 
 </manifest>

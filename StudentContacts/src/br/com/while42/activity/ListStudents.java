@@ -46,15 +46,16 @@ public class ListStudents extends Activity {
 
 		MenuItem newStudent = menu.add(0, 0, 0, "Novo");
 		MenuItem sync = menu.add(0, 1, 0, "Sicronizar");
-		MenuItem album = menu.add(0, 2, 0, "Galeria");
+		MenuItem gallery = menu.add(0, 2, 0, "Galeria");
 		MenuItem map = menu.add(0, 3, 0, "Map");		
 
 		newStudent.setIcon(R.drawable.novo);
 		sync.setIcon(R.drawable.smile);
-		album.setIcon(R.drawable.foto);
+		gallery.setIcon(R.drawable.foto);
 		map.setIcon(R.drawable.mapa);
 
 		newStudent.setIntent(new Intent(this, FormStudent.class));
+
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -181,7 +182,10 @@ public class ListStudents extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
+		if (item.getItemId() == 2) {
+			startActivity(new Intent(ListStudents.this, GalleryStudents.class));
+		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 
