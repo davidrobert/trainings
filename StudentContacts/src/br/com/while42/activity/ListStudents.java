@@ -282,6 +282,5 @@ public class ListStudents extends Activity {
 				return false; // se colocar true nao propaga o evento para outros listeners
 			}
 		});
-
 	}
 }
