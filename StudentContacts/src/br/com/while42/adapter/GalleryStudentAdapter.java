@@ -48,7 +48,7 @@ public class GalleryStudentAdapter extends BaseAdapter {
 			bm = BitmapFactory.decodeResource(context.getResources(), R.drawable.noimage);
 		}
 
-		bm = Bitmap.createScaledBitmap(bm, 70, 70, true);		
+		bm = Bitmap.createScaledBitmap(bm, 170, 170, true);		
 		image.setImageBitmap(bm);
 		return image;
 	}

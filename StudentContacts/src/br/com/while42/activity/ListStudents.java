@@ -55,7 +55,7 @@ public class ListStudents extends Activity {
 		map.setIcon(R.drawable.mapa);
 
 		newStudent.setIntent(new Intent(this, FormStudent.class));
-
+		gallery.setIntent(new Intent(ListStudents.this, GalleryStudents.class));
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -182,9 +182,6 @@ public class ListStudents extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == 2) {
-			startActivity(new Intent(ListStudents.this, GalleryStudents.class));
-		}
 		
 		return super.onOptionsItemSelected(item);
 	}
