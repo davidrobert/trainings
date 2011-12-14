@@ -15,10 +15,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.RatingBar;
 import br.com.while42.R;
 import br.com.while42.model.Student;
 import br.com.while42.persist.StudentDAO;
+import br.com.while42.view.IndicatorBar;
 
 public class FormStudent extends Activity {
 
@@ -32,7 +32,7 @@ public class FormStudent extends Activity {
 	private EditText twitter;
 	private EditText site;
 	private EditText address;
-	private RatingBar score;
+	private IndicatorBar score;
 
 	private Button gravar;
 	private String fileName;
@@ -51,7 +51,7 @@ public class FormStudent extends Activity {
 		twitter = (EditText) findViewById(R.id_form.editTextTwitter);
 		site = (EditText) findViewById(R.id_form.editTextSite);
 		address = (EditText) findViewById(R.id_form.editTextEndereco);
-		score = (RatingBar) findViewById(R.id_form.indicatorBarScore);
+		score = (IndicatorBar) findViewById(R.id_form.indicatorBarScore);
 
 		gravar = (Button) findViewById(R.id_form.buttonRecord);
 
