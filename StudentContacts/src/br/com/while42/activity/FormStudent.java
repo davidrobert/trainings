@@ -51,7 +51,7 @@ public class FormStudent extends Activity {
 		twitter = (EditText) findViewById(R.id_form.editTextTwitter);
 		site = (EditText) findViewById(R.id_form.editTextSite);
 		address = (EditText) findViewById(R.id_form.editTextEndereco);
-		score = (RatingBar) findViewById(R.id_form.ratingBarScore);
+		score = (RatingBar) findViewById(R.id_form.indicatorBarScore);
 
 		gravar = (Button) findViewById(R.id_form.buttonRecord);
 

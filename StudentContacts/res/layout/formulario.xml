@@ -96,11 +96,17 @@
             android:layout_height="wrap_content"
             android:text="Nota:" />
 
-        <RatingBar
-            android:id="@+id_form/ratingBarScore"
+        <br.com.while42.view.IndicatorBar
+            android:id="@+id_form/indicatorBarScore"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_gravity="center_horizontal" />
+        
+<!--        <RatingBar-->
+<!--            android:id="@+id_form/ratingBarScore"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="fill_parent"-->
+<!--            android:layout_gravity="center_horizontal" />-->
 
         <Button
             android:id="@+id_form/buttonRecord"
@@ -108,6 +114,8 @@
             android:layout_height="fill_parent"
             android:layout_gravity="center_horizontal"
             android:text="Gravar" />
+        
+        
     </LinearLayout>
 
 </ScrollView>
