@@ -124,4 +124,38 @@ public class StudentDAO extends SQLiteOpenHelper {
 		return values;
 	}
 
+	public Student findByPhone(String phone) {
+		
+		Student student = null;
+		
+		String where = "phone=?";
+		String[] values = new String[] { phone };
+		
+		Cursor cursor = getWritableDatabase().query(TABLE, 
+				COLS,    // Colunas 
+				where,   // where
+				values,  // values
+				null,    // group by
+				null,    // having
+				"name"); // order by
+		
+		if (cursor.moveToNext()) {
+			
+			student = new Student();
+			
+			student.setId(cursor.getInt(0));
+			student.setName(cursor.getString(1));
+			student.setAddress(cursor.getString(2));
+			student.setPhone(cursor.getString(3));
+			student.setEmail(cursor.getString(4));
+			student.setTwitter(cursor.getString(5));
+			student.setSite(cursor.getString(6));
+			student.setScore(cursor.getDouble(7));
+			student.setPhoto(cursor.getString(8));		
+		}
+		
+		cursor.close();		
+		return student;
+	}
+
 }

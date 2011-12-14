@@ -32,7 +32,8 @@ public class Synchronism {
 	}
 
 	public void syncronize() {
-		progress = ProgressDialog.show(context, "Aguarde...", "Sincronizando dados com o servidor", true);
+		// TODO: Escrever um comentario explicando a funcionalidade dos dois "true" na metodo show
+		progress = ProgressDialog.show(context, "Aguarde...", "Sincronizando dados com o servidor", true, true);
 		message = Toast.makeText(context, "Dados enviados com sucesso", Toast.LENGTH_LONG);
 
 		new Thread(new Runnable() {

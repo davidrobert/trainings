@@ -12,13 +12,14 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
             android:label="@string/app_name"
-            android:name=".ListStudents" >
+            android:name=".activity.ListStudents" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +28,7 @@
         </activity>
         <activity
             android:label="Novo"
-            android:name=".FormStudent" >
+            android:name=".activity.FormStudent" >
         </activity>
         <activity
             android:label="Web"
@@ -41,6 +42,10 @@
         <receiver
             android:label="SMSReceiver"
             android:name=".receiver.SMSReceiver" >
+            
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVER" />
+            </intent-filter>
         </receiver>
     </application>
 
