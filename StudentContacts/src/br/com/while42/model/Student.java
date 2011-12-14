@@ -75,7 +75,7 @@ public class Student implements Serializable {
 	public String toString() {
 		return this.name;
 	}
-
+	
 	public boolean isPersistent() {
 		return getId() != 0;
 	}

@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import br.com.while42.communication.Synchronism;
 import br.com.while42.model.Student;
 import br.com.while42.persist.StudentDAO;
 
@@ -56,6 +57,16 @@ public class ListStudents extends Activity {
 
 		newStudent.setIntent(new Intent(this, FormStudent.class));
 		gallery.setIntent(new Intent(ListStudents.this, GalleryStudents.class));
+		
+		sync.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem arg0) {
+				Synchronism sync = new Synchronism(ListStudents.this);
+				sync.syncronize();
+				return false;
+			}
+		});
 
 		return super.onCreateOptionsMenu(menu);
 	}
