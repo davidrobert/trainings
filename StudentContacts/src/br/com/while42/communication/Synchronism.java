@@ -21,7 +21,7 @@ import br.com.while42.model.Student;
 import br.com.while42.persist.StudentDAO;
 
 public class Synchronism {
-	private String address = "http://www.caelum.com.br/mobile?dados=?";
+	private String address = "http://www.caelum.com.br/mobile?dado=";
 
 	private Context context;
 	private ProgressDialog progress;
@@ -51,19 +51,21 @@ public class Synchronism {
 				Log.i("ENVIANDO", encode);
 				HttpGet httpget = new HttpGet(encode);
 				
-				HttpResponse response;
 				try {
-					response = client.execute(httpget);
+					HttpResponse response = client.execute(httpget);
 					String msg = EntityUtils.toString(response.getEntity());
-					message.setText(">>" + msg + "<<");
+					
+					message.setText(msg);
 					Log.i("RECEBENDO", msg);
 					
 				} catch (ClientProtocolException e) {
 					Log.i("ERROR", "ClientProtocolException");
 					e.printStackTrace();
+					
 				} catch (ParseException e) {
 					Log.i("ERROR", "ParseException");
 					e.printStackTrace();
+					
 				} catch (IOException e) {
 					Log.i("ERROR", "IOException");
 					e.printStackTrace();
