@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Gallery;
 import android.widget.Toast;
+import br.com.while42.R;
 import br.com.while42.adapter.GalleryStudentAdapter;
 import br.com.while42.model.Student;
 import br.com.while42.persist.StudentDAO;

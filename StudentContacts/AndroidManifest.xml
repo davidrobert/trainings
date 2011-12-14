@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.while42.activity"
+    package="br.com.while42"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -21,6 +21,7 @@
             android:name=".ListStudents" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,13 +31,17 @@
         </activity>
         <activity
             android:label="Web"
-            android:name=".WebStudent" >
+            android:name=".activity.WebStudent" >
         </activity>
         <activity
             android:label="Gallery"
-            android:name=".GalleryStudents" >
+            android:name=".activity.GalleryStudents" >
         </activity>
-        
+
+        <receiver
+            android:label="SMSReceiver"
+            android:name=".receiver.SMSReceiver" >
+        </receiver>
     </application>
 
 </manifest>

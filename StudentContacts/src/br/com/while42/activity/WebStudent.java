@@ -1,9 +1,10 @@
 package br.com.while42.activity;
 
-import br.com.while42.model.Student;
 import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
+import br.com.while42.R;
+import br.com.while42.model.Student;
 
 public class WebStudent extends Activity {
 	

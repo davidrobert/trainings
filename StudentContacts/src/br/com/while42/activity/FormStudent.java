@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
+import br.com.while42.R;
 import br.com.while42.model.Student;
 import br.com.while42.persist.StudentDAO;
 

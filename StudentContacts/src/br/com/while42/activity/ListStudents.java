@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import br.com.while42.R;
 import br.com.while42.communication.Synchronism;
 import br.com.while42.model.Student;
 import br.com.while42.persist.StudentDAO;
