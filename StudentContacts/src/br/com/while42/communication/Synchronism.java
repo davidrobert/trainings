@@ -44,33 +44,40 @@ public class Synchronism {
 				List<Student> students = dao.getList();
 				dao.close();
 
+				Log.i("DEBUG", address + StudentToJSON.convert(students));
+
+				/* 
+				 * Exemplo de requisicao (sem encode) 
+				 * http://www.caelum.com.br/mobile?dado={"list":[{"aluno":{"id":1,"nome":"David Robert","endereco":"Avenida Leonardo da Vinci, 2713, Sao Paulo","telefone":"11123456789","email":"davidrobert@gmail.com","twitter":"while42","site":"http:\/\/while42.com.br","nota":5}},{"aluno":{"id":2,"nome":"jonas","endereco":"","telefone":"","email":"","twitter":"","site":"","nota":3.5}},{"aluno":{"id":3,"nome":"maria","endereco":"","telefone":"","email":"","twitter":"","site":"","nota":3}}]}
+				 */
+
 				String encode = URLEncoder.encode(StudentToJSON.convert(students));
 				encode = address + encode; 
-				
+
 				HttpClient client = new DefaultHttpClient();
 				Log.i("ENVIANDO", encode);
 				HttpGet httpget = new HttpGet(encode);
-				
+
 				try {
 					HttpResponse response = client.execute(httpget);
 					String msg = EntityUtils.toString(response.getEntity());
-					
+
 					message.setText(msg);
 					Log.i("RECEBENDO", msg);
-					
+
 				} catch (ClientProtocolException e) {
 					Log.i("ERROR", "ClientProtocolException");
 					e.printStackTrace();
-					
+
 				} catch (ParseException e) {
 					Log.i("ERROR", "ParseException");
 					e.printStackTrace();
-					
+
 				} catch (IOException e) {
 					Log.i("ERROR", "IOException");
 					e.printStackTrace();
 				}
-				
+
 				progress.dismiss();
 				message.show();
 			}
