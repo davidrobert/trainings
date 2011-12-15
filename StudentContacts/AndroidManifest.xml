@@ -13,6 +13,8 @@
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -22,7 +24,6 @@
             android:name=".activity.ListStudents" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -38,15 +39,20 @@
             android:label="Gallery"
             android:name=".activity.GalleryStudents" >
         </activity>
+        <activity
+            android:label="Map"
+            android:name="br.com.while42.activity.MapStudents" >            
+        </activity>
 
         <receiver
             android:label="SMSReceiver"
             android:name=".receiver.SMSReceiver" >
-            
-            <intent-filter>
+            <intent-filter >
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
+        <uses-library android:name="com.google.android.maps" />
     </application>
 
 </manifest>

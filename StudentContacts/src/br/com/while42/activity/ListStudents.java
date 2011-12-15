@@ -59,6 +59,9 @@ public class ListStudents extends Activity {
 		newStudent.setIntent(new Intent(this, FormStudent.class));
 		gallery.setIntent(new Intent(ListStudents.this, GalleryStudents.class));
 		
+		//startActivity(new Intent(ListStudents.this, MapStudents.class));
+		map.setIntent(new Intent(ListStudents.this, MapStudents.class));
+		
 		sync.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			
 			@Override
