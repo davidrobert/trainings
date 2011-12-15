@@ -14,9 +14,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import br.com.while42.R;
 import br.com.while42.model.Student;
 import br.com.while42.persist.StudentDAO;
+import br.com.while42.view.StudentOverlay;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -70,13 +72,13 @@ public class MapStudents extends MapActivity {
 
 		mapView = (MapView) findViewById(R.id_map.mapViewLocation);
 
-		mapView.setSatellite(true);
+		mapView.setSatellite(false);
 		mapView.setStreetView(true);
 		mapView.displayZoomControls(true);
 		mapView.setBuiltInZoomControls(true);
 
 		mapController = mapView.getController();
-		mapController.setZoom(50);
+		mapController.setZoom(15);
 
 		List<Overlay> overlays = mapView.getOverlays();
 		MyLocationOverlay myLocationOverlay = new MyLocationOverlay(this, mapView);
@@ -94,22 +96,23 @@ public class MapStudents extends MapActivity {
 
 		manager.requestLocationUpdates(provider, 2000, 20, locationListener);
 
-
 		// Mostrar todos os alunos cadastrados por meio de overlay sobre o mapa
 
 		StudentDAO dao = new StudentDAO(MapStudents.this);
 		List<Student> students = dao.getList();
 		dao.close();
 
-		Geocoder geo = new Geocoder(MapStudents.this, Locale.getDefault());
-
+		Geocoder geo = new Geocoder(MapStudents.this, Locale.getDefault());	
+		
 		for (Student student: students) {
-			Address address = null;
-
+			Address address = null;			
+			
 			try {
 				List<Address> addresses = geo.getFromLocationName(student.getAddress(), 1);
+				
 				if (addresses.size() > 0) address = addresses.get(0);
 			} catch (IOException e) {
+				Log.i("ERROR", "Ops! Baleiando!");
 				e.printStackTrace();
 			}
 			
@@ -122,13 +125,14 @@ public class MapStudents extends MapActivity {
 						fis.close();
 						bitmap = Bitmap.createScaledBitmap(bitmap, 30, 30, true);
 					} catch (IOException e) {
+						Log.i("ERROR", "Ops! Baleiando!");
 						e.printStackTrace();						
 					}
 				}
-			}
-			
-			//MyOverlay myOverlay = new MyOverlay(address, bitmap);
-			//mapView.getOverlays().add(myOverlay);
+				
+				StudentOverlay myOverlay = new StudentOverlay(address, bitmap);
+				mapView.getOverlays().add(myOverlay);
+			}						
 		}
 		
 		mapView.invalidate();
@@ -138,5 +142,4 @@ public class MapStudents extends MapActivity {
 	protected boolean isRouteDisplayed() {
 		return false;
 	}
-
 }
