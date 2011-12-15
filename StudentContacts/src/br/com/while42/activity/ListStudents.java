@@ -5,8 +5,10 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.app.AlertDialog.Builder;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -35,6 +37,7 @@ import br.com.while42.R;
 import br.com.while42.communication.Synchronism;
 import br.com.while42.model.Student;
 import br.com.while42.persist.StudentDAO;
+import br.com.while42.receiver.SMSReceiver;
 
 public class ListStudents extends Activity {
 
@@ -216,6 +219,12 @@ public class ListStudents extends Activity {
 		dao.close();
 
 		adapter.notifyDataSetChanged();
+		
+		int idNotification = getIntent().getIntExtra(SMSReceiver.NOTIFICATION_LABEL, -1);
+		if (idNotification != -1) {
+			NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+			manager.cancel(idNotification);
+		}
 	}
 
 	@Override
