@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:text="Nota:" />
 
-        <br.com.while42.view.IndicatorBar
+        <br.com.while42.studantcontacts.view.IndicatorBar
             android:id="@+id_form/indicatorBarScore"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"

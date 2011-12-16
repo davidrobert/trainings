@@ -45,12 +45,12 @@
         </activity>
         <activity
             android:label="Preferences"
-            android:name=".activity.Preferences" >
+            android:name=".studantcontacts.activity.Preferences" >
         </activity>
 
         <receiver
             android:label="SMSReceiver"
-            android:name=".receiver.SMSReceiver" >
+            android:name=".studantcontacts.receiver.SMSReceiver" >
             <intent-filter >
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
