@@ -50,18 +50,7 @@ public class FormStudent extends Activity {
 			manager.cancel(idNotification);
 		}
 		
-		student = (Student) getIntent().getSerializableExtra("alunoSelecionado");
-		
-		photo = (ImageButton) findViewById(R.id_form.imageButtonPhoto);
-		name = (EditText) findViewById(R.id_form.editTextName);
-		phone = (EditText) findViewById(R.id_form.editTextPhone);
-		email = (EditText) findViewById(R.id_form.editTextEmail);
-		twitter = (EditText) findViewById(R.id_form.editTextTwitter);
-		site = (EditText) findViewById(R.id_form.editTextSite);
-		address = (EditText) findViewById(R.id_form.editTextEndereco);
-		score = (IndicatorBar) findViewById(R.id_form.indicatorBarScore);
-
-		gravar = (Button) findViewById(R.id_form.buttonRecord);
+		student = (Student) getIntent().getSerializableExtra("alunoSelecionado");		
 
 		if (student == null) {
 			student = new Student();        	
@@ -78,7 +67,24 @@ public class FormStudent extends Activity {
 			score.setRating((float) student.getScore());
 		}   
 
-		loadImage();
+		loadImage();		
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.formulario);                		
+		
+		photo = (ImageButton) findViewById(R.id_form.imageButtonPhoto);
+		name = (EditText) findViewById(R.id_form.editTextName);
+		phone = (EditText) findViewById(R.id_form.editTextPhone);
+		email = (EditText) findViewById(R.id_form.editTextEmail);
+		twitter = (EditText) findViewById(R.id_form.editTextTwitter);
+		site = (EditText) findViewById(R.id_form.editTextSite);
+		address = (EditText) findViewById(R.id_form.editTextEndereco);
+		score = (IndicatorBar) findViewById(R.id_form.indicatorBarScore);
+
+		gravar = (Button) findViewById(R.id_form.buttonRecord);
 		
 		photo.setOnClickListener(new OnClickListener() {
 
@@ -122,13 +128,6 @@ public class FormStudent extends Activity {
 				finish(); 
 			}
 		});
-	}
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.formulario);                		
-		
 	}
 
 	@Override
