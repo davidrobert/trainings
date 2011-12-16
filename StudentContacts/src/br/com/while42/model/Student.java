@@ -6,6 +6,8 @@ public class Student implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	public static final String ID_LABEL = Student.class.getName() + "_ID";
+	
 	private long id;	
 	private String name;
 	private String address;	

@@ -3,6 +3,8 @@ package br.com.while42.activity;
 import java.io.File;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,6 +20,7 @@ import android.widget.ImageButton;
 import br.com.while42.R;
 import br.com.while42.model.Student;
 import br.com.while42.persist.StudentDAO;
+import br.com.while42.receiver.SMSReceiver;
 import br.com.while42.view.IndicatorBar;
 
 public class FormStudent extends Activity {
@@ -38,12 +41,17 @@ public class FormStudent extends Activity {
 	private String fileName;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.formulario);                
-
+	protected void onResume() {	
+		super.onResume();
+		
+		int idNotification = getIntent().getIntExtra(SMSReceiver.NOTIFICATION_LABEL, -1);
+		if (idNotification != -1) {
+			NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+			manager.cancel(idNotification);
+		}
+		
 		student = (Student) getIntent().getSerializableExtra("alunoSelecionado");
-
+		
 		photo = (ImageButton) findViewById(R.id_form.imageButtonPhoto);
 		name = (EditText) findViewById(R.id_form.editTextName);
 		phone = (EditText) findViewById(R.id_form.editTextPhone);
@@ -71,7 +79,7 @@ public class FormStudent extends Activity {
 		}   
 
 		loadImage();
-
+		
 		photo.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -114,6 +122,13 @@ public class FormStudent extends Activity {
 				finish(); 
 			}
 		});
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.formulario);                		
+		
 	}
 
 	@Override

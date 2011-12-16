@@ -224,7 +224,7 @@ public class ListStudents extends Activity {
 		if (idNotification != -1) {
 			NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 			manager.cancel(idNotification);
-		}
+		}		
 	}
 
 	@Override
