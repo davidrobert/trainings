@@ -1,4 +1,4 @@
-package br.com.while42.activity;
+package br.com.while42.studantcontacts.activity;
 
 import br.com.while42.R;
 import android.app.Activity;

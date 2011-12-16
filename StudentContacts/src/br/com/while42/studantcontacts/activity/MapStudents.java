@@ -1,4 +1,4 @@
-package br.com.while42.activity;
+package br.com.while42.studantcontacts.activity;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,9 +16,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import br.com.while42.R;
-import br.com.while42.model.Student;
-import br.com.while42.persist.StudentDAO;
-import br.com.while42.view.StudentOverlay;
+import br.com.while42.studantcontacts.model.Student;
+import br.com.while42.studantcontacts.persist.StudentDAO;
+import br.com.while42.studantcontacts.view.StudentOverlay;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;

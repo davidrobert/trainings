@@ -1,4 +1,4 @@
-package br.com.while42.adapter;
+package br.com.while42.studantcontacts.adapter;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import br.com.while42.R;
-import br.com.while42.model.Student;
+import br.com.while42.studantcontacts.model.Student;
 
 public class GalleryStudentAdapter extends BaseAdapter {
 

@@ -1,4 +1,4 @@
-package br.com.while42.model;
+package br.com.while42.studantcontacts.model;
 
 import java.io.Serializable;
 

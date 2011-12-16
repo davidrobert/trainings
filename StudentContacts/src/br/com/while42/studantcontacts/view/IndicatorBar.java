@@ -1,4 +1,4 @@
-package br.com.while42.view;
+package br.com.while42.studantcontacts.view;
 
 import android.content.Context;
 import android.graphics.Canvas;

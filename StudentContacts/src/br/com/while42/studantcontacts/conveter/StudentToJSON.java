@@ -1,4 +1,4 @@
-package br.com.while42.conveter;
+package br.com.while42.studantcontacts.conveter;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.json.JSONException;
 import org.json.JSONStringer;
 
 import android.util.Log;
-import br.com.while42.model.Student;
+import br.com.while42.studantcontacts.model.Student;
 
 public class StudentToJSON {
 

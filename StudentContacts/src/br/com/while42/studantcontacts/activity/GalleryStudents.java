@@ -1,4 +1,4 @@
-package br.com.while42.activity;
+package br.com.while42.studantcontacts.activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +11,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Gallery;
 import android.widget.Toast;
 import br.com.while42.R;
-import br.com.while42.adapter.GalleryStudentAdapter;
-import br.com.while42.model.Student;
-import br.com.while42.persist.StudentDAO;
+import br.com.while42.studantcontacts.adapter.GalleryStudentAdapter;
+import br.com.while42.studantcontacts.model.Student;
+import br.com.while42.studantcontacts.persist.StudentDAO;
 
 public class GalleryStudents extends Activity {
 	

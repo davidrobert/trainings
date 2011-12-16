@@ -1,4 +1,4 @@
-package br.com.while42.persist;
+package br.com.while42.studantcontacts.persist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import br.com.while42.model.Student;
+import br.com.while42.studantcontacts.model.Student;
 
 public class StudentDAO extends SQLiteOpenHelper {
 

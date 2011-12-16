@@ -1,4 +1,4 @@
-package br.com.while42.receiver;
+package br.com.while42.studantcontacts.receiver;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -11,10 +11,10 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 import br.com.while42.R;
-import br.com.while42.activity.FormStudent;
-import br.com.while42.activity.ListStudents;
-import br.com.while42.model.Student;
-import br.com.while42.persist.StudentDAO;
+import br.com.while42.studantcontacts.activity.FormStudent;
+import br.com.while42.studantcontacts.activity.ListStudents;
+import br.com.while42.studantcontacts.model.Student;
+import br.com.while42.studantcontacts.persist.StudentDAO;
 
 public class SMSReceiver extends BroadcastReceiver {
 	

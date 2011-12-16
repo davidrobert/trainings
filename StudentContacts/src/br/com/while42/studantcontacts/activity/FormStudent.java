@@ -1,4 +1,4 @@
-package br.com.while42.activity;
+package br.com.while42.studantcontacts.activity;
 
 import java.io.File;
 
@@ -18,10 +18,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import br.com.while42.R;
-import br.com.while42.model.Student;
-import br.com.while42.persist.StudentDAO;
-import br.com.while42.receiver.SMSReceiver;
-import br.com.while42.view.IndicatorBar;
+import br.com.while42.studantcontacts.model.Student;
+import br.com.while42.studantcontacts.persist.StudentDAO;
+import br.com.while42.studantcontacts.receiver.SMSReceiver;
+import br.com.while42.studantcontacts.view.IndicatorBar;
 
 public class FormStudent extends Activity {
 

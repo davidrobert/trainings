@@ -1,4 +1,4 @@
-package br.com.while42.communication;
+package br.com.while42.studantcontacts.communication;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -16,9 +16,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
-import br.com.while42.conveter.StudentToJSON;
-import br.com.while42.model.Student;
-import br.com.while42.persist.StudentDAO;
+import br.com.while42.studantcontacts.conveter.StudentToJSON;
+import br.com.while42.studantcontacts.model.Student;
+import br.com.while42.studantcontacts.persist.StudentDAO;
 
 public class Synchronism {
 	private String address = "http://www.caelum.com.br/mobile?dado=";
