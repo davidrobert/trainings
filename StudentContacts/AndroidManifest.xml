@@ -43,6 +43,10 @@
             android:label="Map"
             android:name="br.com.while42.activity.MapStudents" >            
         </activity>
+        <activity
+            android:label="Preferences"
+            android:name=".activity.Preferences" >
+        </activity>
 
         <receiver
             android:label="SMSReceiver"
