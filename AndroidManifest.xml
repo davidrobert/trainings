@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.while42"
+    package="br.com.while42.studantcontacts"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -41,16 +41,16 @@
         </activity>
         <activity
             android:label="Map"
-            android:name="br.com.while42.activity.MapStudents" >            
+            android:name=".activity.MapStudents" >            
         </activity>
         <activity
             android:label="Preferences"
-            android:name=".studantcontacts.activity.Preferences" >
+            android:name=".activity.Preferences" >
         </activity>
 
         <receiver
             android:label="SMSReceiver"
-            android:name=".studantcontacts.receiver.SMSReceiver" >
+            android:name=".receiver.SMSReceiver" >
             <intent-filter >
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
