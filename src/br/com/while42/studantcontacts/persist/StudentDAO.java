@@ -12,9 +12,9 @@ import br.com.while42.studantcontacts.model.Student;
 
 public class StudentDAO extends SQLiteOpenHelper {
 
-	static final int VERSION = 5;
-	static final String TABLE = "student";
-	static final String[] COLS = {"id", "name", "address", "phone", "email", "twitter", "site", "score", "photo"};	
+	private static final int VERSION = 5;
+	private static final String TABLE = "student";
+	private static final String[] COLS = {"id", "name", "address", "phone", "email", "twitter", "site", "score", "photo"};	
 	
 	public StudentDAO(Context context) {
 		super(context, TABLE, null, VERSION);
