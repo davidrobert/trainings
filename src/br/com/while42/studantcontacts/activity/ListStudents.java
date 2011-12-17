@@ -5,8 +5,8 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.NotificationManager;
 import android.app.AlertDialog.Builder;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -33,7 +33,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import br.com.while42.R;
+import br.com.while42.studantcontacts.R;
 import br.com.while42.studantcontacts.communication.Synchronism;
 import br.com.while42.studantcontacts.model.Student;
 import br.com.while42.studantcontacts.persist.StudentDAO;

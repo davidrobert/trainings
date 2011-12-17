@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import br.com.while42.R;
+import br.com.while42.studantcontacts.R;
 import br.com.while42.studantcontacts.model.Student;
 
 public class GalleryStudentAdapter extends BaseAdapter {

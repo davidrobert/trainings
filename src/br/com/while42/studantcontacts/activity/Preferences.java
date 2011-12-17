@@ -1,9 +1,9 @@
 package br.com.while42.studantcontacts.activity;
 
-import br.com.while42.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.CheckBox;
+import br.com.while42.studantcontacts.R;
 
 public class Preferences extends Activity {
 

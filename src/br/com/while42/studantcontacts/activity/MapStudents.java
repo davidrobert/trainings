@@ -15,7 +15,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import br.com.while42.R;
+import br.com.while42.studantcontacts.R;
 import br.com.while42.studantcontacts.model.Student;
 import br.com.while42.studantcontacts.persist.StudentDAO;
 import br.com.while42.studantcontacts.view.StudentOverlay;

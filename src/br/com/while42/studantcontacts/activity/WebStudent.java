@@ -3,7 +3,7 @@ package br.com.while42.studantcontacts.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
-import br.com.while42.R;
+import br.com.while42.studantcontacts.R;
 import br.com.while42.studantcontacts.model.Student;
 
 public class WebStudent extends Activity {

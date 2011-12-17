@@ -17,7 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import br.com.while42.R;
+import br.com.while42.studantcontacts.R;
 import br.com.while42.studantcontacts.model.Student;
 import br.com.while42.studantcontacts.persist.StudentDAO;
 import br.com.while42.studantcontacts.receiver.SMSReceiver;
