@@ -37,7 +37,7 @@ public class FormStudent extends Activity {
 	private EditText address;
 	private IndicatorBar score;
 
-	private Button gravar;
+	private Button record;
 	private String fileName;
 
 	@Override
@@ -56,7 +56,7 @@ public class FormStudent extends Activity {
 			student = new Student();        	
 
 		} else {        	
-			gravar.setText("Alterar");
+			record.setText("Alterar");
 
 			name.setText(student.getName());
 			phone.setText(student.getPhone());
@@ -84,7 +84,7 @@ public class FormStudent extends Activity {
 		address = (EditText) findViewById(R.id_form.editTextEndereco);
 		score = (IndicatorBar) findViewById(R.id_form.indicatorBarScore);
 
-		gravar = (Button) findViewById(R.id_form.buttonRecord);
+		record = (Button) findViewById(R.id_form.buttonRecord);
 		
 		photo.setOnClickListener(new OnClickListener() {
 
@@ -101,7 +101,7 @@ public class FormStudent extends Activity {
 			}
 		});
 
-		gravar.setOnClickListener(new OnClickListener() {
+		record.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
