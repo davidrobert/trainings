@@ -9,8 +9,8 @@ public class TestCandlestickFactoryWithOnlyOneOperation {
 	public static void main(String[] args) {
 		Calendar hoje = Calendar.getInstance();
 		
-		Operation op = new Operation(40.5, 100, hoje);
-		List<Operation> operations = Arrays.asList(op);
+		Trade op = new Trade(40.5, 100, hoje);
+		List<Trade> operations = Arrays.asList(op);
 		
 		CandleStickFactory factory = new CandleStickFactory();
 		Candlestick candlestick = factory.buidCandleToDate(hoje, operations);

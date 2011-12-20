@@ -10,12 +10,12 @@ public class TestCandlestickFactory {
 
 		Calendar hoje = Calendar.getInstance();
 
-		Operation op1 = new Operation(40.5, 100, hoje);
-		Operation op2 = new Operation(45.0, 100, hoje);
-		Operation op3 = new Operation(39.8, 100, hoje);
-		Operation op4 = new Operation(42.3, 100, hoje);
+		Trade op1 = new Trade(40.5, 100, hoje);
+		Trade op2 = new Trade(45.0, 100, hoje);
+		Trade op3 = new Trade(39.8, 100, hoje);
+		Trade op4 = new Trade(42.3, 100, hoje);
 
-		List<Operation> operations = Arrays.asList(op1, op2, op3, op4);
+		List<Trade> operations = Arrays.asList(op1, op2, op3, op4);
 		
 		CandleStickFactory factory = new CandleStickFactory();
 		Candlestick candle = factory.buidCandleToDate(hoje, operations);

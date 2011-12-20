@@ -4,14 +4,14 @@ import java.util.Calendar;
 import java.util.List;
 
 public class CandleStickFactory {
-	public Candlestick buidCandleToDate(Calendar date, List<Operation> operations) {
+	public Candlestick buidCandleToDate(Calendar date, List<Trade> operations) {
 
-		double min = Double.MAX_VALUE;
+		double min = operations.isEmpty() ? 0 : Double.MAX_VALUE;
 		double max = 0;
 		
 		double volume = 0.0;
 		
-		for (Operation op: operations) {
+		for (Trade op: operations) {
 			volume += op.getVolume();
 			
 			if (op.getValue() > max) {

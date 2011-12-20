@@ -9,7 +9,7 @@ public class TestCandlestickFactoryNoOperation {
 	public static void main(String[] args) {
 		Calendar hoje = Calendar.getInstance();
 		
-		List<Operation> list = Arrays.asList();
+		List<Trade> list = Arrays.asList();
 		
 		CandleStickFactory factory = new CandleStickFactory();
 		Candlestick candlestick = factory.buidCandleToDate(hoje, list);

@@ -8,12 +8,12 @@ public class TestCandlestickFactoryOutOfOrder {
 	public static void main(String[] args) {
 		Calendar hoje = Calendar.getInstance();
 
-		Operation op1 = new Operation(40.5, 100, hoje);
-		Operation op2 = new Operation(40.0, 100, hoje);
-		Operation op3 = new Operation(49.8, 100, hoje);
-		Operation op4 = new Operation(53.3, 100, hoje);
+		Trade op1 = new Trade(40.5, 100, hoje);
+		Trade op2 = new Trade(40.0, 100, hoje);
+		Trade op3 = new Trade(49.8, 100, hoje);
+		Trade op4 = new Trade(53.3, 100, hoje);
 
-		List<Operation> list = Arrays.asList(op1, op2, op3, op4);
+		List<Trade> list = Arrays.asList(op1, op2, op3, op4);
 
 		CandleStickFactory factory = new CandleStickFactory();
 		Candlestick candlestick = factory.buidCandleToDate(hoje, list);

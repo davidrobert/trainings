@@ -2,13 +2,13 @@ package br.com.while42.argentum.model;
 
 import java.util.Calendar;
 
-public final class Operation {
+public final class Trade {
 	
 	private final double value; // TODO: Change to BigDecimal
 	private final int ammount;
 	private final Calendar date; 
 		
-	public Operation(double value, int ammount, Calendar date) {
+	public Trade(double value, int ammount, Calendar date) {
 		this.value = value;
 		this.ammount = ammount;
 		this.date = date;
