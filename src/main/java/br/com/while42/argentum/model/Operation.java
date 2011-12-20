@@ -5,21 +5,25 @@ import java.util.Calendar;
 public final class Operation {
 	
 	private final double value; // TODO: Change to BigDecimal
-	private final int volume;
+	private final int ammount;
 	private final Calendar date; 
 		
-	public Operation(double value, int volume, Calendar date) {
+	public Operation(double value, int ammount, Calendar date) {
 		this.value = value;
-		this.volume = volume;
+		this.ammount = ammount;
 		this.date = date;
 	}
 
 	public double getValue() {
 		return value;
 	}
+	
+	public int getAmmount() {
+		return ammount;
+	}
 	 
-	public int getVolume() {
-		return volume;
+	public double getVolume() {
+		return value * ammount;
 	}
 	 
 	public Calendar getDate() {
