@@ -10,7 +10,7 @@ import org.junit.Test;
 public class CandlestickFactoryTest {
 
 	@Test
-	public void basic()  {
+	public void basicSimpleSequenceOfTrades()  {
 
 		Calendar hoje = Calendar.getInstance();
 
