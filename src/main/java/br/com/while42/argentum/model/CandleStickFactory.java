@@ -16,7 +16,9 @@ public class CandleStickFactory {
 			
 			if (op.getValue() > max) {
 				max = op.getValue();
-			} else if (op.getValue() < min) {
+			} 
+			
+			if (op.getValue() < min) {
 				min = op.getValue();
 			}			
 		}		
