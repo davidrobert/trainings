@@ -27,6 +27,6 @@ public final class Trade {
 	}
 	 
 	public Calendar getDate() {
-		return date;
+		return (Calendar) date.clone();
 	}
 }
