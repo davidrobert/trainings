@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public class Candlestick {
 	private final double first;
-	private final double close;
+	private final double last;
 	private final double min;
 	private final double max;
 	private final double volume;
@@ -14,7 +14,7 @@ public class Candlestick {
 			double volume, Calendar date) {
 		super();
 		this.first = first;
-		this.close = close;
+		this.last = close;
 		this.min = min;
 		this.max = max;
 		this.volume = volume;
@@ -25,8 +25,8 @@ public class Candlestick {
 		return first;
 	}
 
-	public double getClose() {
-		return close;
+	public double getLast() {
+		return last;
 	}
 
 	public double getMin() {
@@ -46,11 +46,11 @@ public class Candlestick {
 	}
 
 	public boolean isHigh() {
-		return first < close;
+		return first < last;
 	}
 
 	public boolean isLow() {
-		return first > close;
+		return first > last;
 	}
 	
 	@Override
@@ -58,7 +58,7 @@ public class Candlestick {
 		StringBuilder b = new StringBuilder();
 		b.append("[");
 		b.append("Open ").append(first).append(", ");
-		b.append("Close ").append(close).append(", ");
+		b.append("Close ").append(last).append(", ");
 		b.append("Min ").append(min).append(", ");
 		b.append("Max ").append(max).append(", ");
 		b.append("Volume ").append(volume).append(", ");
