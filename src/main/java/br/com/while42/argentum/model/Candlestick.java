@@ -10,9 +10,7 @@ public class Candlestick {
 	private final double volume;
 	private final Calendar date;
 
-	public Candlestick(double first, double close, double min, double max,
-			double volume, Calendar date) {
-		super();
+	public Candlestick(double first, double close, double min, double max, double volume, Calendar date) {
 		this.first = first;
 		this.last = close;
 		this.min = min;
@@ -62,7 +60,7 @@ public class Candlestick {
 		b.append("Min ").append(min).append(", ");
 		b.append("Max ").append(max).append(", ");
 		b.append("Volume ").append(volume).append(", ");
-		b.append("Date ").append(date);
+		b.append("Date ").append(date.getTime());
 		b.append("]");
 		return b.toString();
 	}

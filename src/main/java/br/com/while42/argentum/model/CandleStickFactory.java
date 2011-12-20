@@ -4,11 +4,10 @@ import java.util.Calendar;
 import java.util.List;
 
 public class CandleStickFactory {
-	public Candlestick buidCandleToDate(Calendar date,
-			List<Operation> operations) {
+	public Candlestick buidCandleToDate(Calendar date, List<Operation> operations) {
 
-		double min = operations.get(0).getValue();
-		double max = operations.get(0).getValue();
+		double min = Double.MAX_VALUE;
+		double max = 0;
 		
 		double volume = 0.0;
 		
@@ -22,8 +21,8 @@ public class CandleStickFactory {
 			}			
 		}		
 
-		double first = operations.get(0).getValue();
-		double close = operations.get(operations.size() - 1).getValue();
+		double first = operations.isEmpty() ? 0 : operations.get(0).getValue();
+		double close = operations.isEmpty() ? 0 : operations.get(operations.size() - 1).getValue();
 
 		return new Candlestick(first, close, min, max, volume, date);
 	}

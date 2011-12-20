@@ -20,10 +20,6 @@ public class TestCandlestickFactory {
 		CandleStickFactory factory = new CandleStickFactory();
 		Candlestick candle = factory.buidCandleToDate(hoje, operations);
 		
-		System.out.println(candle.getFirst());
-		System.out.println(candle.getLast());
-		System.out.println(candle.getMin());
-		System.out.println(candle.getMax());
-		System.out.println(candle.getVolume());
+		System.out.println(candle);
 	}
 }
