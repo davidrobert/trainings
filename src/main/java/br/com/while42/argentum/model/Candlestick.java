@@ -11,12 +11,28 @@ public class Candlestick {
 	private final Calendar date;
 
 	public Candlestick(double first, double close, double min, double max, double volume, Calendar date) {
+		validate(first, close, min, max, date);
+
 		this.first = first;
 		this.last = close;
 		this.min = min;
 		this.max = max;
 		this.volume = volume;
 		this.date = date;
+	}
+
+	private void validate(double first, double close, double min, double max, Calendar date) {
+		if (date == null) {
+			throw new IllegalArgumentException("Date is null");
+		}
+		
+		if (first < 0 || close < 0 || min < 0 || max < 0) {
+			throw new IllegalArgumentException("Value < 0");
+		}
+		
+		if (first > 100000 || close > 100000 || min > 100000 || max > 100000) {
+			throw new IllegalArgumentException("Value > 100000");
+		}
 	}
 
 	public double getFirst() {
@@ -50,7 +66,7 @@ public class Candlestick {
 	public boolean isLow() {
 		return first > last;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder b = new StringBuilder();

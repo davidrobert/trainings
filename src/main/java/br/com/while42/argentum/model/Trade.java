@@ -9,6 +9,10 @@ public final class Trade {
 	private final Calendar date; 
 		
 	public Trade(double value, int ammount, Calendar date) {
+		if (date == null) {
+			throw new IllegalArgumentException();
+		}
+		
 		this.value = value;
 		this.ammount = ammount;
 		this.date = date;
