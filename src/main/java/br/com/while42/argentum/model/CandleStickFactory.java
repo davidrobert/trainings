@@ -1,5 +1,6 @@
 package br.com.while42.argentum.model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -31,4 +32,37 @@ public class CandleStickFactory {
 
 		return new Candlestick(first, close, min, max, volume, date);
 	}
+
+	public boolean isSameDay(Calendar d1, Calendar d2) {
+		return d1.get(Calendar.DAY_OF_MONTH) == d2.get(Calendar.DAY_OF_MONTH)
+				&& d1.get(Calendar.MONTH) == d2.get(Calendar.MONTH)
+				&& d1.get(Calendar.YEAR) == d2.get(Calendar.YEAR);
+	}
+		
+	public List<Candlestick> buildCandlesticks(List<Trade> trades) {
+		List<Candlestick> candles = new ArrayList<Candlestick>();
+		
+		if (trades.isEmpty()) {
+			return candles;
+		}
+		
+		List<Trade> currentTrades = new ArrayList<Trade>();
+		
+		Calendar data = trades.get(0).getDate();		
+		for (Trade t: trades) {
+			if (isSameDay(data, t.getDate())) {
+				currentTrades.add(t);
+			} else {
+				candles.add(buidCandleToDate(data, currentTrades));
+				data = t.getDate(); 
+				currentTrades.clear();
+				currentTrades.add(t);
+			}
+		}
+		
+		candles.add(buidCandleToDate(data, currentTrades));
+		
+		return candles;
+	}
+
 }

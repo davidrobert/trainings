@@ -96,4 +96,48 @@ public class CandlestickFactoryTest {
 		factory.buidCandleToDate(null, list);
 	}
 
+	@Test
+	public void isSameDay() {
+		CandleStickFactory factory = new CandleStickFactory();
+		Calendar date1 = Calendar.getInstance();
+		Calendar date2 = Calendar.getInstance();
+		
+		Assert.assertTrue(factory.isSameDay(date1, date2));
+	}
+	
+	@Test
+	public void buildCandlesticks() {
+		Calendar hoje = Calendar.getInstance();
+		
+		Trade t1 = new Trade(40.5, 100, hoje);
+		Trade t2 = new Trade(45.0, 100, hoje);
+		Trade t3 = new Trade(39.8, 100, hoje);
+		Trade t4 = new Trade(42.3, 100, hoje);
+		
+		Calendar amanha = (Calendar) hoje.clone();
+		amanha.add(Calendar.DAY_OF_MONTH, 1);
+		
+		Trade t5 = new Trade(48.8, 100, amanha);
+		Trade t6 = new Trade(49.3, 100, amanha);
+		
+		Calendar depois = (Calendar) amanha.clone();
+		amanha.add(Calendar.DAY_OF_MONTH, 1);
+		
+		Trade t7 = new Trade(51.8, 100, depois);
+		Trade t8 = new Trade(52.3, 100, depois);
+		
+		List<Trade> trades = Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8);
+		
+		CandleStickFactory factory = new CandleStickFactory();
+		
+		List<Candlestick> candlesticks = factory.buildCandlesticks(trades);
+		
+		Assert.assertEquals(3, candlesticks.size());
+		Assert.assertEquals(40.5, candlesticks.get(0).getFirst(), 0.00001);
+		Assert.assertEquals(42.3, candlesticks.get(0).getLast(), 0.00001);
+		Assert.assertEquals(48.8, candlesticks.get(1).getFirst(), 0.00001);
+		Assert.assertEquals(49.3, candlesticks.get(1).getLast(), 0.00001);
+		Assert.assertEquals(51.8, candlesticks.get(2).getFirst(), 0.00001);
+		Assert.assertEquals(52.3, candlesticks.get(2).getLast(), 0.00001);
+	}
 }
