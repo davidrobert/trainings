@@ -20,5 +20,13 @@ public class TradeTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void TradeWithNullDate() {
 		new Trade(10, 5, null);		
-	}	
+	}
+	
+	@Test
+	public void isSameDay() {
+		Calendar hoje = Calendar.getInstance();		
+		Trade t1 = new Trade(40.5, 100, hoje);
+		
+		Assert.assertTrue(t1.isSameDay(hoje));
+	}
 }

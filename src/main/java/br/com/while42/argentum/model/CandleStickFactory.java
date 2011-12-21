@@ -31,13 +31,7 @@ public class CandleStickFactory {
 		double close = trades.isEmpty() ? 0 : trades.get(trades.size() - 1).getValue();
 
 		return new Candlestick(first, close, min, max, volume, date);
-	}
-
-	public boolean isSameDay(Calendar d1, Calendar d2) {
-		return d1.get(Calendar.DAY_OF_MONTH) == d2.get(Calendar.DAY_OF_MONTH)
-				&& d1.get(Calendar.MONTH) == d2.get(Calendar.MONTH)
-				&& d1.get(Calendar.YEAR) == d2.get(Calendar.YEAR);
-	}
+	}	
 		
 	public List<Candlestick> buildCandlesticks(List<Trade> trades) {
 		List<Candlestick> candles = new ArrayList<Candlestick>();
@@ -50,7 +44,7 @@ public class CandleStickFactory {
 		
 		Calendar data = trades.get(0).getDate();		
 		for (Trade t: trades) {
-			if (isSameDay(data, t.getDate())) {
+			if (t.isSameDay(data)) {
 				currentTrades.add(t);
 			} else {
 				candles.add(buidCandleToDate(data, currentTrades));

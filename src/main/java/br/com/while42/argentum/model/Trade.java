@@ -33,4 +33,10 @@ public final class Trade {
 	public Calendar getDate() {
 		return (Calendar) date.clone();
 	}
+	
+	public boolean isSameDay(Calendar d) {
+		return date.get(Calendar.DAY_OF_MONTH) == d.get(Calendar.DAY_OF_MONTH)
+				&& date.get(Calendar.MONTH) == d.get(Calendar.MONTH)
+				&& date.get(Calendar.YEAR) == d.get(Calendar.YEAR);
+	}
 }

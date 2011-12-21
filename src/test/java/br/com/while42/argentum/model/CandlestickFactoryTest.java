@@ -94,16 +94,7 @@ public class CandlestickFactoryTest {
 
 		CandleStickFactory factory = new CandleStickFactory();
 		factory.buidCandleToDate(null, list);
-	}
-
-	@Test
-	public void isSameDay() {
-		CandleStickFactory factory = new CandleStickFactory();
-		Calendar date1 = Calendar.getInstance();
-		Calendar date2 = Calendar.getInstance();
-		
-		Assert.assertTrue(factory.isSameDay(date1, date2));
-	}
+	}	
 	
 	@Test
 	public void buildCandlesticks() {
