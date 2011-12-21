@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import br.com.while42.argentum.model.Trade;
 import br.com.while42.argentum.reader.ReaderXML;
@@ -16,6 +17,8 @@ public class ChooseXML {
 
 		try {
 			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setFileFilter(new FileNameExtensionFilter("Only XML", "xml"));
+			
 			int r = fileChooser.showOpenDialog(null);
 
 			if (r == JFileChooser.APPROVE_OPTION) {
