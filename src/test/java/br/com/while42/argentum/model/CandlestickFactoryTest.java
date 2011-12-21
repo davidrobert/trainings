@@ -112,7 +112,7 @@ public class CandlestickFactoryTest {
 		Trade t6 = new Trade(49.3, 100, amanha);
 		
 		Calendar depois = (Calendar) amanha.clone();
-		amanha.add(Calendar.DAY_OF_MONTH, 1);
+		depois.add(Calendar.DAY_OF_MONTH, 1);
 		
 		Trade t7 = new Trade(51.8, 100, depois);
 		Trade t8 = new Trade(52.3, 100, depois);
@@ -130,5 +130,10 @@ public class CandlestickFactoryTest {
 		Assert.assertEquals(49.3, candlesticks.get(1).getLast(), 0.00001);
 		Assert.assertEquals(51.8, candlesticks.get(2).getFirst(), 0.00001);
 		Assert.assertEquals(52.3, candlesticks.get(2).getLast(), 0.00001);
+	}
+	
+	@Test
+	public void buildCandlesWithTradesOutOfOrder() {
+		// TODO: ...
 	}
 }

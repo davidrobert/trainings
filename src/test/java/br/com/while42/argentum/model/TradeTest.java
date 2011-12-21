@@ -29,4 +29,14 @@ public class TradeTest {
 		
 		Assert.assertTrue(t1.isSameDay(hoje));
 	}
+	
+	@Test
+	public void isDiferentDay() {
+		Calendar hoje = Calendar.getInstance();		
+		Trade t1 = new Trade(40.5, 100, hoje);
+		
+		hoje.set(Calendar.DAY_OF_MONTH, 15);
+		
+		Assert.assertTrue(t1.isSameDay(hoje));
+	}
 }

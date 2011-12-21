@@ -2,6 +2,7 @@ package br.com.while42.argentum.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 public class CandleStickFactory {
@@ -40,21 +41,27 @@ public class CandleStickFactory {
 			return candles;
 		}
 		
+		Collections.sort(trades);
+		
 		List<Trade> currentTrades = new ArrayList<Trade>();
 		
-		Calendar data = trades.get(0).getDate();		
+		Calendar today = trades.get(0).getDate();		
 		for (Trade t: trades) {
-			if (t.isSameDay(data)) {
+			if (today.before(t)) {
+				throw new IllegalStateException("fora de ordem [d1:" + today.toString() + " d2:" + t.getDate().toString());
+			}
+			
+			if (t.isSameDay(today)) {
 				currentTrades.add(t);
 			} else {
-				candles.add(buidCandleToDate(data, currentTrades));
-				data = t.getDate(); 
+				candles.add(buidCandleToDate(today, currentTrades));
+				today = t.getDate(); 
 				currentTrades.clear();
 				currentTrades.add(t);
 			}
 		}
 		
-		candles.add(buidCandleToDate(data, currentTrades));
+		candles.add(buidCandleToDate(today, currentTrades));
 		
 		return candles;
 	}
