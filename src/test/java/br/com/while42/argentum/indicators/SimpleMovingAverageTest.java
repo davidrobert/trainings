@@ -13,9 +13,9 @@ import br.com.while42.argentum.model.TimeSeries;
 
 public class SimpleMovingAverageTest {
 		
-	private TimeSeries buildTimeSerie(double ... values) {
-		List<Candlestick>  candles = new ArrayList<Candlestick>();
-		for (double d: values) {
+	private TimeSeries buildTimeSerie(double... values) {
+		List<Candlestick> candles = new ArrayList<Candlestick>();
+		for (double d : values) {
 			candles.add(new Candlestick(d, d, d, d, 1000, Calendar.getInstance()));
 		}
 		return new TimeSeries(candles);
