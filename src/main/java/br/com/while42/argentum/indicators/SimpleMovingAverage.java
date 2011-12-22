@@ -14,6 +14,5 @@ public class SimpleMovingAverage {
 		
 		return sum / sizeWindow;
 	}
-	
-	
+		
 }

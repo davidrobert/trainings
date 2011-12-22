@@ -12,8 +12,7 @@ import br.com.while42.argentum.model.Candlestick;
 import br.com.while42.argentum.model.TimeSeries;
 
 public class SimpleMovingAverageTest {
-	
-	
+		
 	private TimeSeries buildTimeSerie(double ... values) {
 		List<Candlestick>  candles = new ArrayList<Candlestick>();
 		for (double d: values) {
@@ -34,12 +33,5 @@ public class SimpleMovingAverageTest {
 		Assert.assertEquals(4.0, sma.calcule(6, serie), 0.00001);
 		Assert.assertEquals(13.0 / 3, sma.calcule(7, serie), 0.00001);
 		Assert.assertEquals(4.0, sma.calcule(8, serie), 0.00001);		
-	}
-	
-	@Test
-	public void SimpleMovingAverageWeighted() {
-		TimeSeries serie = buildTimeSerie(1, 2, 3, 4, 5, 6);
-				
-	}
-	
+	}		
 }
