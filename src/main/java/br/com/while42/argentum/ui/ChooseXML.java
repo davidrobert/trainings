@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import br.com.while42.argentum.model.Trade;
@@ -28,9 +27,9 @@ public class ChooseXML {
 				FileReader reader = new FileReader(fileChooser.getSelectedFile());
 				trades = new ReaderXML().load(reader);
 				
-				Trade firstTrade = trades.get(0);
-				String msg = "First trade of day: " + firstTrade.getValue();
-				JOptionPane.showMessageDialog(null, msg);
+				// Trade firstTrade = trades.get(0);
+				// String msg = "First trade of day: " + firstTrade.getValue();
+				// JOptionPane.showMessageDialog(null, msg);
 			}
 				
 		} catch (FileNotFoundException e) {
