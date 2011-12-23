@@ -3,7 +3,10 @@ package br.com.while42.argentum.graphics;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import javax.swing.JPanel;
+
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -41,6 +44,10 @@ public class GraphGenerator {
 	
 	public void save(OutputStream out) throws IOException {
 		ChartUtilities.writeChartAsPNG(out, graph, 500, 350);
+	}
+	
+	public JPanel getPanel() {
+		return new ChartPanel(graph);
 	}
 	
 }

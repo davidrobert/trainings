@@ -1,14 +1,14 @@
 package br.com.while42.argentum.graphics;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.security.KeyStore.Builder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.swing.JFrame;
+
+import br.com.while42.argentum.indicators.LastValueIndicator;
 import br.com.while42.argentum.indicators.SimpleMovingAverage;
+import br.com.while42.argentum.indicators.WeightedMovingAverage;
 import br.com.while42.argentum.model.Candle;
 import br.com.while42.argentum.model.TimeSeries;
 
@@ -23,18 +23,20 @@ public class GraphGeneratorTest {
 	}
 
 	public static void main(String[] args) {
-		TimeSeries serie = buildTimeSerie(1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 9, 4, 3, 2, 2, 2, 2);
-		
-		GraphGenerator g = new GraphGenerator(serie, 2, 15);
+		TimeSeries serie = buildTimeSerie(1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 9, 4, 3, 2, 1, 2, 2, 4, 5, 6, 7, 8,
+				9, 10, 11, 10, 6, 3, 2, 6, 7, 8, 9);
+
+		GraphGenerator g = new GraphGenerator(serie, 3, 32);
 		g.buildGraph("Start graph");
 		g.plotIndicator(new SimpleMovingAverage());
+		g.plotIndicator(new LastValueIndicator());
+		g.plotIndicator(new WeightedMovingAverage());
 		
-		try {
-			g.save(new FileOutputStream("output.png"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
+		JFrame frame = new JFrame("Minha Janela");
+		frame.add(g.getPanel());
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
 	}
 }

@@ -16,4 +16,8 @@ public class SimpleMovingAverage implements Indicator {
 		return sum / sizeWindow;
 	}
 
+	@Override
+	public String toString() {
+		return "Simple Moving Average";
+	}
 }

@@ -28,4 +28,8 @@ public class WeightedMovingAverage implements Indicator {
 		return sum / pa;
 	}
 
+	@Override
+	public String toString() {
+		return "Weighted Moving Average";
+	}
 }
