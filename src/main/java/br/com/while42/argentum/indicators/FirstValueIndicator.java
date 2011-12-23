@@ -1,11 +1,11 @@
 package br.com.while42.argentum.indicators;
 
-import br.com.while42.argentum.model.TimeSeries;
+import br.com.while42.argentum.model.TimeSerie;
 
 public class FirstValueIndicator implements Indicator {
 
 	@Override
-	public double calcule(int position, TimeSeries serie) {
+	public double calcule(int position, TimeSerie serie) {
 		return serie.getCandle(position).getFirst();
 	}
 	

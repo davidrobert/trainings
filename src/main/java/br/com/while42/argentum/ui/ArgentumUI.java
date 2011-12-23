@@ -1,17 +1,21 @@
 package br.com.while42.argentum.ui;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Locale;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -25,6 +29,8 @@ public class ArgentumUI {
 	private JFrame window;
 	private JPanel mainPanel;
 	private JTable table;
+	private JTabbedPane tabs;
+	private JPanel panelButtons;
 
 	public static void main(String[] args) {
 		
@@ -52,6 +58,8 @@ public class ArgentumUI {
 		buildWindow();
 		buildMainPanel();	
 		builTitle();
+		buildTabs();
+		buildPainelButtons();			
 		buildLoadButton();
 		buildExitButton();
 		buildTable();
@@ -67,12 +75,18 @@ public class ArgentumUI {
 	}
 	
 	private void buildWindow() {
-		window = new JFrame("Argentum");
+		window = new JFrame("Argentum");		
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	private void buildMainPanel() {
 		mainPanel = new JPanel();
+		
+		// mainPanel.setLayout(new FlowLayout());
+		// mainPanel.setLayout(new GridLayout());
+		// mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		// mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
+		
 		window.add(mainPanel);
 	}
 	
@@ -88,7 +102,13 @@ public class ArgentumUI {
 		scroll.getViewport().add(table);
 		scroll.setSize(200, 200);		
 		
-		mainPanel.add(scroll);
+		tabs.setComponentAt(0, scroll);
+		//mainPanel.add(scroll);
+	}
+	
+	private void buildPainelButtons() {
+		panelButtons = new JPanel(new GridLayout());
+		mainPanel.add(panelButtons);		
 	}
 
 	private void buildLoadButton() {
@@ -102,8 +122,8 @@ public class ArgentumUI {
 				table.setModel(tradeTable);
 			}
 		});
-		
-		mainPanel.add(bLoad);
+				
+		panelButtons.add(bLoad);
 	}
 	
 	private void buildExitButton() {
@@ -116,13 +136,27 @@ public class ArgentumUI {
 			}
 		});
 		
-		mainPanel.add(bExit);
+		panelButtons.add(bExit);
 	}
 	
 	private void showScreen() {
 		window.pack();				
 		window.setVisible(true);
-		window.setSize(540, 540);
+		window.setSize(530, 560);
+	}
+	
+	private void buildTabs() {
+		tabs = new JTabbedPane();
+		tabs.addTab("Tabela de Negocios", null);
+		tabs.addTab("Gráfico", null);
+		
+		mainPanel.add(tabs);
+	}
+	
+	private void loadData() {
+		List<Trade> trades = new ChooseXML().selectFile();
+		
+		TradeTableModel tableModel = new TradeTableModel(trades);
 	}
 
 }

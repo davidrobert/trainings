@@ -6,7 +6,7 @@ public class TimeSeriesTest {
 	
 	@Test
 	public void shouldNotAccepttNull() {
-		new TimeSeries(null);
+		new TimeSerie(null);
 	}
 	
 	

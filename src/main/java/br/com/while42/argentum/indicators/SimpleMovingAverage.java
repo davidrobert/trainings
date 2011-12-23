@@ -1,6 +1,6 @@
 package br.com.while42.argentum.indicators;
 
-import br.com.while42.argentum.model.TimeSeries;
+import br.com.while42.argentum.model.TimeSerie;
 
 public class SimpleMovingAverage implements Indicator {
 
@@ -12,7 +12,7 @@ public class SimpleMovingAverage implements Indicator {
 	}
 
 	@Override
-	public double calcule(int position, TimeSeries serie) {
+	public double calcule(int position, TimeSerie serie) {
 		double sum = 0.0;
 		for (int i = position; i > position - sizeWindow; i--) {
 			sum += indicator.calcule(i, serie);

@@ -1,6 +1,6 @@
 package br.com.while42.argentum.indicators;
 
-import br.com.while42.argentum.model.TimeSeries;
+import br.com.while42.argentum.model.TimeSerie;
 
 public class WeightedMovingAverage implements Indicator {
 	private int totalDays = 2;
@@ -11,7 +11,7 @@ public class WeightedMovingAverage implements Indicator {
 	}
 		
 	@Override
-	public double calcule(int position, TimeSeries serie) {
+	public double calcule(int position, TimeSerie serie) {
 		double sum = 0.0;
 		int weight = 1;
 

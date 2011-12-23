@@ -9,21 +9,21 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import br.com.while42.argentum.model.Candle;
-import br.com.while42.argentum.model.TimeSeries;
+import br.com.while42.argentum.model.TimeSerie;
 
 public class SimpleMovingAverageTest {
 		
-	private TimeSeries buildTimeSerie(double... values) {
+	private TimeSerie buildTimeSerie(double... values) {
 		List<Candle> candles = new ArrayList<Candle>();
 		for (double d : values) {
 			candles.add(new Candle(d, d, d, d, 1000, Calendar.getInstance()));
 		}
-		return new TimeSeries(candles);
+		return new TimeSerie(candles);
 	}
 	
 	@Test
 	public void SimpleMovingAverageWitchLastValue() {
-		TimeSeries serie = buildTimeSerie(1, 2, 3, 4, 3, 4, 5, 4, 3);
+		TimeSerie serie = buildTimeSerie(1, 2, 3, 4, 3, 4, 5, 4, 3);
 		SimpleMovingAverage sma = new SimpleMovingAverage(new LastValueIndicator());
 				
 		Assert.assertEquals(2.0, sma.calcule(2, serie), 0.00001);		
@@ -37,7 +37,7 @@ public class SimpleMovingAverageTest {
 	
 	@Test
 	public void SimpleMovingAverageWitchFisrtValue() {
-		TimeSeries serie = buildTimeSerie(1, 2, 3, 4, 3, 4, 5, 4, 3);
+		TimeSerie serie = buildTimeSerie(1, 2, 3, 4, 3, 4, 5, 4, 3);
 		SimpleMovingAverage sma = new SimpleMovingAverage(new FirstValueIndicator());
 				
 		Assert.assertEquals(2.0, sma.calcule(2, serie), 0.00001);		
