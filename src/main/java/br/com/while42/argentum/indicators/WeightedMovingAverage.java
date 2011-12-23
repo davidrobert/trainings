@@ -5,6 +5,9 @@ import br.com.while42.argentum.model.TimeSeries;
 public class WeightedMovingAverage implements Indicator {
 	private int totalDays = 2;
 
+	public WeightedMovingAverage() {		
+	}
+	
 	public WeightedMovingAverage(int totalDays) {
 		this.totalDays = totalDays;
 	}
