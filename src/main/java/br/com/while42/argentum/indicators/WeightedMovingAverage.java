@@ -28,6 +28,6 @@ public class WeightedMovingAverage implements Indicator {
 
 	@Override
 	public String toString() {
-		return "Weighted Moving Average";
+		return "Weighted Moving Average (" + indicator + ")";
 	}
 }

@@ -23,6 +23,6 @@ public class SimpleMovingAverage implements Indicator {
 
 	@Override
 	public String toString() {
-		return "Simple Moving Average";
+		return "Simple Moving Average (" + indicator + ")";
 	}
 }
