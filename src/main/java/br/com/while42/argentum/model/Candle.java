@@ -2,7 +2,7 @@ package br.com.while42.argentum.model;
 
 import java.util.Calendar;
 
-public class Candlestick {
+public class Candle {
 	private final double first;
 	private final double last;
 	private final double min;
@@ -10,7 +10,7 @@ public class Candlestick {
 	private final double volume;
 	private final Calendar date;
 
-	public Candlestick(double first, double close, double min, double max, double volume, Calendar date) {
+	public Candle(double first, double close, double min, double max, double volume, Calendar date) {
 		validate(first, close, min, max, date);
 
 		this.first = first;
@@ -25,11 +25,11 @@ public class Candlestick {
 		if (date == null) {
 			throw new IllegalArgumentException("Date is null");
 		}
-		
+
 		if (first < 0 || close < 0 || min < 0 || max < 0) {
 			throw new IllegalArgumentException("Value < 0");
 		}
-		
+
 		if (first > 100000 || close > 100000 || min > 100000 || max > 100000) {
 			throw new IllegalArgumentException("Value > 100000");
 		}

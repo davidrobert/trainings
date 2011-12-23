@@ -8,15 +8,15 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import br.com.while42.argentum.model.Candlestick;
+import br.com.while42.argentum.model.Candle;
 import br.com.while42.argentum.model.TimeSeries;
 
 public class WeightedMovingAverageTest {
 
 	private TimeSeries buildTimeSerie(double... values) {
-		List<Candlestick> candles = new ArrayList<Candlestick>();
+		List<Candle> candles = new ArrayList<Candle>();
 		for (double d : values) {
-			candles.add(new Candlestick(d, d, d, d, 1000, Calendar.getInstance()));
+			candles.add(new Candle(d, d, d, d, 1000, Calendar.getInstance()));
 		}
 		return new TimeSeries(candles);
 	}

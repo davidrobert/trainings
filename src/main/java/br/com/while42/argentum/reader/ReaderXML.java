@@ -10,6 +10,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class ReaderXML {
 	
+	@SuppressWarnings("unchecked")
 	public List<Trade> load(Reader source) {		
 		XStream stream = new XStream(new DomDriver());
 		stream.alias("trade", Trade.class);

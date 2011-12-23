@@ -5,9 +5,9 @@ import java.util.List;
 
 public class TimeSeries {
 
-	private final List<Candlestick> candles;
+	private final List<Candle> candles;
 
-	public TimeSeries(List<Candlestick> candles) {
+	public TimeSeries(List<Candle> candles) {
 		if (candles == null) {
 			this.candles = Collections.emptyList();
 		} else {
@@ -15,7 +15,7 @@ public class TimeSeries {
 		}
 	}
 	
-	public Candlestick getCandle(int i) {
+	public Candle getCandle(int i) {
 		return candles.get(i);
 	}
 	

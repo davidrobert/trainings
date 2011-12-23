@@ -40,7 +40,7 @@ public class CandleBuilder {
 		return this;
 	}
 	
-	public Candlestick builCandle() {
-		return new Candlestick(first, last, min, max, volume, date);
+	public Candle builCandle() {
+		return new Candle(first, last, min, max, volume, date);
 	}
 }
