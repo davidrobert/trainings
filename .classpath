@@ -8,5 +8,7 @@
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.12.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.12-experimental.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.12-swt.jar"/>
+	<classpathentry kind="lib" path="lib/jcommon-1.0.15.jar"/>
+	<classpathentry kind="lib" path="lib/gnujaxp.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
