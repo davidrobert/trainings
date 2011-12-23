@@ -28,9 +28,9 @@ public class GraphGeneratorTest {
 
 		GraphGenerator g = new GraphGenerator(serie, 3, 32);
 		g.buildGraph("Start graph");
-		g.plotIndicator(new SimpleMovingAverage());
-		g.plotIndicator(new LastValueIndicator());
-		g.plotIndicator(new WeightedMovingAverage());
+		g.plotIndicator(new SimpleMovingAverage(new LastValueIndicator()));
+		g.plotIndicator(new WeightedMovingAverage(new LastValueIndicator()));
+		g.plotIndicator(new LastValueIndicator());		
 		
 		JFrame frame = new JFrame("Minha Janela");
 		frame.add(g.getPanel());

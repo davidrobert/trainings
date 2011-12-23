@@ -4,21 +4,19 @@ import br.com.while42.argentum.model.TimeSeries;
 
 public class WeightedMovingAverage implements Indicator {
 	private int totalDays = 2;
-
-	public WeightedMovingAverage() {		
-	}
+	private Indicator indicator;
 	
-	public WeightedMovingAverage(int totalDays) {
-		this.totalDays = totalDays;
+	public WeightedMovingAverage(Indicator indicator) {
+		this.indicator = indicator;
 	}
-	
+		
 	@Override
 	public double calcule(int position, TimeSeries serie) {
 		double sum = 0.0;
 		int weight = 1;
 
 		for (int i = position - totalDays; i <= position; i++) {
-			sum += serie.getCandle(i).getLast() * weight;
+			sum += indicator.calcule(i, serie) * weight;
 			weight++;
 		}
 

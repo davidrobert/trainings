@@ -24,7 +24,7 @@ public class WeightedMovingAverageTest {
 	@Test
 	public void weightedAverage() {
 		TimeSeries serie = buildTimeSerie(1, 2, 3, 4, 5, 6);
-		WeightedMovingAverage wma = new WeightedMovingAverage();
+		WeightedMovingAverage wma = new WeightedMovingAverage(new LastValueIndicator());
 
 		// Example: calcule(2) = 1*1 + 2*2 + 3*3 = 14. --> 14/6
 		Assert.assertEquals(14d / 6, wma.calcule(2, serie), 0.00001);
