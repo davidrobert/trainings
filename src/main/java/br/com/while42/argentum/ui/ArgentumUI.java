@@ -39,6 +39,7 @@ public class ArgentumUI {
 	private JTable table;
 	private JTabbedPane tabs;
 	private JPanel panelButtons;
+	
 
 	public static void main(String[] args) {
 
@@ -47,18 +48,15 @@ public class ArgentumUI {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		new ArgentumUI().showWindow();
 	}
 
