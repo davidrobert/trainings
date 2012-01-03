@@ -40,4 +40,4 @@ end
 
 puts fulano.incrementAge
 
-
+puts fulano

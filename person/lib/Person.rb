@@ -21,4 +21,7 @@ class Person
 		@age = @age + 1
 	end
 
+	def to_s
+		"My name is #{@name}"
+	end
 end
