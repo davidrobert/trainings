@@ -12,7 +12,7 @@ class Restaurant
 	def add_food(*foods)		
 		@foods ||= Array.new
 		for food in foods
-			@foods << "[" + food.strip + "]" 
+			@foods << "[#{food.strip}]" 
 		end
 		self		
 	end	
@@ -21,6 +21,10 @@ class Restaurant
 		@foods ||= Array.new
 		# ...
 		self
+	end
+
+	def close_bill(data)
+		puts "Close bill:\n  Account closed at the value #{data[:value]} and receipt #{data[:receipt]}. Comment: #{data[:comment]}."			
 	end
 
 	def to_s

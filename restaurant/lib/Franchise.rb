@@ -1,0 +1,29 @@
+class Franchise
+	attr_accessor :name
+
+	def initialize(name = "")
+		@name = name
+	end
+
+	def add_restaurant(*restaurants)
+		@restaurants ||= Array.new
+		for r in restaurants
+			@restaurants << r
+		end
+	end
+
+	def to_s
+		@restaurants ||= Array.new
+		s = "Franchise: #{@name}"
+
+		if @restaurants.size == 0
+			return s
+		end
+
+		s += "\n  Restaurants:"
+		for restaurant in @restaurants
+			s += "\n    #{restaurant.name}"  
+		end
+		s.strip
+	end	
+end
