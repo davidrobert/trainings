@@ -22,3 +22,8 @@ r2 = Restaurant.new
 puts "r2.menu = #{r2.menu}"
 puts "r.menu = #{r.menu}"
 
+r.add_food("cookie")
+r.add_food("milk", "hotdog", "pizza")
+r.add_food("lemon", "orange")
+
+puts r
