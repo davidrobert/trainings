@@ -57,4 +57,11 @@ for i in (1..5)
 	end
 end
 
+# Create string
+f = %(the one ring)
+
+# Create Regexp
+r = /*ring/
+
+puts f =~ r
 
