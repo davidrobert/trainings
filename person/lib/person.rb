@@ -1,4 +1,7 @@
-require "./Person"
+#encoding: utf-8
+$: << File.expand_path(".")
+
+require "Person"
 
 p = Person.new
 puts p.name()

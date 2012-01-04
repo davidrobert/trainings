@@ -1,6 +1,8 @@
 #encoding: utf-8
-require "./Franchise"
-require "./Restaurant"
+$: << File.expand_path(".")
+
+require "Franchise"
+require "Restaurant"
 
 r = Restaurant.new "Domino's Pizza"
 r.qualifies 1, "Bad!"
