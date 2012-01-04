@@ -2,6 +2,10 @@ class Restaurant
 	attr_accessor :name
 
 	def initialize(name = "Restaurant Default")
+		puts "Criando um novo restaurante #{name}"
+		@@total ||= 0
+		@@total += 1
+		puts "Restaurantes criados: #{@@total}"
 		@name = name
 	end
 
