@@ -12,6 +12,15 @@ class Franchise
 		end
 	end
 
+	def report
+		@restaurants ||= Array.new
+		
+		@restaurants.each do |restaurant|
+			yield restaurant
+		end
+		
+	end
+
 	def to_s
 		@restaurants ||= Array.new
 		s = "Franchise: #{@name}"
@@ -21,7 +30,7 @@ class Franchise
 		end
 
 		s += "\n  Restaurants:"
-		for restaurant in @restaurants
+		@restaurants.each do |restaurant|
 			s += "\n    #{restaurant.name}"  
 		end
 		s.strip

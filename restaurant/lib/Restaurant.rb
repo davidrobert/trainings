@@ -30,7 +30,7 @@ class Restaurant
 	def to_s
 		@foods ||= Array.new
 		s = "Foods: "
-		for food in @foods
+		@foods.each do |food|
 			s += food.to_s + " "
 		end
 		s.strip
