@@ -55,3 +55,33 @@ Person2 = Class.new {
 
 p2 = Person2.new
 puts p2
+
+class Person3 < Object
+	def walk
+		puts "Walking..."
+	end
+end
+
+p3 = Person3.new
+
+# -- Metodo de class -- 
+def Person3.number
+	9999	
+end
+
+# -- Metodo de um objeto especifico --
+def p3.number
+	1000
+end
+
+p3.walk
+puts p3.number
+
+p4 = Person3.new
+begin
+	puts p4.number
+rescue NameError => e
+	puts "p4 nao tem o metodo 'number'"
+end
+	
+puts Person3.number
