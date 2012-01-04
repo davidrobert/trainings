@@ -41,5 +41,11 @@ puts f
 
 f2 = Franchise.new "Casa do Pão de Queijo"
 
+f.report do |r|
+	puts "Restaurante cadastrado: #{r.name}"
+end
+
 puts f2
+
+
 

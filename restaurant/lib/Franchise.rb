@@ -18,7 +18,6 @@ class Franchise
 		@restaurants.each do |restaurant|
 			yield restaurant
 		end
-		
 	end
 
 	def to_s

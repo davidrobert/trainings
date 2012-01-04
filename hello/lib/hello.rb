@@ -22,20 +22,20 @@ puts name
 # Symbols are also text (use the character ":")
 puts :name
 
-# Types
+# -- Types --
 i = 0
 3.times { 
 	i = i + 1
 	puts "> #{i} - #{name}" 
 }
 
-# Boolean comparisson
+# -- Boolean comparisson --
 puts "2 > 0 = #{2 > 0}"
 puts "2 < 0 = #{2 < 0}"
 puts "2 == 2 = #{2 == 2}"
 puts "2 != 2 = #{2 != 2}"
 
-# Ranges
+# -- Ranges --
 puts (0..4).each { |x| puts x }  
 puts ('a'..'d').each { |x| puts x }  
 
@@ -57,11 +57,39 @@ for i in (1..5)
 	end
 end
 
-# Create string
+# -- Create string --
 f = %(the one ring)
 
-# Create Regexp
-r = /*ring/
+# -- Create Regexp --
+#r = /*ring/
+#
+#puts f =~ r
 
-puts f =~ r
 
+# -- Sort by --
+a = [ 
+	{:name => 'ZZ', :value => 12}, 
+	{:name => 'AA', :value => 10},
+	{:name => 'DD', :value => 11}, 
+]
+
+a.each do |s|
+	puts s[:name]
+end
+
+a.sort_by{ |s| s[:name] }.each do |s|
+	puts s[:name]
+end
+
+# -- Exceptions --
+def verify_age(age)
+	if age < 18
+		raise ArgumentError, "Menor de idade!"
+	end
+end
+
+begin
+	verify_age 10
+rescue ArgumentError => e
+	puts e.message
+end
