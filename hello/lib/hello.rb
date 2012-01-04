@@ -93,3 +93,24 @@ begin
 rescue ArgumentError => e
 	puts e.message
 end
+
+class InvalidAge < Exception
+	attr_accessor :age
+	def initialize(age)
+		@age = age
+	end
+end
+
+def verify_age2(age)
+	if age < 18		
+		e = InvalidAge.new age
+		raise e, "Menor de idade!!"
+	end
+end
+
+begin
+	verify_age2 10
+rescue InvalidAge => e
+	puts "#{e.message} - Age: #{e.age}"
+end
+
