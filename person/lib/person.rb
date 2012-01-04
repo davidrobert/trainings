@@ -44,3 +44,14 @@ end
 puts fulano.incrementAge
 
 puts fulano
+
+# -- Dynamic Class --
+
+Person2 = Class.new {
+	def to_s
+		"Person2"
+	end
+}
+
+p2 = Person2.new
+puts p2
