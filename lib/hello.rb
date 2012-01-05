@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 # The famous Hello World
 puts "Hello World!"
 
