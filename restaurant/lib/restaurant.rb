@@ -49,5 +49,8 @@ end
 
 puts f2
 
+Restaurant.report
+
+
 
 
