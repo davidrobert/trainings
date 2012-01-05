@@ -51,6 +51,7 @@ puts f2
 
 Restaurant.report
 
-
+puts "-----------"
+f.update_scores
 
 

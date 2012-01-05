@@ -36,6 +36,11 @@ class Restaurant
 		puts "Close bill:\n  Account closed at the value #{data[:value]} and receipt #{data[:receipt]}. Comment: #{data[:comment]}."			
 	end
 
+	# Method to design pattern Observer
+	def update_score(a)
+		puts "Restaurante #{name} recebeu a notificacao da franquia"
+	end
+
 	def to_s
 		@foods ||= Array.new
 		s = "Foods: "

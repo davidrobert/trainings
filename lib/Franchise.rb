@@ -1,6 +1,10 @@
 #encoding: utf-8
 
+require 'observer'
+
 class Franchise
+	include Observable
+
 	attr_accessor :name
 
 	def initialize(name = "")
@@ -11,6 +15,7 @@ class Franchise
 		@restaurants ||= Array.new
 		for r in restaurants
 			@restaurants << r
+			add_observer(r, :update_score)
 		end
 	end
 
@@ -20,6 +25,12 @@ class Franchise
 		@restaurants.each do |restaurant|
 			yield restaurant
 		end
+	end
+
+	# Method to design pattern Observer
+	def update_scores
+		changed
+		notify_observers(self)
 	end
 
 	def to_s
