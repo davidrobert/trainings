@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 class Person
 	attr_accessor :address 
 	attr_accessor :age
