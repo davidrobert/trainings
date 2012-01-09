@@ -1,4 +1,10 @@
 class Qualification < ActiveRecord::Base
+	belongs_to :client
+	belongs_to :restaurant
+
+	validates_presence_of :client_id, :restaurant_id
+	validates_associated :client, :restaurant
+
 	validates_presence_of :score, :message => " - must be completed"	
 	validates_presence_of :amount_spent, :message => " - must be completed"
 

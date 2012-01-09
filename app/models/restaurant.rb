@@ -1,6 +1,9 @@
 #encoding: utf-8 
 
 class Restaurant < ActiveRecord::Base
+	has_many :qualifications	
+	has_and_belons_to_many :dishes
+
 	validates_presence_of :name, :message => "Must be completed"
 	validates_presence_of :address, :message => "Must be completed"
 	validates_presence_of :specialty, :message => "Must be completed"
