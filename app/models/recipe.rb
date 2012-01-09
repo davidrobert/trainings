@@ -1,5 +1,5 @@
 class Recipe < ActiveRecord::Base
-	has_one :dish
+	belongs_to :dish
 	validates_presence_of :content, :message => " - must be completed"
 
 	validates_presence_of :dish_id
