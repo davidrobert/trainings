@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120107002703) do
+ActiveRecord::Schema.define(:version => 20120109210017) do
 
   create_table "clients", :force => true do |t|
     t.string   "name",       :limit => 80
@@ -25,6 +25,18 @@ ActiveRecord::Schema.define(:version => 20120107002703) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "qualifications", :force => true do |t|
+    t.integer  "client_id"
+    t.integer  "restaurant_id"
+    t.float    "score"
+    t.float    "amount_spent"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "qualifications", ["client_id"], :name => "index_qualifications_on_client_id"
+  add_index "qualifications", ["restaurant_id"], :name => "index_qualifications_on_restaurant_id"
 
   create_table "recipes", :force => true do |t|
     t.integer  "dish_id"
