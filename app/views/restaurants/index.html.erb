@@ -1,0 +1,25 @@
+<h1>List of Restaurants</h1>
+
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Address</th>
+		<th>Specialty</th>
+	</tr>
+
+	<% @restaurants.each do |restaurant| %>
+	<tr>
+		<td><%= restaurant.name %></td>
+		<td><%= restaurant.address %></td>
+		<td><%= restaurant.specialty %></td>
+		
+		<td><%= link_to 'Show', {:action => 'show', :id => restaurant} %></td>
+		<td><%= link_to 'Edit', {:action => 'edit', :id => restaurant} %></td>
+		<td><%= link_to 'Delete', {:action => 'destroy', :id => restaurant} %></td>
+	</tr>
+	<% end %>
+
+	<br/>
+
+	<td><%= link_to 'New', {:action => 'new'} %></td>
+</table>
