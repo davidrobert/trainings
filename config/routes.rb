@@ -1,4 +1,6 @@
 QualificationRestaurants::Application.routes.draw do
+  resources :qualifications
+
   resources :clients
 
   # The priority is based upon order of creation:
