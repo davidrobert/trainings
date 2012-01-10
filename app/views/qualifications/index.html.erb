@@ -1,0 +1,29 @@
+<h1>Listing qualifications</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Restaurant</th>
+    <th>Score</th>
+    <th>Amount spent</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @qualifications.each do |qualification| %>
+  <tr>
+    <td><%= qualification.client_id %></td>
+    <td><%= qualification.restaurant_id %></td>
+    <td><%= qualification.score %></td>
+    <td><%= qualification.amount_spent %></td>
+    <td><%= link_to 'Show', qualification %></td>
+    <td><%= link_to 'Edit', edit_qualification_path(qualification) %></td>
+    <td><%= link_to 'Destroy', qualification, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Qualification', new_qualification_path %>
