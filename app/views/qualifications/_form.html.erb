@@ -13,11 +13,15 @@
 
   <div class="field">
     <%= f.label :client_id %><br />
-    <%= f.text_field :client_id %>
+    <%= f.collection_select(:client_id, 
+		                        Client.order('name'),
+		                        :id, :name, {:prompt => true}) %>
   </div>
   <div class="field">
     <%= f.label :restaurant_id %><br />
-    <%= f.text_field :restaurant_id %>
+    <%= f.collection_select(:restaurant_id,
+		                        Restaurant.order('name'),
+		                        :id, :name, {:prompt => true}) %>
   </div>
   <div class="field">
     <%= f.label :score %><br />
