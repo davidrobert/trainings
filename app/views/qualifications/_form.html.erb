@@ -22,7 +22,7 @@
 		<% end %>
   </div>
   <div class="field">
-		<% if %>
+		<% if @qualification.restaurant %>
 			<%= f.hidden_field 'restaurant_id' %>	
 		<% else %>
     	<%= f.label :restaurant_id %><br />
