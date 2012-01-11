@@ -12,16 +12,24 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :client_id %><br />
-    <%= f.collection_select(:client_id, 
-		                        Client.order('name'),
-		                        :id, :name, {:prompt => true}) %>
+		<% if @qualification.client %>
+			<%= f.hidden_field 'client_id' %>
+		<% else %>
+    	<%= f.label :client_id %><br />
+	    <%= f.collection_select(:client_id, 
+			                        Client.order('name'),
+			                        :id, :name, {:prompt => true}) %>
+		<% end %>
   </div>
   <div class="field">
-    <%= f.label :restaurant_id %><br />
-    <%= f.collection_select(:restaurant_id,
-		                        Restaurant.order('name'),
-		                        :id, :name, {:prompt => true}) %>
+		<% if %>
+			<%= f.hidden_field 'restaurant_id' %>	
+		<% else %>
+    	<%= f.label :restaurant_id %><br />
+	    <%= f.collection_select(:restaurant_id,
+			                        Restaurant.order('name'),
+			                        :id, :name, {:prompt => true}) %>
+		<% end %>
   </div>
   <div class="field">
     <%= f.label :score %><br />

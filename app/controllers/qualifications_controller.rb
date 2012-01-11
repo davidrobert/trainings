@@ -26,6 +26,14 @@ class QualificationsController < ApplicationController
   def new
     @qualification = Qualification.new
 
+		if params[:client]
+			@qualification.client = Client.find(params[:client])
+		end
+
+		if params[:restaurant]
+			@qualification.restaurant = Restaurant.find(params[:restaurant])
+		end
+
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @qualification }

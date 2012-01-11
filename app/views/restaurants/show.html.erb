@@ -14,6 +14,9 @@
 		<%= @restaurant.specialty %>
 	</p>
 
+	<%= link_to 'Qualification this restaurant', :controller => "qualifications",
+	                                             :action => "new",
+	                                             :restaurant => @restaurant %>
 	<%= link_to 'Back', {:action => 'index'} %>
 	<%= link_to 'Edit', {:action => 'edit', :id => @restaurant} %>
 	<%= link_to 'Delete', {:action => 'destroy', :id => @restaurant} %>
