@@ -13,8 +13,8 @@
 
 <% @qualifications.each do |qualification| %>
   <tr>
-    <td><%= qualification.client_id %></td>
-    <td><%= qualification.restaurant_id %></td>
+    <td><%= qualification.client.name %></td>
+    <td><%= qualification.restaurant.name %></td>
     <td><%= qualification.score %></td>
     <td><%= qualification.amount_spent %></td>
     <td><%= link_to 'Show', qualification %></td>
