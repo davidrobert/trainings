@@ -8,8 +8,9 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-
-<%= yield %>
+	<%= main_menu %>
+	<p style="color: green"><%= flash[:notice] %></p>
+	<%= yield %>
 
 </body>
 </html>
