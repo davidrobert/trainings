@@ -12,6 +12,8 @@ class Restaurant < ActiveRecord::Base
 
 	validate :the_first_letter_should_be_capitalized
 
+	has_many :comments, :as => :commentable
+
 	private 
 	def the_first_letter_should_be_capitalized
 		errors.add("name", "The first letter should be capitalized") unless name =~ /[A-Z].*/

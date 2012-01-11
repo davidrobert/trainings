@@ -1,4 +1,6 @@
 QualificationRestaurants::Application.routes.draw do
+  resources :comments
+
   resources :qualifications
 
   resources :clients

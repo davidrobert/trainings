@@ -16,5 +16,6 @@ class Qualification < ActiveRecord::Base
 	validates_numericality_of :amount_spent,
 	                          :greater_than => 0,
 	                          :message => " - must be a number greater than 0"
-	                          
+
+	has_many :comments, :as => :commentable
 end
