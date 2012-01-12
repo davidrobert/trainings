@@ -1,0 +1,18 @@
+
+<p id="comment_<%= comment.id %>">
+	<%=	comment.content %>
+	<%=	link_to '(delete)', comment, 
+		:method => :delete, 
+	  :remote => true,
+	  :id => "remove_comment_#{comment.id}" %>
+</p>
+
+<%= content_for :js do %>
+	$('#remove_comment_<%= comment.id %>').bind(
+			'ajax:success', 
+			function(xhr, result) {
+				$('#comment_<%= comment.id %>').remove();
+			}
+	);
+<% end %>
+

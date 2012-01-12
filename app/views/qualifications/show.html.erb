@@ -20,6 +20,9 @@
   <%= format_value(@qualification.amount_spent) %>
 </p>
 
+<% unless @qualification.comments.empty? %>
+	<%= comments(@qualification) %>
+<% end %>
 
 <%= link_to 'Edit', edit_qualification_path(@qualification) %> |
 <%= link_to 'Back', qualifications_path %>

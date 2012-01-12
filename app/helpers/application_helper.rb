@@ -12,4 +12,16 @@ module ApplicationHelper
 	def format_value(number)
 		number_to_currency(number, :unit => "R$ ", :separator => ",", :delimiter => ".")
 	end
+
+	def comments(commentable) 
+		comments = "<h3>Comments</h3>"
+		comments << "<div id='comments'>"
+		if commentable.comments.any?
+			comments << render(:partial => "comments/comment",
+			                   :collection => commentable.comments)
+		end
+		comments << "</div>"
+		raw comments
+	end
+
 end

@@ -11,6 +11,9 @@
 	<%= main_menu %>
 	<p style="color: green"><%= flash[:notice] %></p>
 	<%= yield %>
-
+	
+	<script type="text/javascript">
+		<%= yield :js %>
+	</script>
 </body>
 </html>

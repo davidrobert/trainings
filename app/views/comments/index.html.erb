@@ -11,13 +11,18 @@
   </tr>
 
 <% @comments.each do |comment| %>
-  <tr>
+  <tr id="comment_<%= comment.id %>" >
     <td><%= comment.content %></td>
     <td><%= comment.commentable_id %></td>
     <td><%= comment.commentable_type %></td>
     <td><%= link_to 'Show', comment %></td>
     <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
-    <td><%= link_to 'Destroy', comment, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', comment, :confirm => 'Are you sure?', :method => :delete, :remote => true %></td>
+		<%= content_for :js do%>
+			$("#comment_<%= comment.id %>").bind("ajax:success", function() {
+					$(this).fadeOut();
+			});
+		<% end %>
   </tr>
 <% end %>
 </table>
