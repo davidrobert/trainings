@@ -3,6 +3,9 @@
 class Restaurant < ActiveRecord::Base
 	has_many :qualifications	
 	has_and_belongs_to_many :dishes
+	has_attached_file :photo, :styles => { :medium => "300x300>", 
+	                                       :thumb => "100x100>",
+	                                       :large => "800x600>" }
 
 	validates_presence_of :name, :message => "Must be completed"
 	validates_presence_of :address, :message => "Must be completed"

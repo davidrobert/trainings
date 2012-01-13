@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120111225451) do
+ActiveRecord::Schema.define(:version => 20120113221713) do
 
   create_table "clients", :force => true do |t|
     t.string   "name",       :limit => 80
@@ -61,11 +61,15 @@ ActiveRecord::Schema.define(:version => 20120111225451) do
   end
 
   create_table "restaurants", :force => true do |t|
-    t.string   "name",       :limit => 80
+    t.string   "name",               :limit => 80
     t.string   "address"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "specialty",  :limit => 40
+    t.string   "specialty",          :limit => 40
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
 end

@@ -9,6 +9,8 @@ gem 'mysql2', '~> 0.2.6'
 gem 'jquery-rails'
 
 gem 'will_paginate'
+gem 'hpricot'
+gem 'paperclip'
 
 # Use unicorn as the web server
 # gem 'unicorn'
