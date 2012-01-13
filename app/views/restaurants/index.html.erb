@@ -10,6 +10,7 @@
 
 	<% @restaurants.each do |restaurant| %>
 	<tr>
+		<td><%= image_tag restaurant.photo.url(:thumb) %></td>
 		<td><%= restaurant.name %></td>
 		<td><%= restaurant.address %></td>
 		<td><%= restaurant.specialty %></td>

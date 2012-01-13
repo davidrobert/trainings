@@ -9,7 +9,12 @@
 		</ul>
 	<% end %>
 
-	<%= form_for :restaurant, :url => {:action => 'update', :id => @restaurant} do |f| %>
+	<%= form_for :restaurant, :url => {:action => 'update', :id => @restaurant},
+	                          :html => {:multipart => true } do |f| %>
+
+		<%= image_tag @restaurant.photo.url(:thumb) %>
+		<%= f.file_field :photo %>
+
 		Name: <%= f.text_field :name %>
 		Address: <%= f.text_field :address %>
 		Specialty: <%= f.text_field :specialty %>
