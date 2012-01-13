@@ -17,6 +17,7 @@
 	<% unless @restaurant.comments.empty? %>
 		<%= comments(@restaurant) %>
 	<% end %>
+	<%= new_comment(@restaurant) %>
 	
 	<%= link_to 'Qualification this restaurant', :controller => "qualifications",
 	                                             :action => "new",

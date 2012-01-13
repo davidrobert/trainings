@@ -24,4 +24,8 @@ module ApplicationHelper
 		raw comments
 	end
 
+	def new_comment(commentable)
+		raw render(:partial => "comments/new_comment",
+		           :locals => { :commentable => commentable })
+	end
 end
