@@ -1,4 +1,5 @@
 #language: pt
+@javascript
 Funcionalidade: Carros
 	Para vender meu carro
 	Como usuário do sistema
