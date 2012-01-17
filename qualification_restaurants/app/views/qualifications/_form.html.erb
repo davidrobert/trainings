@@ -1,0 +1,45 @@
+<%= form_for(@qualification) do |f| %>
+  <% if @qualification.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@qualification.errors.count, "error") %> prohibited this qualification from being saved:</h2>
+
+      <ul>
+      <% @qualification.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+		<% if @qualification.client %>
+			<%= f.hidden_field 'client_id' %>
+		<% else %>
+    	<%= f.label :client_id %><br />
+	    <%= f.collection_select(:client_id, 
+			                        Client.order('name'),
+			                        :id, :name, {:prompt => true}) %>
+		<% end %>
+  </div>
+  <div class="field">
+		<% if @qualification.restaurant %>
+			<%= f.hidden_field 'restaurant_id' %>	
+		<% else %>
+    	<%= f.label :restaurant_id %><br />
+	    <%= f.collection_select(:restaurant_id,
+			                        Restaurant.order('name'),
+			                        :id, :name, {:prompt => true}) %>
+		<% end %>
+  </div>
+  <div class="field">
+    <%= f.label :score %><br />
+    <%= f.text_field :score %>
+  </div>
+  <div class="field">
+    <%= f.label :amount_spent %><br />
+    <%= f.text_field :amount_spent %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,33 @@
+<%= render :partial => "title" %>
+<h1>Show Restaurant</h1>
+
+	<p>
+		<b>Photo:</b>
+		<%= image_tag @restaurant.photo.url(:large) %>
+	</p.
+
+	<p>
+		<b>Name:</b>
+		<%= @restaurant.name %>
+	</p>
+	<p>
+		<b>Address:</b>
+		<%= @restaurant.address %>
+	</p>
+	<p>
+		<b>Specialty:</b>
+		<%= @restaurant.specialty %>
+	</p>
+
+	<% unless @restaurant.comments.empty? %>
+		<%= comments(@restaurant) %>
+	<% end %>
+	<%= new_comment(@restaurant) %>
+	
+	<%= link_to 'Qualification this restaurant', :controller => "qualifications",
+	                                             :action => "new",
+	                                             :restaurant => @restaurant %>
+	<%= link_to 'Back', {:action => 'index'} %>
+	<%= link_to 'Edit', {:action => 'edit', :id => @restaurant} %>
+	<%= link_to 'Delete', {:action => 'destroy', :id => @restaurant} %>
+</table>

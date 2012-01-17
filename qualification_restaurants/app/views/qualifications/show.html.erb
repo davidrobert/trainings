@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Client:</b>
+  <%= @qualification.client.name %>
+</p>
+
+<p>
+  <b>Restaurant:</b>
+  <%= @qualification.restaurant.name %>
+</p>
+
+<p>
+  <b>Score:</b>
+  <%= @qualification.score %>
+</p>
+
+<p>
+  <b>Amount spent:</b>
+  <%= format_value(@qualification.amount_spent) %>
+</p>
+
+<% unless @qualification.comments.empty? %>
+	<%= comments(@qualification) %>
+<% end %>
+<%= new_comment(@qualification) %>
+
+<%= link_to 'Edit', edit_qualification_path(@qualification) %> |
+<%= link_to 'Back', qualifications_path %>
