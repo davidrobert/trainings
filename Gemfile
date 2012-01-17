@@ -12,6 +12,7 @@ gem 'database_cleaner'
 gem 'cucumber-rails'
 gem 'rspec-rails'
 
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
@@ -33,4 +34,5 @@ gem 'rspec-rails'
 # and rake tasks are available in development mode:
 group :development, :test do
   gem 'webrat'
+  gem 'simplecov', '>= 0.3.2'
 end
