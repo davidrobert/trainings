@@ -1,0 +1,39 @@
+<div id="form">
+	<%= form_for @car, :url => {:action => 'create'} do |f| -%>
+		<strong>Quer vender?</strong>
+		<br/><br/>
+	
+		<%= f.label :name %><br/>
+		<%= f.text_field :name, :class => 'button-input' %>
+		<br/>
+
+		<%= f.label :description %><br/>
+		<%= f.text_area :description, :cols => 26, :rows => 9 %>
+		<br/>
+
+		<%= f.label :value %><br/>
+		<%= f.text_field :value, :class => 'button-input' %>
+		<br/><br/>
+
+		<%= f.submit "Anunciar!", :disable_with => '...', :class => 'anunciar' %><br/>
+	<% end -%>
+</div>
+
+<div style="clear:both"></div>
+
+<div id="search">
+	<strong>Carros a venda</strong>	
+	<br/>
+
+	<% if !@cars.blank? %>
+		<% for car in @cars %>
+			<br/>
+			<b><%= car.name %></b><br/>
+			<%= car.description %><br/>
+			R$<%= car.value %><br/>
+		<% end %>
+	<% else %>
+		<p>Nenhum carro cadastrado.</p>
+	<% end %>
+</div>
+
