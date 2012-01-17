@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="br.com.while42.studantcontacts"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="7" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:label="@string/app_name"
+            android:name=".activity.ListStudents" >
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:label="Novo"
+            android:name=".activity.FormStudent" >
+        </activity>
+        <activity
+            android:label="Web"
+            android:name=".activity.WebStudent" >
+        </activity>
+        <activity
+            android:label="Gallery"
+            android:name=".activity.GalleryStudents" >
+        </activity>
+        <activity
+            android:label="Map"
+            android:name=".activity.MapStudents" >            
+        </activity>
+        <activity
+            android:label="Preferences"
+            android:name=".activity.Preferences" >
+        </activity>
+
+        <receiver
+            android:label="SMSReceiver"
+            android:name=".receiver.SMSReceiver" >
+            <intent-filter >
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <uses-library android:name="com.google.android.maps" />
+    </application>
+
+</manifest>
