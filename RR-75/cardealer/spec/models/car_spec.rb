@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Car do
 
+	include CarSpec 
+
 	before do
 		@car = Car.new
 	end
@@ -18,5 +20,14 @@ describe Car do
 	it "Moto?" do
 		@car.should_not be_an_instance_of(Moto)
 	end
-	
+
+	it "deveria calcular comissao" do
+		@car.value = 32000
+		@commission = 1600.0
+
+		lambda {
+			@car.calculate_commission
+		}.should has_value(@commission)
+	end	
+
 end
