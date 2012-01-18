@@ -30,4 +30,16 @@ describe Car do
 		}.should has_value(@commission)
 	end	
 
+	it "testando fabrica" do
+		celta = Factory.build(:car)
+		celta.name.should be == 'celta'
+		celta.description.should be == 'vendo celta usado, ano 2001'
+		celta.value.should be == 17000
+
+		fox = Factory.build(:car, :name => 'fox', :description => 'vendo fox seminovo', :value => 30000)
+		fox.name.should be == 'fox'
+		fox.description.should be == 'vendo fox seminovo'
+		fox.value.should be == 30000
+	end
+
 end

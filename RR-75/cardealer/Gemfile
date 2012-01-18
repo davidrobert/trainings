@@ -11,6 +11,7 @@ gem 'capybara'
 gem 'database_cleaner'
 gem 'cucumber-rails'
 gem 'rspec-rails'
+gem 'factory_girl_rails'
 
 
 # Use unicorn as the web server
