@@ -8,7 +8,7 @@ describe Notifier do
 
 		it "cabecalho" do
 			mail.subject.should eq(car.name)
-			mail.to.should eq(["david@camargo.eti.br"])
+			mail.to.should eq(["davidrobert@gmail.com"])
 			mail.from.should eq(["davidrobert@gmail.com"])
 		end
 
