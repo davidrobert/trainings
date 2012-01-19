@@ -24,13 +24,7 @@ Funcionalidade: Carros
 
 	Cenario: Registrando um carro
 		Dado que estou na pagina inicial
-		Dado que os seguintes usuarios existem:
-			| login    | email           | password |
-			| jose     | jose@email.com  | 123456   |
-		E clico no link "Login"
-		E preencho o campo "user[email]" com "jose@email.com"
-		E preencho o campo "user[password]" com "123456"
-		E aperto o botao "Sign in"
+		E estou logado como "jose@email.com"
 		E preencho o campo "car[name]" com "Monza"
 		E preencho o campo "car[description]" com "Muito bom estado." 
 		E preencho o campo "car[value]" com "5000"

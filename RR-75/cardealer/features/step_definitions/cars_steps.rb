@@ -27,7 +27,7 @@ Dado /^clico no link "([^"]*)"$/ do |arg1|
 	click_link(arg1)
 end
 
-E /^estou logado como "([^\"])"$/ do |email|
+Dado /^estou logado como "([^"]*)"$/ do |email|
 	User.create! :email => 'jose@email.com', :password => '123456', :password_confirmation => '123456'
 	click_link('Login')
 	fill_in('user[email]', :with => 'jose@email.com')
