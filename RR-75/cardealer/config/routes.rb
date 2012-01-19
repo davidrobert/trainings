@@ -1,4 +1,6 @@
 Cardealer::Application.routes.draw do
+  devise_for :users
+
   resources :cars
 
 	root to: "cars#index"
