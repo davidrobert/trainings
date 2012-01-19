@@ -13,6 +13,7 @@ gem 'cucumber-rails'
 gem 'rspec-rails'
 gem 'factory_girl_rails'
 gem 'devise'
+gem 'restfulie'
 
 
 # Use unicorn as the web server

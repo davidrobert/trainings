@@ -9,6 +9,10 @@
   </head>
   <body>
     <div id="container">
+			<div id="footer" class="blue-style" >
+				<p>Loja de Carros</p>
+				<p><%= hour_now() %>
+		</div>
       <% flash.each do |name, msg| %>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <% end %>
