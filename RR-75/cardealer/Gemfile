@@ -14,6 +14,7 @@ gem 'rspec-rails'
 gem 'factory_girl_rails'
 gem 'devise'
 gem 'restfulie'
+gem 'rufus-scheduler'
 
 
 # Use unicorn as the web server
