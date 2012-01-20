@@ -1,13 +1,17 @@
 class CarsController < ApplicationController
 
 	# Lembrete: por padrão o ambiente de desenvolvimento do Rails
-	# deixa o cache desabilitado
+	# deixa o cache desabilitado#
+
+	# Este exemplo nao eh muito eficiente pois o cache 
+	# expira sempre que alguem faz login ou logout
+	# Isso serve apenas para exemplificar a utilizacao do cache.
 
 	# Indica para o Rails que a pagina de index seja cacheada 
 	# desta maneira dentro da raiz, no diretorio public, sera criado 
 	# um arquivo index.html
 	# Exemplo: .../public/index.html
-	#caches_page :index
+	caches_page :index
 
 	def index
 		@car = Car.new
@@ -20,7 +24,7 @@ class CarsController < ApplicationController
 
 		# Indica que o cache deve expirar, ou seja, a proxima requisição para
 		# index ira gerar um novo cache
-		#expires_page(:controller => "cars", :action => "index")
+		expires_page(:controller => "cars", :action => "index")
 
 		redirect_to :action => "index"
 
