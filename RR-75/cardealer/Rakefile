@@ -5,3 +5,17 @@ require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
 Cardealer::Application.load_tasks
+
+
+# Testando novas tarefas no rake
+desc 'Tarefa simples para iniciar com o Rake'
+task :hello do
+	username = ENV["USER"]
+	puts "Hi #{username}!"
+end
+
+desc 'Sincroniza os arquivos do diretorio local com o diretorio de backup (~/backup)'
+task :backup do
+	system "rsync -ruv ./ ~/backup"
+end
+
