@@ -7,7 +7,7 @@ class CarsController < ApplicationController
 	# desta maneira dentro da raiz, no diretorio public, sera criado 
 	# um arquivo index.html
 	# Exemplo: .../public/index.html
-	caches_page :index
+	#caches_page :index
 
 	def index
 		@car = Car.new
@@ -20,7 +20,7 @@ class CarsController < ApplicationController
 
 		# Indica que o cache deve expirar, ou seja, a proxima requisição para
 		# index ira gerar um novo cache
-		expires_page(:controller => "cars", :action => "index")
+		#expires_page(:controller => "cars", :action => "index")
 
 		redirect_to :action => "index"
 
