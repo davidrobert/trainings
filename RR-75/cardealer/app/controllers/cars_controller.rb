@@ -1,11 +1,10 @@
 class CarsController < ApplicationController
 
 	# Lembrete: por padrão o ambiente de desenvolvimento do Rails
-	# deixa o cache desabilitado#
+	# deixa o cache desabilitado
 
-	# Este exemplo nao eh muito eficiente pois o cache 
-	# expira sempre que alguem faz login ou logout
-	# Isso serve apenas para exemplificar a utilizacao do cache.
+	# Para usar o observer (CarSweeper)
+	cache_sweeper :car_sweeper
 
 	# Indica para o Rails que a pagina de index seja cacheada 
 	# desta maneira dentro da raiz, no diretorio public, sera criado 
@@ -23,8 +22,10 @@ class CarsController < ApplicationController
 		car.save
 
 		# Indica que o cache deve expirar, ou seja, a proxima requisição para
-		# index ira gerar um novo cache
-		expires_page(:controller => "cars", :action => "index")
+		# index ira gerar um novo cache.
+		# ps.: Se estiver usando o observer do carro (CarSweeper) essa linha eh 
+		#      desnecessaria por isso esta comentada neste caso.
+		# expires_page(:controller => "cars", :action => "index")
 
 		redirect_to :action => "index"
 
