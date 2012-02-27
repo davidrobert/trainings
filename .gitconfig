@@ -1,0 +1,9 @@
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[user]
+	name = David Robert
+	email = davidrobert@gmail.com
+[github]
+	user = davidrobert
