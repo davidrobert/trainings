@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+
+    <!-- sessao é gravado na memoria do tomcat e um backup é gravado no node n2 -->
+    <!-- node n1 eh failover apenas (nada replicado) -->
+    <!-- nodes n1 e n2 nao se conhecem, mas SessionManager conhece pela config abaixo :) -->
+    <!-- caso que node n2 falha, tomcat grava session state no n1 -->
+    <!-- caso que tomcat falha, sessao será recuperado pelo outro tomcat (node n2 faz parte do cookie) -->
+    <!-- podem ser definidos mais do que um fail over node, por exemplo failoverNodes="n1 n2" -->
+    <Manager pathname="/projeto-jsf" className="de.javakaffee.web.msm.MemcachedBackupSessionManager"
+	    memcachedNodes="n1:localhost:11211 n2:localhost:11212"
+	    failoverNodes="n1"
+	    requestUriIgnorePattern=".*\.(png|gif|jpg|css|js)\.cfm$"
+	    sessionBackupAsync="false"
+	    sessionBackupTimeout="180"
+            copyCollectionsForSerialization="false"
+            transcoderFactoryClass="de.javakaffee.web.msm.JavaSerializationTranscoderFactory"
+    />
+</Context>

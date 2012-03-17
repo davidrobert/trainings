@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:p="http://primefaces.prime.com.tr/ui"
+		>
+
+<ui:composition template="/_template.xhtml">
+	
+	<ui:define name="titulo">Sistema de notas fiscais</ui:define>
+		
+	<ui:define name="corpo">
+	
+		<h:form id="formProduto">
+			<h2>
+					<h:outputText value="Novo Produto:" rendered="#{empty produtoBean.produto.id}"/>
+					<h:outputText value="Editar Produto:" rendered="#{not empty produtoBean.produto.id}"/>
+			</h2>
+			
+			<h:inputHidden value="#{produtoBean.produto.id }" />
+			<p:messages styleClass="erros"/>
+			<p:fieldset legend="Dados do Produto">
+				<h:outputLabel for="nome" value="Nome:"/> 
+				<p:inputText styleClass="input" id="nome" value="#{produtoBean.produto.nome }" required="true" >
+					<f:validateLength minimum="6" />
+					<f:ajax execute="@this" render="formProduto:nomeMessage"/>
+				</p:inputText>
+				<p:message for="nome" id="nomeMessage"/>
+				<h:outputLabel for="descricao" value="Descrição"/>
+				<h:inputTextarea styleClass="input" id="descricao" value="#{produtoBean.produto.descricao }"/>
+				<p:message for="descricao" />
+				
+				<h:outputLabel for="preco" value="Preço:"/>
+				<p:inputText id="preco" value="#{produtoBean.produto.preco }" required="true" requiredMessage="Campo Preço obrigatório" validatorMessage="Preço deve ter mais do que 50 centavos">
+					<f:validateDoubleRange minimum="0.50"/>			
+					<f:convertNumber type="number" maxFractionDigits="2" locale="pt_BR"/>		
+				</p:inputText>
+				<p:message for="preco" />
+				
+				<p:commandButton value="gravar" action="#{produtoBean.grava}" update="formTabela,formProduto" />
+ 
+			</p:fieldset>
+		</h:form>
+		
+		<h2>Listagem de produtos</h2>
+		
+		<h:form id="formTabela">
+		<p:dataTable value="#{produtoBean.produtos}" var="produto" style="dados" rowClasses="par,impar">
+			<p:column headerText="Nome">
+				#{produto.nome}
+			</p:column>
+			
+			<p:column headerText="Descrição">
+				#{produto.descricao}
+			</p:column>
+			
+			<p:column headerText="Preço" footerText="#{produtoBean.soma}">
+				#{produto.preco}
+			</p:column>
+
+			<p:column headerText="edita" >
+				<h:commandLink value="editar"  >
+					<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{produto}"/>
+					<f:ajax render=":formProduto"/>
+				</h:commandLink>
+			</p:column>
+			
+			<p:column headerText="remove">
+				<p:commandLink action="#{produtoBean.remove}" value="X" update="formTabela formProduto">
+					<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{produto}"/>
+				</p:commandLink>
+			</p:column>
+			
+		</p:dataTable>
+		</h:form>
+		
+	</ui:define>		
+</ui:composition>
+		
+</html>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+
+    <!--
+    <Manager pathname="/benchmark" className="de.javakaffee.web.msm.MemcachedBackupSessionManager"
+	    memcachedNodes="n1:localhost:11211 n2:localhost:11212"
+	    failoverNodes="n1"
+	    requestUriIgnorePattern=".*\.(png|gif|jpg|css|js)\.cfm$"
+	    sessionBackupAsync="false"
+	    sessionBackupTimeout="100"
+            copyCollectionsForSerialization="true"
+            transcoderFactoryClass="de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory"
+            customConverter="de.javakaffee.web.msm.serializer.kryo.JodaDateTimeRegistration"
+    />
+    
+    Tomcat 1
+    conf/context.xml
+    
+    <Manager pathname="/benchmark" className="de.javakaffee.web.msm.MemcachedBackupSessionManager"
+	    memcachedNodes="n1:localhost:11211 n2:localhost:11212"
+	    failoverNodes="n1"
+	    requestUriIgnorePattern=".*\.(png|gif|jpg|css|js)\.cfm$"
+	    sessionBackupAsync="false"
+	    sessionBackupTimeout="180"
+            copyCollectionsForSerialization="false"
+            transcoderFactoryClass="de.javakaffee.web.msm.JavaSerializationTranscoderFactory"
+    />
+    
+    Tomcat 2
+    conf/context.xml
+    
+	    <Manager pathname="/benchmark" className="de.javakaffee.web.msm.MemcachedBackupSessionManager"
+		    memcachedNodes="n1:localhost:11211 n2:localhost:11212"
+		    failoverNodes="n2"
+		    requestUriIgnorePattern=".*\.(png|gif|jpg|css|js)\.cfm$"
+		    sessionBackupAsync="false"
+		    sessionBackupTimeout="180"
+	            copyCollectionsForSerialization="false"
+	            transcoderFactoryClass="de.javakaffee.web.msm.JavaSerializationTranscoderFactory"
+	    />
+    -->
+
+<!-- 	copyCollectionsForSerialization="false" should be false for javaserialization-->
+
+</Context>

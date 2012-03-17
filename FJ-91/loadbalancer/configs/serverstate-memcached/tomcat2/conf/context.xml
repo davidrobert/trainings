@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    
+    <!-- grava session backup no n1, caso n1 nao está disponivel grava no n2 -->
+    <Manager pathname="/projeto-jsf" className="de.javakaffee.web.msm.MemcachedBackupSessionManager"
+	    memcachedNodes="n1:localhost:11211 n2:localhost:11212"
+	    failoverNodes="n2"
+	    requestUriIgnorePattern=".*\.(png|gif|jpg|css|js)\.cfm$"
+	    sessionBackupAsync="false"
+	    sessionBackupTimeout="180"
+            copyCollectionsForSerialization="false"
+            transcoderFactoryClass="de.javakaffee.web.msm.JavaSerializationTranscoderFactory"
+    />
+	
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!--
+    <Manager pathname="" />
+    -->
+
+    <!-- Uncomment this to enable Comet connection tacking (provides events
+         on session expiration as well as webapp lifecycle) -->
+    <!--
+    <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" />
+    -->
+
+
+    <!-- 
+    <Manager className="de.javakaffee.web.msm.MemcachedBackupSessionManager"
+	    sticky="true"
+	    memcachedNodes="n1:localhost:11211 n2:localhost:11212"
+	    failoverNodes="n2"
+	    requestUriIgnorePattern=".*\.(png|gif|jpg|css|js|ico)$"
+	    sessionBackupAsync="false"
+	    sessionBackupTimeout="100"
+            transcoderFactoryClass="de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory"
+            customConverter="de.javakaffee.web.msm.serializer.kryo.JodaDateTimeRegistration,de.javakaffee.web.msm.serializer.kryo.WicketSerializerFactory"
+    />
+    
+            transcoderFactoryClass="de.javakaffee.web.msm.JavaSerializationTranscoderFactory"
+            transcoderFactoryClass="de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory"
+            transcoderFactoryClass="de.javakaffee.web.msm.serializer.javolution.JavolutionTranscoderFactory"
+            customConverter="de.javakaffee.web.msm.serializer.javolution.JodaDateTimeFormat"
+        transcoderFactoryClass="de.javakaffee.web.msm.serializer.javolution.AaltoTranscoderFactory" -->
+        
+    <!-- 
+        transcoderFactoryClass="de.javakaffee.web.msm.serializer.javolution.JavolutionTranscoderFactory" -->
+    <!-- 
+        transcoderFactoryClass="de.javakaffee.web.msm.serializer.xstream.XStreamTranscoderFactory" -->
+    <!-- 
+        transcoderFactoryClass="de.javakaffee.web.msm.serializer.xstream.XStreamTranscoderFactory" -->
+
+</Context>

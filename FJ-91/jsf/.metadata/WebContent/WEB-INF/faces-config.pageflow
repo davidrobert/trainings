@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf11897165867140" configfile="/fj-91-jsf/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="formulario" x="96" y="143" id="pf11897169761421" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf11897169761432" inlinks="pf11897175145725" path="/formulario.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="lista" x="300" y="143" id="pf11897169761433" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf11897175145725" inlinks="pf11897169761432" path="/lista.jsp"/>
+  <links id="pf11897169761432" target="pf11897169761433" source="pf11897169761421" outcome="ok"/>
+  <links id="pf11897175145725" target="pf11897169761421" source="pf11897169761433" outcome="ok"/>
+</pageflow:Pageflow>

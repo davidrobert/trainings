@@ -1,0 +1,8 @@
+Essa aplicação mostra dois problemas com classloaders:
+
+1) Ao acessar http://localhost:8080/classloader-web/ haverá um NoSuchMethodError no Tomcat 6.
+Isso porque compilamos o projeto usando um JAR da servlet-3.0 mas o Tomcat 6 possui um JAR da 2.5.
+
+2) Ao fazer qualquer reload no contexto, estourará um OutOfMemoryError: PermGen space.
+Estamos carregando milhares de classes na memória e forçando um memory leak com JDBC e
+o Driver do MySQL.

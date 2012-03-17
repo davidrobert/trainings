@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/jersey-core-1.11.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-server-1.11.jar"/>
+	<classpathentry kind="lib" path="lib/asm-3.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/grizzly-http-2.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/grizzly-http-server-2.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-grizzly2-1.11.jar"/>
+	<classpathentry kind="lib" path="lib/grizzly-framework-2.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/hypermedia-action-client-1.11-20111125.151732-18.jar"/>
+	<classpathentry kind="lib" path="lib/hypermedia-action-core-1.11-20111125.151651-19.jar"/>
+	<classpathentry kind="lib" path="lib/hypermedia-action-server-1.11-20111125.151712-18.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-bundle-1.11.jar"/>
+	<classpathentry kind="lib" path="lib/wadl-core-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/jsr311-api-1.1.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

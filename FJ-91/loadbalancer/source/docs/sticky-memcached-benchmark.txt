@@ -1,0 +1,44 @@
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+
+
+Server Software:        Apache-Coyote/1.1
+Server Hostname:        localhost
+Server Port:            8080
+
+Document Path:          /projeto-jsf/produto.xhtml
+Document Length:        7020 bytes
+
+Concurrency Level:      5
+Time taken for tests:   26.861 seconds
+Complete requests:      2000
+Failed requests:        1428
+   (Connect: 0, Receive: 0, Length: 1428, Exceptions: 0)
+Write errors:           0
+Total transferred:      14578174 bytes
+HTML transferred:       14043174 bytes
+Requests per second:    74.46 [#/sec] (mean)
+Time per request:       67.153 [ms] (mean)
+Time per request:       13.431 [ms] (mean, across all concurrent requests)
+Transfer rate:          530.00 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       0
+Processing:    11   67  75.9     47    1209
+Waiting:       11   66  75.6     46    1205
+Total:         11   67  75.9     47    1209
+
+Percentage of the requests served within a certain time (ms)
+  50%     47
+  66%     68
+  75%     83
+  80%     95
+  90%    137
+  95%    181
+  98%    239
+  99%    286
+ 100%   1209 (longest request)

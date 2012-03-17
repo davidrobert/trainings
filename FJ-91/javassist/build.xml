@@ -1,0 +1,23 @@
+<project name="javassist" default="all">
+	<target name="package">
+		<jar basedir="target" includes="**/transformer/*" destfile="transformer.jar">
+			<manifest>
+				<attribute name="Premain-Class" value="br.com.caelum.fj91.transformer.JavassistTransformer"/>
+				<attribute name="Can-Redefine-Classes" value="true"/>
+			</manifest>
+		</jar>
+		<jar basedir="target" includes="**/app/*.class" destfile="app.jar">
+		</jar>
+	</target>
+	<target name="run">
+		<java classname="br.com.caelum.fj91.transformer.Teste" fork="true">
+			<classpath>
+				<fileset dir="lib" includes="*.jar" />
+				<fileset dir="." includes="app.jar" />
+			</classpath>
+			<jvmarg value="-javaagent:transformer.jar"/>
+		</java>
+	</target>
+	<target name="all" depends="package, run">
+	</target>
+</project>

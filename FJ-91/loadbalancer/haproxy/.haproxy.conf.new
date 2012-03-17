@@ -1,0 +1,20 @@
+global
+        daemon
+        maxconn 256
+
+    defaults
+        mode http
+        timeout connect 5000ms
+        timeout client 50000ms
+        timeout server 50000ms
+
+    listen http_proxy 0.0.0.0:8080
+        mode http
+        cookie JSESSIONID prefix
+        balance roundrobin
+        server web1-norm 127.0.0.1:8081 cookie s1 
+        server web2-norm 127.0.0.1:1:8082 cookie s2 
+#        server web1-stop 192.168.1.1:80 cookie s1 check port 80 backup
+#        server web2-stop 192.168.1.2:80 cookie s2 check port 80 backup
+
+

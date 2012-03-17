@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="scala" default="roda-programa" basedir=".">
+	
+	<property name="build.dir" value="bin" />
+	
+	<target name="init">
+		<property name="scala-library.jar" value="lib/scala-library.jar" />
+		<path id="classpath">
+			<pathelement location="${scala-library.jar}" />
+			<pathelement location="bin"   />
+			<pathelement location="${build.dir}" />
+		</path>
+		<taskdef resource="scala/tools/ant/antlib.xml">
+			<classpath>
+				<pathelement location="lib/scala-compiler.jar" />
+				<pathelement location="${scala-library.jar}" />
+			</classpath>
+		</taskdef>
+	</target>
+
+	<target name="build" depends="init, clean">
+		<mkdir dir="${build.dir}" />
+		<scalac srcdir="src/main/scala" destdir="${build.dir}" classpathref="classpath">
+			<include name="**/Produto.scala" />
+		</scalac>
+		<javac srcdir="src/main/java" destdir="${build.dir}" classpathref="classpath" includeantruntime="false">
+			<include name="**/*.java" />
+		</javac>
+		<scalac srcdir="src/main/scala" destdir="${build.dir}" classpathref="classpath">
+			<include name="**/*.scala" />
+		</scalac>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<mkdir dir="${build.dir}" />
+	</target>
+
+	<target name="roda-programa" depends="build">
+		<java fork="true" classname="br.com.caelum.fj91.scala.Programa" classpathref="classpath"></java>
+	</target>
+	
+	<target name="funcional" depends="build">
+		<java fork="true" classname="br.com.caelum.fj91.scala.ProgramaFuncional" classpathref="classpath"></java>
+	</target>
+</project>

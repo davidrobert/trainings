@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context path="/projeto-jsf" distributable="true">
+
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+
+</Context>

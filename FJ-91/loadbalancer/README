@@ -1,0 +1,106 @@
+Objetivo: testar a distribuição de uma web-app jsf
+
+TODO: benchmark com ab  -> resultado do benchmarks tá na pasta docs
+
+Arquitetura:
+-----------
+	haproxy
+      |		|
+tomcat1		tomcat2
+     \		/
+     (session backup)
+
+HAProxy
+-------
+ * tem um pasta haproxy 
+ * pode ser rodado sticky ou non-sticky
+
+5 configurações disponiveis (tem um arquivo readme em cada pasta)
+---------------------------
+
+1) serverstate-session 
+ * projeto jsf com in-memory session-server-state
+ * haproxy foi configurado para ser sticky
+ * nenhuma replicacao, ao mater um tomcat se perde session-state
+ * escalabilidade linear, alta disponibilidade, nao confiavel 
+
+2) serverstate-memcached
+ * haproxy foi configurado para ser sticky (poderia ser non-sticky)
+ * session state é salve no tamcat, e tem um backup no memcached
+ * quando tomcat cai, session é recuperado no memcachde
+ * escalabilidade quase linear, alta disponibilidade, mais confiavel atraves memcached  
+
+3) serverstate-replication
+ * projeto jsf com in-memory session-server-state 
+ * haproxy poderia non-sticky ou sticky (tomcat faz cookie rewriting)
+ * tomcat foi configurado no cluster (faz replication atraves do SessionDeltaManager)
+ * escalabilidade limitada, alta disponibilidade, confiavel  
+ * multicast deve ser configurado corretamente
+
+4) serverstate-database
+ * igual ao memcached mas jdbc persistence
+ * config no context.xml define um PersistenceManager
+ * banco deve ser configurado (arquivo sql na pasta do projeto)
+
+5) clientstate
+ * projeto jsf configurado com client como state-saving-method (server-stateless) 
+ * haproxy foi configurado para ser non-sticky, faz apenas load-balancing
+ * ao matar um tomcat outro responde (HA), e tudo continua funcionando
+ * escalabilidade linear, alta disponibilidade, confiavel, mas aumenta a banda e processamento  
+ * mas nao TODO session state fica no lado do servidor!!!!
+
+Infos gerais:
+-------------
+
+1)haproxy
+* roda na porta 8080
+* config: haproxy.conf sticky e non-sticky
+* backend servers configurado para 8081 e 8082
+
+Para iniciar (dentro na pasta onde tem haproxy.conf):
+$./../haproxy-1.4 -f haproxy-sticky.conf 
+
+ou
+
+$sh run-haproxy.sh
+
+2) Tomcats 
+ * para testar session replication, session distribution via memcached, sticky session e client state
+ * tudo baseado no mesmo tomcat 6.0.32 localizado na raiz
+ * configs especificas se encontram dentro da pasta config
+ * tomcat1 e tomcat2 de cada projeto define config
+ * veja tambem os readme em cada subpasta
+
+Para rodar tomcat1 e tomcat2 (dentro da pasta onde tem haproxy.conf):
+$sh tomcat1/bin/catalina.sh run
+$sh tomcat2/bin/catalina.sh run
+
+
+3) Memcached
+ * deve estar instalado nas maquina (apt-get install memcached)
+
+
+4) projeto-jsf
+ * codigo fonte na pasta source
+ * maven project, pom.xml na raiz
+ * mvn package, ou para testar mvn jetty:run
+ * para fazer deploy: war na pasta webapps do apache-tomcat-6.0.32
+ * no web.xml tem a config sobre STATE_SAVING_METHOD
+
+Para testar (via haproxy):
+http://localhost:8080/projeto-jsf/produto.xhtml
+
+Para acessar tomcat direto:
+http://localhost:8081/projeto-jsf/produto.xhtml
+http://localhost:8082/projeto-jsf/produto.xhtml
+
+
+Fontes: 
+http://www.datadisk.co.uk/html_docs/java_app/tomcat6/tomcat6_clustering.htm
+http://www.tomcatexpert.com/blog/2010/07/12/trick-my-proxy-front-tomcat-haproxy-instead-apache
+http://www.tomcatexpert.com/tags/haproxy
+http://haproxy.1wt.eu/download/1.2/doc/architecture.txt
+http://haproxy.1wt.eu/download/1.4/doc/configuration.txt
+http://code.google.com/p/memcached-session-manager/
+https://github.com/magro/msm-sample-webapp
+

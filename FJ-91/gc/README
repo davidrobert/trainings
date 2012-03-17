@@ -1,0 +1,7 @@
+Esse exercicio estressa o garbage collector criando milhares de objetos e
+segurando suas referencias por um tempo consideravel.
+
+Execute com uma restricao explicita de memoria e analise seu comportamento
+no VisualVM:
+
+  java -Xms100m -Xmx100m EstressaGC

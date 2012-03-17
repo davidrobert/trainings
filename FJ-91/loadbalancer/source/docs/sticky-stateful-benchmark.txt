@@ -1,0 +1,46 @@
+ab -n 2000 -c 5   http://localhost:8080/projeto-jsf/produto.xhtml > sticky-stateful-benchmark.txt
+
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+
+
+Server Software:        Apache-Coyote/1.1
+Server Hostname:        localhost
+Server Port:            8080
+
+Document Path:          /projeto-jsf/produto.xhtml
+Document Length:        7022 bytes
+
+Concurrency Level:      5
+Time taken for tests:   19.254 seconds
+Complete requests:      2000
+Failed requests:        1106
+   (Connect: 0, Receive: 0, Length: 1106, Exceptions: 0)
+Write errors:           0
+Total transferred:      14583158 bytes
+HTML transferred:       14043158 bytes
+Requests per second:    103.88 [#/sec] (mean)
+Time per request:       48.134 [ms] (mean)
+Time per request:       9.627 [ms] (mean, across all concurrent requests)
+Transfer rate:          739.67 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       0
+Processing:     7   48  73.1     39    1476
+Waiting:        7   46  72.9     37    1476
+Total:          7   48  73.1     39    1476
+
+Percentage of the requests served within a certain time (ms)
+  50%     39
+  66%     51
+  75%     59
+  80%     64
+  90%     83
+  95%    103
+  98%    133
+  99%    167
+ 100%   1476 (longest request)

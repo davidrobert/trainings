@@ -1,0 +1,11 @@
+<aspectj>
+
+	<aspects>
+		<aspect name="br.com.caelum.aspect.PrintAspect" />
+	</aspects>
+
+	<!--<weaver options="-verbose -showWeaveInfo">-->
+	<!--	<include within="br.com.caelum.modelo.Produto" />-->
+	<!--</weaver>-->
+
+</aspectj>

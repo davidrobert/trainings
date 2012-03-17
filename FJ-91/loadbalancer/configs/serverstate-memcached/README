@@ -1,0 +1,58 @@
+Config: haproxy (sticky), 2 tomcats (guarda session local em memoria) e memcached para backup da sessao 
+
+
+* alta-diponibilidade e confiavel,  escalavel
+* tambem funciona com non-sticky
+
+	 haproxy (8080)
+	 /            \
+ tomcat1 (8081)   tomcat2 (8082)    
+               \ /
+                x   
+               / \    
+    memcached       memcached
+     (11211)         (11212)        
+
+-> ordem para iniciar 2x memcached, 2x tomcat
+-> precisa ter instalado memcached: apt-get install memcached
+
+Para rodar memcached:
+ memcached -p 11211 -u memcached -m 64 -M -vv
+ memcached -p 11212 -u memcached -m 64 -M -vv
+
+
+Para rodar tomcat1 e tomcat2 
+ ./tomcat1/bin/catalina.sh run
+ ./tomcat2/bin/catalina.sh run
+
+Deve aparecer:
+ MSG: INFO: MemcachedSessionService finished initialization, sticky true, with node ids [n1] and failover node ids [n2]
+
+
+Obs Tomcats:
+ * cada tomcat possui uma config do contexto na pasta conf/context.xml
+ * config define:
+ ** MemcachedBackupSessionManager (para gravar os dados no memcached)
+ ** JavaSerializationTranscoderFactory (usa serializacao padrao, existem alternativas como xstream)
+ ** memcachedNodes e failoverNodes
+ * os jars do SessionManager estao na pasta lib 
+(memcached-session-manager-1.5.1.jar, memcached-session-manager-tc6-1.5.1.jar)
+ * jar do memcached no lib (memcached-2.2.4.jar)
+ * memcached instances nao se conhecem, backup é feito atraves do session manager
+
+Do context.xml
+
+    <!-- sessao é gravado na memoria do tomcat e um backup é gravado no n2 -->
+    <!-- n1 eh failover apenas (nada é replicado entre nodes do memcached) -->
+    <!-- n1 e n2 nao se conhecem, mas o SessionManager conhece :) -->
+    <!-- caso que n2 falha, tomcat grava session state no n1 -->
+    <!-- caso que tomcat falha, sessao será recuperado pelo outro tomcat (n2 faz parte do cookie) -->
+    <Manager pathname="/projeto-jsf" className="de.javakaffee.web.msm.MemcachedBackupSessionManager"
+	    memcachedNodes="n1:localhost:11211 n2:localhost:11212"
+	    failoverNodes="n1"
+	    requestUriIgnorePattern=".*\.(png|gif|jpg|css|js)\.cfm$"
+	    sessionBackupAsync="false"
+	    sessionBackupTimeout="180"
+            copyCollectionsForSerialization="false"
+            transcoderFactoryClass="de.javakaffee.web.msm.JavaSerializationTranscoderFactory"
+    />

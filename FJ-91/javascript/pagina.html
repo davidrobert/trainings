@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<script type="text/javascript" src="src/main/javascript/validacoes.js"></script>
+	</head>
+	<body>
+		<p>
+			Digite algo no campo abaixo e em seguida tire o foco dele (clique em outro lugar na tela).
+		</p>
+		<label>Digite: <input type="text" onblur="fazValidacoes(this)"></label>
+		<script type="text/javascript">
+			function fazValidacoes(element) {
+				var comeca = comecaComMaiuscula(element.value);
+				if(! comeca) {
+					alert('Deveria ter primeira letra maiuscula');
+				}
+				
+				var tamanhoMinimo = 15;
+				var possuiTamanhoMinimo = possuiMinimoDeCaracteres(element.value, tamanhoMinimo);
+				if(! possuiTamanhoMinimo) {
+					alert('Deveria ter ' + tamanhoMinimo + ' caracteres');
+				}
+			}
+		</script>
+	</body>
+</html>

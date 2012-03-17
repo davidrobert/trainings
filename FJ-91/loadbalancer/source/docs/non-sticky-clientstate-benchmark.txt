@@ -1,0 +1,46 @@
+ab -n 2000 -c 5   http://localhost:8080/projeto-jsf-client-state/produto.xhtml > non-sticky-clientstate-benchmark.txt
+
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+
+
+Server Software:        Apache-Coyote/1.1
+Server Hostname:        localhost
+Server Port:            8080
+
+Document Path:          /projeto-jsf-client-state/produto.xhtml
+Document Length:        10129 bytes
+
+Concurrency Level:      5
+Time taken for tests:   20.360 seconds
+Complete requests:      2000
+Failed requests:        1000
+   (Connect: 0, Receive: 0, Length: 1000, Exceptions: 0)
+Write errors:           0
+Total transferred:      20594000 bytes
+HTML transferred:       20266000 bytes
+Requests per second:    98.23 [#/sec] (mean)
+Time per request:       50.900 [ms] (mean)
+Time per request:       10.180 [ms] (mean, across all concurrent requests)
+Transfer rate:          987.79 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       0
+Processing:     8   51  79.2     39    1552
+Waiting:        8   48  78.7     37    1551
+Total:          8   51  79.2     39    1552
+
+Percentage of the requests served within a certain time (ms)
+  50%     39
+  66%     53
+  75%     62
+  80%     69
+  90%     93
+  95%    114
+  98%    144
+  99%    182
+ 100%   1552 (longest request)

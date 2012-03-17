@@ -1,0 +1,3 @@
+Precisa configurar o Eclipse para nao dar erro de compilacao no uso das classes Internal
+do Rhino. Va no Eclipse, Preferences, busque "forbidden", vá em Java/Compiler/Errors e Warnings, 
+Deprecated and Restricted API, desmarca Forbidden Access

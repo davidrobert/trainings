@@ -1,0 +1,37 @@
+Config: Tomcat cluster com session backup no mysql e HAProxy (sticky)
+
+* alta-diponibilidade e confiavel, escalavel (?), desempenho piora 
+
+
+	 haproxy (8080)
+	 /            \
+ tomcat1 (8081)    tomcat2 (8082)  
+	 \	     /
+       mysql (session backup)
+    
+Como testar?
+ * configura mysql 
+ * rodar haproxy e os dois tomcats
+ * acesse a aplicacao e ve qual tomcat respondeu
+ * verifique tambem o banco (select session_id from session), 
+ * a session deve estar gravada no banco (asincrono, pode demorar um pouco)
+ * matar o tomcat que responde (kill -9 pid, nao usar ctrl-c)
+ * tenta acessar a aplicacao, outro tomcat deve recuperar a sessao do bancho
+
+1) tomcats 
+ * em cada tomcat tem um context com session manager configurado
+ * tomcats fazem backup no banco 
+ * com o backup failover do tomcat é possivel
+
+para rodar tomcat1 e tomcat2:
+./tomcat1/bin/catalina.sh run
+./tomcat2/bin/catalina.sh run
+
+2) mysql
+ * tem um sql.txt para configurar o banco
+
+Pelo terminal:
+ mysql -u root
+ use tomcat
+ select session_id from sesssions;
+

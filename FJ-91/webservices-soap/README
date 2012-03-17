@@ -1,0 +1,3 @@
+Com o endpoint em execução, no terminal, dentro do diretório do projeto, execute:
+
+wsimport -d src/ -s src/ -p br.com.caelum.fj91.cliente http://localhost:8080/Dicionario?wsdl

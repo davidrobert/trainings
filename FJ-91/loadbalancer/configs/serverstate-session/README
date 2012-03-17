@@ -1,0 +1,23 @@
+Config: Sticky com session-state no server (nao replicado, sem backup)
+
+* alta-diponibilidade mas não confiavel, escalavel
+* bom desempenho
+
+	     haproxy (8080)
+	    /       	 \
+     tomcat1 (8081)       tomcat2 (8082)     
+    (session state)  	  (session state)
+
+
+Exemplo sticky cookie (configurado no haproxy.conf):
+ JSESSIONID=tomcat2~A7D83AEC756577D29B27BDA329E60C80
+
+
+Tomcats
+ * nada especial
+
+Para rodar
+ ./tomcat1/bin/catalina.sh run
+ ./tomcat2/bin/catalina.sh run
+
+

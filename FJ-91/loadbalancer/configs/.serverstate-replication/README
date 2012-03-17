@@ -1,0 +1,35 @@
+Config: Tomcat cluster com session replication (DeltaManager) e HAProxy (sticky)
+
+* alta-diponibilidade e confiavel, nao é escalavel
+
+	 haproxy (8080)
+	 /            \
+ tomcat1 (8081) <-> tomcat2 (8082)      
+
+-> ordem para iniciar 2x tomcat, haproxy
+      
+
+tomcats (session replication, HA junto com haproxy)
+ * cada tomcat possui uma config do contexto na pasta conf/context.xml
+ * cada contexto "/projeto-jsf" é configurado como distributable (distributable="true")
+ * server.xml define jvmRoute (<Engine name="Catalina" defaultHost="localhost" jvmRoute="jvm1">)
+ * Configurar tambem a tag Cluster dentro da Engine (SimpleTCPCluster)
+
+para rodar tomcat1 e tomcat2:
+./tomcat1/bin/catalina.sh run
+./tomcat2/bin/catalina.sh run
+
+
+TODO Config MULTICAST:
+
+Habilitar:
+sudo  ifconfig wlan0 multicast
+
+Routa:
+sudo route add -host 228.0.0.4 dev wlan0
+route -n
+
+TODO:
+é preciso configurar uma rota para multicast
+
+

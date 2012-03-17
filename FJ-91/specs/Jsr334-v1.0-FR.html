@@ -1,0 +1,1906 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Project Coin/JSR 334 Final Release Specification, v1.0</title> 
+</head>
+
+<body>
+
+<h1>Project Coin/JSR 334 Final Release Specification, v1.0</h1>
+
+<h1>Table of Contents</h1>
+
+<ul>
+
+<li><a href="#overview">Overview</a>
+
+<li><a href="#features">Features</a>
+
+<li><a href="#changelog">Changelog</a>
+
+<li><a href="#appendix">Appendix &mdash; JSR 269 language model</a>
+
+</ul>
+
+<h1><a name=overview>Overview</a></h1>
+
+<p>
+
+Project Coin/JSR 334 is an effort to add a set of small language
+changes to Java SE 7 under the <a
+href="http://www.jcp.org/en/jsr/summary?id=336">JSR 336 umbrella
+JSR</a> with the reference implementation developed in <a
+href="http://openjdk.java.net/projects/jdk7/">OpenJDK</a>.
+
+The changes must be simultaneously small in specification,
+implementation, and testing.
+
+The small changes to the Java programming language in Java SE 7 are:
+
+</p>
+
+<ul>
+
+<li><p><a href=#string_switch>Strings in switch</a>
+</p>
+
+<li><p><a href=#literals>Binary integral literals and
+underscores in numeric literals</a>
+</p>
+
+<li><p><a href=#multi_catch>Multi-catch and more precise rethrow</a>
+</p>
+
+<li><p><a href=#diamond>Improved Type Inference for Generic Instance Creation (diamond)</a>
+</p>
+
+<li><p><a href=#try_with_resources><code>try</code>-with-resources statement</a>
+</p>
+
+<li><p><a href=#varargs>Simplified Varargs Method Invocation</a>
+</p>
+
+</ul>
+
+<p>
+
+The specification for each feature will follow or be cited.
+
+Non-normative discussion will appear in block quotes as below:
+
+</p>
+
+<blockquote>
+<hr>
+<p><b>Discussion:</b>
+
+Text appearing here is informative and <em>not</em> part of the specification.
+
+</p>
+<hr>
+</blockquote>
+
+<p>
+
+The specification for a language change includes updates to the <i><a
+href="http://java.sun.com/docs/books/jls/">Java&trade; Language
+Specification</a></i> (JLS), both normative and informative, and may
+also include supporting library changes.
+
+In this document, a section citation such as &sect;1.2.3 refers to the
+corresponding section of the full JLS logically associated with this
+document, which is a accompanying pdf file in annex 3 of the <a
+href="http://jcp.org/aboutJava/communityprocess/final/jsr336/index.html">JSR
+336 final release</a>.
+
+The exact JLS changes appear in green text in the associated pdf file
+for the proposed final draft of this JSR.
+
+Other language changes being made in Java SE 7 are represented in
+different colors in the JLS draft; the full color key is:
+
+</p>
+
+<dl>
+
+<dt style="color:green">green:</dt>
+<dd>changes associated with JSR 334</dd>
+
+<dt style="color:red">red:</dt>
+
+<dd>new text in the Java SE 7 Edition of the JLS added under
+maintenance</dd>
+
+<dt style="color:blue">blue:</dt>
+<dd>text changed under maintenance
+with respect to the Third Edition of the JLS</dd>
+
+<dt style="color:purple">purple:</dt>
+<dd> changes associated with <a
+href="http://www.jcp.org/en/jsr/summary?id=292">JSR 292</a></dd>
+
+</dl>
+
+<p>
+
+Readers should review the discussion section of a feature before
+sending in a comment or question about that feature.
+
+Previous discussions of design considerations may appear in the
+<a href="http://mail.openjdk.java.net/mailman/listinfo/coin-dev"
+title="OpenJDK coin-dev archive"><code>coin-dev</code> archives</a>.
+
+</p>
+
+<p>
+
+For informational purposes, a summary of changes to the JSR 269 API in
+the <code>javax.lang.model.*</code> packages is given in an appendix.
+
+Some of the changes were made to directly support new language
+features; other changes are usability improvements to the API.
+
+These changes have gone through a <a
+href="http://jcp.org/aboutJava/communityprocess/maintenance/jsr269/index.html">maintenance
+review of JSR 269</a> for inclusion in the JSR 336 umbrella JSR for
+Java SE 7.
+
+</p>
+
+
+<h1><a name=features>Features</a></h1>
+
+<h2><a name=string_switch>Strings in switch</a></h2>
+
+<p>
+
+The list of types which can be switched on in &sect;14.11 "The switch
+Statement" is augmented to include <code>String</code>.
+
+</p>
+
+<p>
+
+No other explicit changes are necessary to support switching on a string.
+
+</p>
+
+<blockquote>
+<hr>
+<p><b>Discussion:</b>
+
+The lexical grammar of the switch statement does not need to be
+changed to support switching on a string since the <code>String</code>
+is already included in the definition of constant expressions, 
+&sect;15.28, so the <i>SwitchLabel</i> production does not need to be
+augmented.
+
+The existing restrictions in  &sect;14.11 on no duplicate labels,
+at most one default, no <code>null</code> labels, etc. all apply to
+<code>String</code> labels without modification.
+
+The definite assignment analysis of the switch statement, 
+&sect;16.2.9, is unchanged as well.
+
+</p>
+
+<p>
+
+The prohibition on duplicate string labels applies <em>after</em> any
+encoding step which maps a sequence of bytes of the input file to a
+sequence of logical characters and after the specified Unicode escape
+lexical translations (&sect;3.2) are applied.
+
+Therefore, labels that are textually distinct in the source code may
+still be regarded as being duplicates after these translations occur.
+
+Whether or not string labels are distinct may depend on the encoding
+used by the compiler to interpret the bytes of the input sources.
+
+</p>
+
+<p>
+
+In order to keep strings in switch a small language change, the JVM
+<i>lookupswitch</i> and <i>tableswitch</i> instructions in Java SE 7
+do <em>not</em> support switching on a string.
+
+Instead, Java compilers are responsible for translating a switch on
+strings into some sequence of byte code instructions with the proper
+semantics.
+
+Many valid and efficient translation schemes are possible that have
+better expected performance than successive comparisons of the string
+being switched on with each <code>case</code> label constant.
+
+Direct JVM support for switching on a string may be added in a future
+version of the platform.
+
+</p>
+<hr>
+</blockquote>
+
+<!-- #################################################################### -->
+
+<h2><a name=literals>Binary integral literals and underscores in
+numeric literals</a></h2>
+
+<p>
+
+Binary integer literals are structured just like hexadecimal integer
+literals except that binary digits are used instead of hexadecimal
+digits and binary literals are prefixed by "<code>0b</code>" or
+"<code>0B</code>" rather than "<code>0x</code>" or "<code>0X</code>".
+
+</p>
+
+<p>
+
+In numeric literals, underscores are allowed as separators
+<em>between</em> digits.
+
+This applies to literals in any supported base: binary, octal,
+hexadecimal, or decimal and applies both to integer literals
+(&sect;3.10.1) and floating-point literals (&sect;3.10.2).
+
+</p>
+
+<p>
+
+The grammatical changes for this feature are additions and
+modifications to &sect;3.10.1 and &sect;3.10.2.
+
+No other language changes are necessary to support the new literal
+syntax.
+
+</p>
+
+<blockquote>
+<hr>
+<p><b>Discussion:</b>
+
+The grammar changes imply underscores as separators are supported both
+in integral literals, for <code>int</code> and <code>long</code>, as
+well as for floating-point literals without explicit grammar changes
+to the section describing floating-point literals.
+
+Therefore allowed uses of underscores include:
+
+<ul>
+
+<li><p><code>1234_5678</code>
+</p>
+
+<li><p><code>1_2_3_4__5_6_7_8L</code>
+</p>
+
+<li><p><code>0b0001_0010_0100_1000</code>
+</p>
+
+
+<li><p><code>3.141_592_653_589_793d</code>
+</p>
+
+<li><p><code>0x1.ffff_ffff_ffff_fP1_023 // Double.MAX_VALUE</code>
+</p>
+
+
+</ul>
+
+<p>
+
+while <em>disallowed</em> uses of underscores include:
+
+</p>
+
+<ul>
+
+<li><p><code>_1234</code>  
+</p>
+
+<li><p><code>0x_1234</code>
+</p>
+
+<li><p><code>1234_</code>
+</p>
+
+<li><p><code>0x1.0_p_-1022</code>
+</p>
+
+</ul>
+
+<p>
+
+The grammar above for the literals is unambiguous, but as written
+requires a lookahead of more than 1 character because the recursion is
+in the middle of the <i>Digits</i> production.
+
+Since the underscores are separators, productions like
+
+</p>
+
+<blockquote>
+<dl>
+<dt><i>Digits:</i></dt>
+<dd><i>Digit DigitsAndUnderscores<sub>opt</sub></i></dd>
+</dl>
+</blockquote>
+
+<p>
+
+would <em>not</em> be correct since an underscore could appear as a terminator
+of the literal.
+
+Since the lexical grammar has expository purposes, no attempt has
+been made to refactor the grammar to restore a look ahead of 1.
+
+In addition, in practice the underscores may be purged with a small
+amount of additional logic in a compiler's scanner as opposed to its
+parser proper.
+
+</p>
+
+<p>
+
+Since the leading "<code>0</code>" used to specify an octal literal is
+itself a digit, underscores are allowed between the leading
+<code>0</code> and subsequent value-carrying digits of an octal
+literal.
+
+This differs from the treatment of the hexadecimal and binary literal
+specifiers, "<code>0x</code>" and "<code>0b</code>", which are not
+made up entirely of digit characters of the base in question.
+
+</p>
+
+<p>
+
+The expert group discussed limiting underscores between digits to a
+single underscore rather than the multiple underscores currently
+allowed.
+
+The kernel of the single-underscore grammar would be:
+
+</p>
+
+<blockquote>
+<dl>
+<dt><i>Digits:</i></dt>
+<dd><i>DigitsAndUnderscores<sub>opt</sub> Digit</i></dd>
+</dl>
+
+<dl>
+<dt><i>DigitsAndUnderscores:</i></dt>
+<dd><i>Digit Underscore<sub>opt</sub> DigitsAndUnderscores<sub>opt</sub></i></dd>
+</dl>
+
+<dl>
+<dt><i>Underscore:</i></dt>
+<dd><code>_</code></dd>
+</dl>
+
+</blockquote>
+
+<p>
+
+Allowing at most one underscore could prevent some abuses of the
+feature, at the cost of outlawing some potentially helpful syntactic
+alignment and introducing a restriction on underscores not present in
+the use of underscores in identifier names.
+
+In the end, repeated underscores were allowed between digits.
+
+</p>
+
+
+<p>
+
+Currently the methods in the <code>java.lang</code> package that
+convert strings to primitive numeric values do <em>not</em> support
+converting inputs strings with underscores (<a
+href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6863378"
+title="Project Coin: Consider library support for underscores in
+numbers">Oracle bug 6863378</a>).
+
+This capability might be added in the future.
+
+</p>
+
+<hr>
+</blockquote>
+
+
+<!-- #################################################################### -->
+
+<h2><a name=multi_catch>Multi-catch and more precise rethrow</a></h2>
+
+<p>
+
+Two changes are made to exception handling.
+
+First, multiple exception types can be named as being handled by a
+single <code>catch</code> block.
+
+The grammar of a <code>catch</code> clause of a <code>try</code>
+statement (&sect;14.20) is extended to allow a series of exception
+types, separated by the "OR" operator symbol, "<code>|</code>", to be
+used in the declaration of the exception parameter.
+
+Second, if an exception parameter is not modified and if it is
+rethrown inside the <code>catch</code> block, the compiler applies a
+more precise analysis to determine the type of what can be thrown.
+
+Informally, if the <code>catch</code> parameter is not modified and if
+the exception is rethrown, the compiler knows the exception is one of
+the exceptions throwable by the <code>try</code> block and not already
+handled by some earlier <code>catch</code> block.
+
+This determination of the types that can be thrown can be more
+precise, meaning more specific than, the declared type of the
+<code>catch</code> parameter.
+
+</p>
+
+<p>
+
+Specification changes to support these changes to exception handling
+are made in the following sections of the JLS:
+
+</p>
+
+<ul>
+
+<li><p>&sect;4.12.4 "<code>final</code> Variables"
+</p>
+
+<li><p>&sect;11.2.2 "Exception Analysis of Statements"
+</p>
+
+<li><p>&sect;11.2.3 "Exception Checking"
+</p>
+
+<li><p>&sect;13.4.4 "Superclasses and Superinterfaces"
+</p>
+
+<li><p>&sect;14.20 "The <code>try</code> statement"
+</p>
+
+<li><p>&sect;18 "Syntax"
+</p>
+
+</ul>
+ 
+<blockquote>
+<hr>
+<p><b>Discussion:</b>
+
+Since it is implicitly final, an explicit <code>final</code> on a multi-catch
+exception parameter is legal, but discouraged as a matter of style.
+
+</p>
+
+<p>
+
+There are contrived cases where the more precise exception analysis
+can stop compilation of currently valid programs (by the compiler
+identifying more dead code); one example is:
+
+</p>
+ 
+<pre>
+try {
+   throw new DaughterOfFoo();
+} catch (Foo e) {
+   try {
+      throw e; // used to throw Foo, now throws DaughterOfFoo
+   } catch (SonOfFoo anotherException) { // Reachable?
+   }
+}
+</pre>
+
+<p>
+
+This will compile under source 6 and earlier using the imprecise
+analysis (the rethrow of <code>e</code> is regarded as being
+<code>Foo</code> or some subclass of <code>Foo</code>), but will not
+compile under the more precise analysis since the compiler will
+correctly view "<code>catch (SonOfFoo ...)</code>" as unreachable.
+ 
+An examination of millions of lines of code in a diverse set of
+projects, including dozens of members of the <a
+href="http://qualitascorpus.com/">Qualitas Corpus</a> and the JDK,
+found no instances where these conditions occurred.
+
+Therefore, using a more precise exception analysis when recompiling
+existing code is viewed as having acceptable source compatibility
+risk.
+
+If the source can be modified, removing the dead code from the code
+would resolve the problem.
+
+</p>
+
+<p>
+
+Fuller support for union types may be added in future releases;
+forcing union <code>catch</code> parameters to be implicitly or
+explicitly <code>final</code> preserves flexibility in evolving the
+language if fuller support is added in the future.
+
+</p>
+
+<p>
+
+The exception alternatives in multi-<code>catch</code> clause must be
+disjoint, one cannot be a subclass of another.
+
+In particular, since a type is a subtype of itself, it is illegal to
+have duplicated class types in the declaration of an exception
+parameter.
+
+It would be possible to define reasonable semantics when a true
+superclass/subclass relationship existed between two alternatives,
+namely to logically remove the subclass from the list of alternatives.
+
+While allowing superclass/subclass exceptions would provide source
+compatibility robustness to changes in exception hierarchies,
+prohibition of superclass/subclass relationships offers a number of
+design advantages.
+
+First, if deemed helpful, such relationships can be allowed in future
+releases in a compatible fashion.
+
+Second, since the exceptions types are disjoint, the results of a
+semantic translation to uni-<code>catch</code> clauses are independent
+of the ordering of the alternatives.
+
+(If superclass/subclass relationships were supported, either the
+subclasses would have to be removed before such a translations or a
+topological sort of the exception types would need to be performed,
+putting superclasses after subclasses.)
+
+</p>
+
+<p>
+
+The revised exception analysis for <code>final</code> and effectively
+<code>final</code> <code>catch</code> parameters is more precise than
+the previously defined analysis.
+
+Therefore, when the new analysis is applied to existing code, all
+<code>throws</code> clauses on methods and constructors remain valid.
+
+</p>
+
+<hr>
+</blockquote>
+
+
+<!-- #################################################################### -->
+
+<h2><a name=diamond>Improved Type Inference for Generic Instance Creation (diamond)</a></h2>
+
+<p>
+
+The diamond language change allows explicit type arguments to
+constructors of parameterized classes, most notably collections, to be
+omitted in many situations since the compiler is able to infer the
+arguments on behalf of the programmer.
+
+</p>
+
+<p>
+
+The grammatical and other changes to support diamond occur in:
+
+</p>
+
+<ul>
+
+<li><p>&sect;15.9 "Class Instance Creation Expressions"
+</p>
+
+<li><p>&sect;15.9.1 "Determining the Class being Instantiated"
+</p>
+
+<li><p>&sect;15.9.3 "Choosing the Constructor and its Arguments"
+</p>
+
+<li><p>&sect;18 "Syntax"
+</p>
+
+</ul>
+
+
+
+<blockquote>
+<hr>
+<p><b>Discussion:</b>
+
+Syntacticly, <i>ClassOrInterfaceType</i> expands to either a
+<i>ClassType</i> or <i>InterfaceType</i> (&sect;4.3).
+
+Both <i>ClassType</i> and <i>InterfaceType</i> then in turn expand to
+<br> <i>TypeDeclSpecifier TypeArguments<sub>opt</sub></i><br>
+
+Therefore, "inlining" <i>TypeDeclSpecifier</i> for
+<i>ClassOrInterfaceType</i> followed by an optional
+<i>TypeArgumentsOrDiamond</i> captures the desired syntax.
+
+</p>
+
+<p>
+
+Raw types have an existing meaning in Java programs and it is useful
+to maintain a distinction between raw types (hopefully in legacy code)
+and types inferred by the compiler.
+
+Therefore, the diamond syntax is used to mark locations where type
+inference is requested as opposed to interpreting all instances of raw
+types as inference sites.
+
+</p>
+
+<p>
+
+Constructors with explicit type arguments can be assigned to variables
+having a raw type or a type with a wildcard:
+
+</p>
+
+<blockquote><pre>
+
+List    rawList  = new ArrayList&lt;Object&gt;(); // Raw types discouraged, but legal
+List&lt;?&gt; wildList = new ArrayList&lt;Object&gt;(); 
+
+</pre></blockquote>
+
+
+<p>
+
+Consquently, diamond can be used on the left hand side of an
+assignment where the right hand size uses a raw type or a type with a
+wildcard:
+
+</p>
+
+<blockquote><pre>
+
+List    rawList  = new ArrayList&lt;&gt;(); // Raw types strongly discouraged with diamond, but legal
+List&lt;?&gt; wildList = new ArrayList&lt;&gt;(); 
+
+</pre></blockquote>
+
+
+<p>
+
+In both cases, the compiler infers <code>Object</code> as the value of
+type argument for the constructor.
+
+This result is implied by the rules contained in  &sect;15.12.2.
+
+Allowing diamond in such locations eases retrofitting existing code to
+use diamond.
+
+</p>
+
+
+<p>
+
+Internally, a Java compiler operates over a richer set of types than
+those that can be written down explicitly in a Java program.
+
+The compiler-internal types which cannot be written in a Java program
+are called <em>non-denotable</em> types.
+
+Non-denotable types can occur as the result of the inference used by
+diamond.
+
+Therefore, using diamond with anonymous inner classes is <em>not</em>
+supported since doing so in general would require extensions to the
+class file signature attribute to represent non-denotable types, a de
+facto JVM change.
+
+It is feasible that future platform versions could allow use of
+diamond when creating an anonymous inner class as long as the inferred
+type was denotable.
+
+</p>
+
+<hr>
+</blockquote>
+
+
+<!-- #################################################################### -->
+
+<h2><a name=try_with_resources><code>try</code>-with-resources statement</a></h2>
+
+<p>
+
+The <code>try</code>-with-resources feature includes a suite of
+language and library changes to ease management of objects that
+require an explicit call to a <code>close</code> to free up some
+underlying resource when the object is no longer in use.
+
+Typical objects whose correct management can be assisted by
+<code>try</code>-with-resources include input streams and output
+streams where native operating system resources need to be explicitly
+freed since they are not managed by garbage collection.
+
+</p>
+
+<p>
+
+The supporting library changes for <code>try</code>-with-resources
+feature are:
+
+</p>
+
+<ul>
+
+<li><p>A new interface <code>java.lang.AutoCloseable</code>.
+</p>
+
+<li><p>Libraries retrofitted to implement the new interface.
+</p>
+
+<li><p>Facilities to manage <i>suppressed exceptions</i> on
+<code>java.lang.Throwable</code>.
+</p>
+
+</ul>
+
+<p>
+
+The new interface <code>java.lang.AutoCloseable</code>:
+
+</p>
+
+<blockquote>
+<pre>
+package java.lang;
+
+/**
+ * A resource that must be closed when it is no longer needed.
+ *
+ * @since 1.7
+ */
+public interface AutoCloseable {
+    /**
+     * Closes this resource, relinquishing any underlying resources.
+     * This method is invoked automatically on objects managed by the
+     * {@code try}-with-resources statement.
+     *
+     * &lt;p&gt;While this interface method is declared to throw {@code
+     * Exception}, implementers are <em>strongly</em> encouraged to
+     * declare concrete implementations of the {@code close} method to
+     * throw more specific exceptions, or to throw no exception at all
+     * if the close operation cannot fail.
+     *
+     * &lt;p&gt;<em>Implementers of this interface are also strongly advised
+     * to not have the {@code close} method throw {@link
+     * InterruptedException}.</em>
+     *
+     * This exception interacts with a thread's interrupted status,
+     * and runtime misbehavior is likely to occur if an {@code
+     * InterruptedException} is {@linkplain Throwable#addSuppressed
+     * suppressed}.
+     *
+     * More generally, if it would cause problems for an
+     * exception to be suppressed, the {@code AutoCloseable.close}
+     * method should not throw it.
+     *
+     * &lt;p&gt;Note that unlike the {@link java.io.Closeable#close close}
+     * method of {@link java.io.Closeable}, this {@code close} method
+     * is <em>not</em> required to be idempotent.  In other words,
+     * calling this {@code close} method more than once may have some
+     * visible side effect, unlike {@code Closeable.close} which is
+     * required to have no effect if called more than once.
+     *
+     * However, implementers of this interface are strongly encouraged
+     * to make their {@code close} methods idempotent.
+     *
+     * @throws Exception if this resource cannot be closed
+     */
+    void close() throws Exception;
+}
+</pre>
+</blockquote>
+
+<p>
+
+Types directly implementing or extending <code>java.lang.AutoCloseable</code>:
+
+</p>
+
+<ul>
+
+<li><p><code>java.beans.XMLDecoder
+</code></p>
+
+<li><p><code>java.beans.XMLEncoder
+</code></p>
+
+<li><p><code>java.io.Closeable
+</code></p>
+
+<li><p><code>java.io.ObjectInput
+</code></p>
+
+<li><p><code>java.io.ObjectOutput
+</code></p>
+
+<li><p><code>java.sql.Connection
+</code></p>
+
+<li><p><code>java.sql.ResultSet
+</code></p>
+
+<li><p><code>java.sql.Statement
+</code></p>
+
+<li><p><code>java.nio.channels.FileLock
+</code> (with an added <code>close</code> method)</p>
+
+<li><p><code>javax.sound.midi.MidiDevice
+</code></p>
+
+<li><p><code>javax.sound.midi.Receiver
+</code></p>
+
+<li><p><code>javax.sound.midi.Transmitter
+</code></p>
+
+<li><p><code>javax.sound.sampled.Line
+</code></p>
+
+</ul>
+
+<p>
+
+Types newly implementing or extending <code>java.io.Closeable</code>:
+
+</p>
+
+<ul>
+
+<li><p><code>java.util.Scanner
+</code></p>
+
+<li><p><code>javax.imageio.stream.ImageInputStream
+</code></p>
+
+</ul>
+
+
+<p>
+
+One constructor and two new methods are added to
+<code>java.lang.Throwable</code> to manage suppressed exceptions; in
+addition, the serial format is updated:
+
+</p>
+
+<blockquote><pre>
+    /**
+     * Constructs a new throwable with the specified detail message,
+     * cause, {@linkplain #addSuppressed suppression} enabled or
+     * disabled, and writable stack trace enabled or disabled.  If
+     * suppression is disabled, {@link #getSuppressed} for this object
+     * will return a zero-length array and calls to {@link
+     * #addSuppressed} that would otherwise append an exception to the
+     * suppressed list will have no effect.  If the writable stack
+     * trace is false, this constructor will not call {@link
+     * #fillInStackTrace()}, a {@code null} will be written to the
+     * {@code stackTrace} field, and subsequent calls to {@code
+     * fillInStackTrace} and {@link
+     * #setStackTrace(StackTraceElement[])} will not set the stack
+     * trace.  If the writable stack trace is false, {@link
+     * #getStackTrace} will return a zero length array.
+     *
+     * &lt;p&gt;Note that the other constructors of {@code Throwable} treat
+     * suppression as being enabled and the stack trace as being
+     * writable.  Subclasses of {@code Throwable} should document any
+     * conditions under which suppression is disabled and document
+     * conditions under which the stack trace is not writable.
+     * Disabling of suppression should only occur in exceptional
+     * circumstances where special requirements exist, such as a
+     * virtual machine reusing exception objects under low-memory
+     * situations. Circumstances where a given exception object is
+     * repeatedly caught and rethrown, such as to implement control
+     * flow between two sub-systems, is another situation where
+     * immutable throwable objects would be appropriate. 
+     *
+     * @param  message the detail message.
+     * @param cause the cause.  (A {@code null} value is permitted,
+     * and indicates that the cause is nonexistent or unknown.)
+     * @param enableSuppression whether or not suppression is enabled or disabled
+     * @param writableStackTrace whether or not the stack trace should be
+     *                           writable
+     *
+     * @see OutOfMemoryError
+     * @see NullPointerException
+     * @see ArithmeticException
+     * @since 1.7
+     */
+    protected Throwable(String message, Throwable cause,
+                        boolean enableSuppression,
+                        boolean writableStackTrace)
+
+    /**
+     * The list of suppressed exceptions, as returned by {@link
+     * #getSuppressed()}.  The list is initialized to a zero-element
+     * unmodifiable sentinel list.  When a serialized Throwable is
+     * read in, if the {@code suppressedExceptions} field points to a
+     * zero-element list, the field is reset to the sentinel value.
+     *
+     * @serial
+     * @since 1.7
+     */
+    private List&lt;Throwable&gt; suppressedExceptions = SUPPRESSED_SENTINEL;
+
+    /**
+     * Appends the specified exception to the exceptions that were
+     * suppressed in order to deliver this exception. This method is
+     * thread-safe and typically called (automatically and implicitly)
+     * by the {@code try}-with-resources statement.
+     *
+     * &lt;p&gt;The suppression behavior is enabled <em>unless</em> disabled
+     * {@linkplain #Throwable(String, Throwable, boolean) via a
+     * constructor}. When suppression is disabled, this method does
+     * nothing other than to validate its argument.
+     *
+     * &lt;p&gt;Note that when one exception {@linkplain
+     * #initCause(Throwable) causes} another exception, the first
+     * exception is usually caught and then the second exception is
+     * thrown in response.  In other words, there is a causal
+     * connection between the two exceptions.
+     *
+     * In contrast, there are situations where two independent
+     * exceptions can be thrown in sibling code blocks, in particular
+     * in the {@code try} block of a {@code try}-with-resources
+     * statement and the compiler-generated {@code finally} block
+     * which closes the resource.
+     *
+     * In these situations, only one of the thrown exceptions can be
+     * propagated.  In the {@code try}-with-resources statement, when
+     * there are two such exceptions, the exception originating from
+     * the {@code try} block is propagated and the exception from the
+     * {@code finally} block is added to the list of exceptions
+     * suppressed by the exception from the {@code try} block.  As an
+     * exception unwinds the stack, it can accumulate multiple
+     * suppressed exceptions.
+     *
+     * &lt;p&gt;An exception may have suppressed exceptions while also being
+     * caused by another exception.  Whether or not an exception has a
+     * cause is semantically known at the time of its creation, unlike
+     * whether or not an exception will suppress other exceptions
+     * which is typically only determined after an exception is
+     * thrown.
+     *
+     * &lt;p&gt;Note that programmer written code is also able to take
+     * advantage of calling this method in situations where there are
+     * multiple sibling exceptions and only one can be propagated.
+     *
+     * @param exception the exception to be added to the list of
+     *        suppressed exceptions
+     * @throws IllegalArgumentException if {@code exception} is this
+     *         throwable; a throwable cannot suppress itself.
+     * @throws NullPointerException if {@code exception} is {@code null}
+     * @since 1.7
+     */
+    public final void addSuppressed(Throwable exception)
+
+    /**
+     * Returns an array containing all of the exceptions that were
+     * suppressed, typically by the {@code try}-with-resources
+     * statement, in order to deliver this exception.
+     *
+     * If no exceptions were suppressed or {@linkplain
+     * Throwable(String, Throwable, boolean) suppression is disabled},
+     * an empty array is returned. This method is
+     * thread-safe. Writes to the returned array do not affect future
+     * calls to this method.
+     *
+     * @return an array containing all of the exceptions that were
+     *         suppressed to deliver this exception.
+     * @since 1.7
+     */
+    public final Throwable[] getSuppressed()
+
+    // Added explicit specification for readObject.
+    /**
+     * Reads a {@code Throwable} from a stream, enforcing
+     * well-formedness constraints on fields.  Null entries and
+     * self-pointers are not allowed in the list of {@code
+     * suppressedExceptions}.  Null entries are not allowed for stack
+     * trace elements.
+     *
+     * Note that there are no constraints on the value the {@code
+     * cause} field can hold; both {@code null} and {@code this} are
+     * valid values for the field.
+     */
+    private void readObject(ObjectInputStream s)
+
+
+    /**
+     * Write a {@code Throwable} object to a stream.
+     *
+     * A {@code null} stack trace field is represented in the serial
+     * form as a one-element array whose element is equal to {@code
+     * new StackTraceElement("", "", null, Integer.MIN_VALUE)}.
+     */
+    private void writeObject(ObjectOutputStream s)
+
+   /**
+     * The stack trace, as returned by {@link #getStackTrace()}.
+     * The field is initialized to a zero-length array. A {@code
+     * null} value of this field indicates subsequent calls to {@link
+     * #setStackTrace(StackTraceElement[])} and {@link
+     * #fillInStackTrace()} will be be no-ops.
+     *
+     * @serial
+     * @since 1.4
+    private StackTraceElement[] stackTrace;
+</pre></blockquote>
+
+<p>
+
+Three <code>Throwable</code> subclasses in <code>java.lang</code> have
+a disclaimer added that their objects may be constructed by the
+virtual machine as if suppression were disabled:
+
+</p>
+
+<ul>
+
+<li><p><code>java.lang.ArithmeticException
+</code></p>
+
+<li><p><code>java.lang.NullPointerException
+</code></p>
+
+<li><p><code>java.lang.OutOfMemoryError
+</code></p>
+
+</ul>
+
+<hr>
+<p>
+
+The language specification changes for <code>try</code>-with-resources
+affect the following sections of JLS:
+
+</p>
+
+<ul>
+
+<li><p>&sect;4.12.4 "<code>final</code> Variables"
+</p>
+
+<li><p>&sect;6.3 "Scope of a Declaration"
+</p>
+
+<li><p>&sect;6.4 "Shadowing and Obscuring"
+</p>
+
+<li><p>&sect;11.2.2 "Exception Analysis of Statements"
+</p>
+
+<li><p>&sect;14.20 "The <code>try</code> statement"
+</p>
+
+<li><p>&sect;14.20.3 "<code>try</code>-with-resources" (new section)
+</p>
+
+<li><p>&sect;18 "Syntax"
+</p>
+
+</ul>
+
+<hr>
+
+<blockquote>
+<hr>
+<p><b>Discussion:</b>
+
+The <code>Throwable.printStackTrace</code> family of methods have
+their expected behavior updated to include displaying information
+about suppressed exceptions.
+
+</p>
+
+<p>
+
+An implication of the combined grammar is that a <code>try</code>
+statement must have at least one of a <code>catch</code> clause, a
+<code>finally</code> block, and a resource specification.
+
+Furthermore, it is permissible for a <code>try</code> statement to
+have exactly one of these three components.
+
+</p>
+
+<p>The grammar for a declared resource is<br>
+
+<i>VariableModifiers<sub>opt</sub> Type VariableDeclaratorId</i> <code>=</code> <i>Expression</i><br>
+rather than the simpler
+<i>LocalVariableDeclaration</i><br>
+to disallow code like<br>
+<code>AutoCloseable a, b, c</code><br>
+which is not useful in this context since the variables have to be initialized.
+
+A suggested grammatical extension has been to allow multiple resources
+to share the declared resource type as in
+
+</p>
+
+<blockquote><pre>
+// Suggested syntax extension
+try(Resource r0 = new Resource(), // Comma separating resources
+    r1 = new Resource()) {        // with a shared type
+    //...
+}
+</pre></blockquote>
+
+<p>
+
+However, this has been judged to be a change with low utility since
+managing multiple resource of the same type is expected to be
+relatively uncommon.
+
+In many cases where multiple resources are managed, one resource is a
+wrapper around an underlying resource.
+
+</p>
+
+<p> The exception behavior of <code>close</code> methods is accounted
+for in determining the set of exceptions a
+<code>try</code>-with-resources statement can throw.
+
+</p>
+
+<p>
+
+By design, no special accommodations are made to deal with the
+<code>ThreadDeath</code> error which is spawned by the long-deprecated
+<code>Thead.stop</code> method.
+
+</p>
+
+<p>
+
+Resource declarations in a resource specification are implicitly
+<code>final</code>.
+
+For consistency with existing declarations that have implicit
+modifiers, it is legal (though discouraged) for a programmer to
+provide an explicit "<code>final</code>" modifier.
+
+By having resource declarations be implicitly or explicitly
+<code>final</code>, a source of resource leaks and potentially
+ambiguities in behavior is avoided.
+
+If the resource were <em>not</em> <code>final</code> and if the
+variable were modified within the body of the <code>try</code> block,
+then there might be no reference to the original resource available at
+the end of the block and thus the <code>close</code> method might
+never get called.
+
+(Discussion of an analogous condition is included in the rationale for
+why the general expression form of <code>try</code>-with-resources was
+dropped between early draft review and public review.)
+
+By allowing non-<code>final</code> modifiers, annotations such as
+<code>@SuppressWarnings</code> will be preserved on the translated
+code, which implies <code>@SuppressWarnings</code> on a resource
+will have the intended effect.
+
+</p>
+
+<p>
+
+The translation exploits the <a href="#multi_catch">improved precision
+of exception analysis</a> for an effectively <code>final</code>
+exception parameter.
+ 
+</p>
+
+<p>
+
+At least in Java SE 7, a class must have a method named "close" to
+implement the <code>AutoCloseable</code> interface and thus work with
+the <code>try</code>-with-resources statement.
+
+To allow methods with other names like "dispose" to be called at block
+exit instead, an adapter interface with a matching factory can be used
+to wrap the object in question and forward calls from "close" to the
+type-specific clean-up method.
+
+In the future, it is possible other mechanisms, such as interface
+injection, may also allow classes not declared to implement
+<code>AutoCloseable</code> to be operated on by the
+<code>try</code>-with-resources statement
+
+</p>
+
+<hr>
+</blockquote>
+
+<!-- #################################################################### -->
+
+<h2><a name=varargs>Simplified Varargs Method Invocation</a></h2>
+
+<p>
+
+Previously, the thrird edition of the JLS mandated many uninformative
+unchecked warning messages be generated by compilers when certain
+potentially problematic varargs methods were called.
+
+The set of methods considered problematic in this way included methods
+in the core JDK libraries.
+
+This feature generates a new warning at the <em>declaration</em> of
+such methods and provides a mechanism for the programmer to state the
+method is actually not problematic so that warnings are <em>not</em>
+generated at either the method's declaration or use.
+
+</p>
+
+<p>
+
+As part of this language change, an unchecked warning is required at
+declaration sites of varargs methods and constructors that have a
+non-reifiable element type (&sect;4.7) for the varargs parameter.
+
+Previously, call sites of such methods have generated unchecked
+warnings.
+
+The requirement is specified by additions to &sect;8.4.1 "Formal
+Parameters."
+
+</p>
+
+<p>
+
+The other component of this language change is a new annotation type,
+<code>SafeVarargs</code>, which can be used to suppress both the
+unchecked warning at the declaration site of a varargs method as well
+as the unchecked warnings at call site.
+
+</p>
+
+
+<p>
+
+The language specification changes to support simplified varargs method
+invocation affect the following sections of JLS:
+
+</p>
+
+
+<ul>
+
+<li><p>&sect;4.8 "Raw Types"
+</p>
+
+<li><p>&sect;4.12.2 "Variables of Reference Type"
+</p>
+
+<li><p>&sect;8.4.1 "Formal Parameters"
+</p>
+
+<li><p>&sect;9.6.3.7 "SafeVarargs" (new section"
+</p>
+
+<li><p>&sect;15.12.4.2 "Evaluate Arguments"
+</p>
+
+</ul>
+
+<p>
+
+The specification of the new <code>SafeVarargs</code> annotation type is below.
+
+</p>
+
+
+<hr>
+
+<blockquote>
+
+<h2>Annotation Type SafeVarargs</h2>
+
+<hr>
+<br>
+<pre>@Documented
+@Retention(value=RUNTIME)
+@Target(value={CONSTRUCTOR,METHOD})
+public @interface <strong>SafeVarargs</strong></pre>
+
+<p>A programmer assertion that the body of the annotated method or
+ constructor does not perform potentially unsafe operations on its
+ varargs parameter.  Applying this annotation to a method or
+ constructor suppresses unchecked warnings about a
+ <i>non-reifiable</i> variable-arity (vararg) type and suppresses
+ unchecked warnings about parameterized array creation at call sites.</p>
+
+ <p> In addition to the usage restrictions imposed by its <code>@Target</code> meta-annotation, compilers are required to implement
+ additional usage restrictions on this annotation type; it is a
+ compile-time error if a method or constructor declaration is
+ annotated with a <code>@SafeVarargs</code> annotation, and either:
+
+ <ul>
+
+ <li>  the declaration is a fixed-arity method or constructor
+
+ <li> the declaration is a variable-arity method that is neither
+ <code>static</code> nor <code>final</code>.
+
+ </ul>
+
+ <p> Compilers are encouraged to issue warnings when this annotation
+ type is applied to a method or constructor declaration where:
+
+ <ul>
+
+ <li> The variable-arity parameter has a reifiable element type,
+ which includes primitive types, <code>Object</code>, and <code>String</code>.
+ (The unchecked warnings this annotation type suppresses already do
+ not occur for a reifiable element type.)
+
+ <li> The body of the method or constructor declaration performs
+ potentially unsafe operations, such as an assignment to an element of
+ the variable-arity parameter's array that generates an unchecked
+ warning.  Some unsafe operations do not trigger an unchecked
+ warning. For example, the aliasing in
+
+<blockquote><pre>
+@SafeVarargs // Not actually safe!
+static void m(List&lt;String&gt;... stringLists) {
+  Object[] array = stringLists;
+  List&lt;Integer&gt; tmpList = Arrays.asList(42);
+  array[0] = tmpList; // Semantically invalid, but compiles without warnings
+  String s = stringLists[0].get(0); // Oh no, ClassCastException at runtime!
+}
+</pre></blockquote>
+
+leads to a <code>ClassCastException</code> at runtime.
+
+
+ <p>Future versions of the platform may mandate compiler errors for
+ such unsafe operations.
+
+ </ul>
+</blockquote>
+
+<hr>
+
+<p>
+
+The platform methods and constructors annotated with a
+<code>@SafeVarargs</code> annotation are:
+
+</p>
+
+<ul>
+
+<li><code>public static &lt;T> List&lt;T&gt; java.util.Arrays.asList(T... a)</code>
+<li><code>public static &lt;T&gt; boolean java.util.Collections.addAll(Collection&lt;? super T&gt; c, T... elements)</code>
+<li><code>public static &lt;E extends Enum&lt;E&gt;&gt; java.util.EnumSet&lt;E&gt; EnumSet.of(E first, E... rest)</code>
+<li><code>protected final void javax.swing.SwingWorker.publish(V... chunks)</code>
+
+</ul>
+
+<blockquote>
+<hr>
+<p><b>Discussion:</b>
+
+In practice, the <code>EnumSet.of</code> method should not generate unchecked
+warnings since the inferred type in any given application of the
+method should be some particular concrete enum type.
+
+This is a consequence of the additional restrictions imposed on enum
+types, such as they are all direct subclasses of the abstract class
+<code>java.lang.Enum</code>.
+
+However, adding <code>@SafeVarargs</code> does correctly capture the
+semantics of the method.
+
+</p>
+
+<p>
+
+Generally safe operations on the varargs parameter include only
+reading from the parameter and treating the parameter in an invariant
+sense.
+
+Aliasing the parameter is potentially unsafe.
+
+</p>
+
+<p>
+
+Since new unchecked warnings are being introduced, those diligently
+compiling with options like "<code>-Xlint:unchecked -Werror</code>"
+will see a build error under JDK 7 if any of the suspicious varargs
+method declarations are found.
+
+To address this, the <code>@SafeVarargs</code> annotation can be
+applied to the declarations, if appropriate, or in the compiler
+reference implementation the <code>@SuppressWarnings({"unchecked",
+"varargs"})</code> annotation can be applied.
+
+Unlike <code>@SafeVarargs</code>, the <code>@SuppressWarnings</code>
+annotation will <em>not</em> squelch unchecked warnings at the call
+sites of the annotated method.
+
+</p>
+
+
+<p>
+
+Since it affects programming language semantics, the
+<code>SafeVarargs</code> annotation type is placed in the
+<code>java.lang</code> package.
+
+</p>
+
+<p>
+
+The <code>SafeVarargs</code> annotation type is declared with a
+runtime <code>RetentionPolicy</code> for several reasons.
+
+Some representation of the <code>SafeVarargs</code> status is needed
+in class files to allow compilers to know to omit unchecked warnings
+at call sites of annotated methods, unchecked warnings that would
+otherwise be mandated by the language specification.
+
+If this information is stored using an annotation, the annotation type
+can have one of three retention policies, SOURCE, CLASS, or RUNTIME.
+
+With the SOURCE policy, the annotation would <em>not</em> be stored in
+the class file at all, which would not meet the requirements of
+eliding warnings when uses of the annotated method or constructor are
+compiled separately from the class declaring the method or
+constructor.
+
+That leaves CLASS and RUNTIME as potential retention policies.
+
+Both policies use equal space in the class file.
+
+However, an advantage of RUNTIME retention is that no explicit method
+is needed in reflective APIs to query the <code>SafeVarargs</code>
+status of a method or constructor since the presence or absence of the
+annotation can be tested.
+ 
+For example, there is no need for an <code>isSafeVarargs</code> method
+on the <code>Method</code> and <code>Constructor</code> classes in the
+<code>java.lang.reflect</code> package or for an
+<code>isSafeVarargs</code> method in
+<code>javax.lang.model.element.ExecutableElement</code>.
+
+Therefore, the <code>SafeVarargs</code> annotation type is declared
+with RUNTIME retention and no methods are added to any of the
+platform's reflective APIs to query for this information.
+
+This information could conceivably be stored in a new class file
+attribute, but small language changes do not change the VM
+specification and a new recognized class file attribute is a VM
+change.
+
+An additional benefit of having the information in class files is
+enabling class file-based analysis tools to perform additional checks
+on the operations of annotated methods and constructors.
+
+</p>
+
+<hr>
+</blockquote>
+
+<h1><a name=changelog>Changelog</a></h1>
+
+<h2>Changes since Proposed Final Draft (PFD)</h2>
+
+<ul>
+
+<li>There were no specification changes made subsequent to proposed
+final draft for either final approval ballot or final release.
+
+</ul>
+
+<h2>Changes since Public Review (PR)</h2>
+
+<ul>
+
+<li><p>Incorporated language changes into JLS proper.
+</p>
+
+<li><p>Forbid combining diamond and explicit type arguments to a generic constructor.
+</p>
+
+<li><p>Removed unusual protocol around
+<code>Throwable.addSuppressed(null)</code> and added a new constructor
+to <code>Throwable</code> to allow suppression to be disabled.
+
+Added disclaimers that <code>OutOfMemoryError</code>,
+<code>NullPointerException</code>, and <code>ArithmeticException</code>
+objects created by the JVM may have suppression disabled.
+
+</p>
+
+<li><p>Added thread safely requirements to
+<code>Throwable.addSuppressed</code> and
+<code>Throwable.getSuppressed</code>.
+</p>
+
+</ul>
+
+<h2>Changes between Early Draft Review (EDR) and Public Review (PR)</h2>
+
+<ul>
+
+<li><p>The specification for diamond was expanded and clarified.
+
+Using diamond on a non-generic class is explicitly forbidden.
+</p>
+
+<li><p>The specification for multi-catch was expanded and made more precise.
+</p>
+
+<li><p>As recognized as a possibility in the EDR, the
+<code>try</code>-with-resources statement has dropped support for a
+resource to be given as a general expression without an accompanying
+explicit variable declaration.
+</p>
+
+<p>
+
+Several technical problems with the EDR proposal that allowed a
+general expression were identified:  
+
+</p>
+
+
+<ul>
+
+<li><p>Syntactic ambiguity: In the parser, it was not always possible
+to distinguish with one-token look-ahead between the start of an
+<i>Expression</i> and the start of a <i>Type</i>.  Consider code like
+
+</p>
+
+<blockquote><pre>
+  try(i &lt; j // Ternary operator on variables i and j
+      ? new Resource1() :
+        new Resource2()) {...}
+</pre></blockquote>
+
+<p>
+
+compared to code like 
+
+</p>
+
+<blockquote><pre>
+  try(Box &lt; Resource // Simple generic wrapper around a resource
+      &gt; resourceBox = Box&lt;&gt;(new Resource1())) {...}
+</pre></blockquote>
+
+<p>
+
+A natural grammatical fallback short of banning <i>Expression</i>
+would be to only allow a more restricted expression, such as
+<i>Identifier</i>.
+
+However, that restricted grammar would require compiler changes to
+alert programmers to some surprising legal code, as given in the
+following examples.
+
+</p>
+
+<li><p>Usability issues: Consider a <code>try</code>-with-resources
+statement being used to manage an existing variable where the variable
+is mutated <em>inside</em> the <code>try</code> block:
+
+</p>
+
+<blockquote><pre>
+public class TwrExamples implements AutoCloseable {
+   public static void main(String... args) {
+       TwrExamples twrEg1 = new TwrExamples();
+       System.out.println(twrEg1.hashCode());
+
+       try(twrEg1) {
+           twrEg1 = new TwrExamples();  // Mutating the variable!
+           System.out.println(twrEg1.hashCode());
+       }
+   }
+
+   @Override
+   public void close() {
+       System.out.println(hashCode());
+   }
+}
+</pre></blockquote>
+
+<p>
+
+As <code>try</code>-with-resources was previously specified, this 
+would cause <code>close</code> to be called on the original value, not
+the value <code>twrEg1</code> pointed to at the time the
+<code>try</code> block finishes.
+
+
+In this case, the printed output of the program may be something
+like:<br>
+
+1607576787<br>
+1051296202<br>
+1607576787<br>
+
+which indicates that while <code>close</code> was called on the
+original value, close was <em>not</em> called on the new
+<code>TwrExamples</code> object created inside the
+<code>try</code>-with-resources block.
+
+Either policy of calling <code>code</code> on the original value or
+the value on exit of the block could be problematic.
+
+The compiler did not issue any warnings about this situation and
+warnings should be added if this feature were to be kept.
+
+(Mutating a resource variable declared as part of the
+<code>try</code>-with-resources statement is illegal since such
+variables are implicitly or explicitly final).
+
+</p>
+
+</ul>
+
+<p>
+
+Other complications that stemmed from supporting a general expression
+as a resource were making sure the specification and implementation
+accepted both
+
+</p>
+
+<blockquote><pre>
+   try(null) {...}
+</pre></blockquote>
+
+<p>
+and
+</p>
+
+<blockquote><pre>
+   try(myGenericMethodThatInfersTheTypeOfItsResult()) {}
+</pre></blockquote>
+
+<p>
+
+as valid programs.
+
+</p>
+
+<p>
+
+The main rationale for supporting general expressions was to allow
+non-<code>Closeable</code> objects, such as locks, to be easily
+wrapped in a suitable type to enjoy the call-method-on-block-exit
+guarantees of <code>try</code>-with-resources.
+
+When this is desirable, the same effect can still be achieved with an
+explicit resource declaration.
+
+As experience is gained with <code>try</code>-with-resources,
+extensions to support other usage patterns will be considered in
+future releases.
+
+One potential future extension is to allow a resource to be specified
+as an expression that is a final or effectively final variable.
+
+Such a restricted expression form would remove the need to declare a
+resource variable for the sole purpose of aliasing an existing
+variable while avoiding pathologies stemming from the resource
+variable being modified within the body of the
+<code>try</code>-with-resources statement.
+
+</p>
+
+<li><p>An optional trailing semicolon is allowed to terminate the
+sequence of resources in a resource specification rather than
+producing a syntax error.
+
+Allowing, but not requiring, a semicolon in this location is
+analogous to how optional commas are allowed in array initializers and
+the declarations of enum constants.
+
+This less restrictive syntax requires fewer edits when appending to
+the list of resources and, more importantly, eases the logic needed to
+programmatically generate code.
+
+</p>
+
+<li><p>The compiler-generated calls to the <code>close</code> method of
+a resource in a <code>try</code>-with-resources statement only occur
+if the resource is non-<code>null</code>.
+
+This change was informed by discussions on the <code>coin-dev</code>
+alias as well as by experiments retrofitting
+<code>try</code>-with-resources onto the JDK libraries.
+
+Note that the programmer still has responsibility to check for a
+<code>null</code> resource if the resource is used inside the
+<code>try</code> block; the generated <code>null</code> check does
+<em>not</em> occur before the <code>try</code> block is entered.
+
+</p>
+
+<li><p>Strong warnings were added to the javadoc of
+<code>AutoCloseable</code> about having the <code>close</code> method
+throw <code>InterruptedException</code>.
+</p>
+
+<li><p>The <code>@SafeVarargs</code> annotation was applied to
+appropriate places in the platform libraries.
+</p>
+
+<li><p>JLS changes were provided for the simplified varargs method
+invocation feature.
+</p>
+
+
+<li><p>Minor clarifications were made to API specifications.
+</p>
+
+</ul>
+
+
+<h1><a name=appendix>Appendix &mdash; JSR 269 language model</a></h1>
+
+<p>
+
+The JSR 269 language model follows somewhat different evolution rules
+than most APIs included in Java SE.
+
+In particular, while the changes to the API are binary compatible,
+certain source <em>incompatible</em> changes are made of necessity.
+
+In particular, methods can be added to the visitor interfaces to allow
+operations on newly-added language constructs to be performed.
+
+This evolution path was expected during JSR 269's development and for
+that reason, developers were warned to <em>not</em> directly implement
+the visitor interfaces, but rather to extend one of the visitor
+utility classes.
+
+The utility classes are versioned per release and implement default
+behavior appropriate for that release.
+
+</p>
+
+<p>
+
+Changes to the language model include:
+
+</p>
+
+<ul>
+
+<li><p>New enum constant
+<code>javax.lang.model.SourceVersion.RELEASE_7</code>.
+</p>
+
+<li><p>In the package description of
+<code>javax.lang.model.element</code>, requirements on when a model
+must be provided are loosened to remove the requirement in case of an
+"irrecoverable error that could not be removed by the generation of
+new types," a condition which includes but is not limited to syntax
+errors.
+</p>
+
+<li><p>New exception type
+<code>javax.lang.model.UnknownEntityException</code> added as a common
+superclass for existing exception types
+<code>UnknownAnnotationValueException</code>,
+<code>UnknownElementException</code>, and
+<code>UnknownTypeException</code>.
+</p>
+
+<li><p>New enum constant
+<code>javax.lang.model.element.ElementKind.RESOURCE_VARIABLE</code>.
+</p>
+
+<li><p>New mixin interfaces <code>Parameterizable</code> and
+<code>QualifiedNameable</code> added to package
+<code>javax.lang.model.element</code>.
+
+<code>ExecutableElement</code> and <code>TypeElement</code> are
+retrofitted to extend <code>Parameterizable</code>;
+<code>PackageElement</code>and <code>TypeElement</code> are
+retrofitted to extend <code>QualifiedNameable</code>.
+
+</p>
+
+<li><p>Behavior of <code>getEnclosingElement</code> method defined to
+return the generic element of a type parameter instead of
+<code>null</code>.
+</p>
+
+<li><p>New interface
+<code>javax.lang.model.type.UnionType</code> to model
+union types.
+</p>
+
+<li><p>New enum constant
+<code>javax.lang.model.type.TypeKind.UNION</code> to mark
+union types.
+</p>
+
+<li><p>New method <code>visitUnion</code> added to visitor
+interface <code>javax.lang.model.type.TypeVisitor</code>.
+
+Utility visitor implementations updated accordingly.
+</p>
+
+<li><p>In the package <code>javax.lang.model.type</code>,
+<code>MirroredType<b>s</b>Exception</code> retrofitted to be the
+superclass of <code>MirroredTypeException</code>.
+</p>
+
+<li><p>New utility visitors for release 7 in package
+<code>javax.lang.model.util</code>:
+</p>
+
+<ul>
+<li><p><code>AbstractAnnotationValueVisitor7</code>
+</p>
+
+<li><p><code>AbstractElementVisitor7</code>
+</p>
+
+<li><p><code>AbstractTypeVisitor7</code>
+</p>
+
+<li><p><code>ElementKindVisitor7</code>
+</p>
+
+<li><p><code>ElementScanner7</code>
+</p>
+
+<li><p><code>SimpleAnnotationValueVisitor7</code>
+</p>
+
+<li><p><code>SimpleElementVisitor7</code>
+</p>
+
+<li><p><code>SimpleTypeVisitor7</code>
+</p>
+
+<li><p><code>TypeKindVisitor7</code>
+</p>
+
+</ul>
+
+<li><p>The visitors <code>ElementKindVisitor6</code>,
+<code>ElementScanner6</code>, and <code>SimpleElementVisitor6</code>,
+are updated to account for new element kind
+<code>RESOURCE_VARIABLE</code>.
+</p>
+
+
+<li><p>The visitor <code>AbstractTypeVisitor6</code> is updated to
+account for the possibility of visiting a
+<code>UnionType</code>.
+</p>
+
+<li><p>Definition of documentation comment added to javadoc of
+<code>javax.lang.model.util.Elements.getDocComment</code>.
+</p>
+
+</ul>
+
+</body>
+</html>
