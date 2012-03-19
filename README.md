@@ -3,12 +3,14 @@ Trainings
 =================
 Materials of different trainings
 
+
 Android
 =======
 
 ### FJ-57 - Mobile Development with Google Android ###
 ![logo](http://www.caelum.com.br/imagens/cursos/icones/100/FJ-57.png)
 Mobile Development with Google Android.
+
 
 Java
 ====
@@ -21,12 +23,14 @@ A Java development lab focused on good programming practices.
 ![logo](http://www.caelum.com.br/imagens/cursos/icones/100/FJ-91.png) 
 Architecture and Design Java Projects.
 
+
 Agile Software Development
 ==========================
 
 ### PM-87 - Practices Agile Software Development ###
 ![logo](http://www.caelum.com.br/imagens/cursos/icones/100/PM-87.png) 
 Agile Software Development.
+
 
 Ruby/Rails
 ==========
