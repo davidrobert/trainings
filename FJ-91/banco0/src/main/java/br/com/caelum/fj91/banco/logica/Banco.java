@@ -72,4 +72,21 @@ public class Banco {
 		
 		return novaConta;
 	}
+
+	public void criaNovaConta(String campoNome, String campoCpf) {
+		if (consultaSerasa(campoCpf)) {
+			try {
+				
+				Cliente titular = registraCliente(campoNome, campoCpf);
+				int numeroDaConta = geraNumeroConta();
+				Conta novaConta = registraConta(titular, numeroDaConta);
+				System.out.println("Nova conta registrada com sucesso: " + novaConta);
+				
+			} catch (SQLException e) {
+				System.err.println("Problemas ao persistir no banco de dados");
+			}
+		} else {
+			System.err.println("Cliente não passou na consulta ao Serasa");
+		}
+	}
 }
