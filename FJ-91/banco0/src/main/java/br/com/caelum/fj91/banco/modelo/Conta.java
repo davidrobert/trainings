@@ -62,5 +62,30 @@ public class Conta {
 	public String toString() {
 		return "{Conta #" + this.numero + "}";
 	}
+
+	/**
+	 * Saca dinheiro de uma conta bancária
+	 * 
+	 * @param valor Valor a ser sacado
+	 */
+	public void saca(BigDecimal valor) {
+		BigDecimal novoSaldo = getSaldo().subtract(valor);
+		
+		if (novoSaldo.compareTo(getLimite().negate()) >= 0) {
+			setSaldo(novoSaldo);
+		} else {
+			throw new RuntimeException("Saldo insuficiente");
+		}
+	}
+
+	/**
+	 * Deposita dinheiro em uma conta bancária
+	 * 
+	 * @param valor Valor a ser sacado
+	 */
+	public void deposita(BigDecimal valor) {
+		BigDecimal novoSaldo = getSaldo().add(valor);
+		setSaldo(novoSaldo);
+	}
 	
 }
