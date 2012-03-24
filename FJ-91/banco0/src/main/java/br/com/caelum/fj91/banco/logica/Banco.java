@@ -26,11 +26,9 @@ public class Banco {
 	 * @param campoCpf  Recebe valor digitado no formulário com o cpf.
 	 * @return Novo cliente persistido no sistema
 	 */
-	public Cliente registraCliente(String campoNome, String campoCpf)  throws SQLException {
+	private Cliente registraCliente(String campoNome, String campoCpf)  throws SQLException {
 		// recebe os dados de um formulário, cria um cliente e guarda no banco de dados
-		Cliente cliente = new Cliente();
-		cliente.setCpf(campoCpf);
-		cliente.setNome(campoNome);
+		Cliente cliente = new Cliente(campoNome, campoCpf);
 		
 		Dao<Cliente> dao = new Dao<Cliente>();
 		dao.adiciona(cliente);
@@ -44,7 +42,7 @@ public class Banco {
 	 * Gera números para novas contas no banco
 	 * @return Número da próxima conta
 	 */
-	public int geraNumeroConta() {
+	private int geraNumeroConta() {
 		geradorDeNumeros += new Random(42).nextInt(1000);
 		return geradorDeNumeros++;
 	}
@@ -55,15 +53,10 @@ public class Banco {
 	 * @param numero  Número da conta
 	 * @return Nova Conta, aberta e registrada
 	 */
-	public Conta registraConta(Cliente titular, int numero) throws SQLException {
+	private Conta registraConta(Cliente titular, int numero) throws SQLException {
 		Calendar hoje = Calendar.getInstance();
 		
-		Conta novaConta = new Conta();
-		novaConta.setNumero(numero);
-		novaConta.setDataAbertura(hoje);
-
-		// TODO vamos precisar usar o construtor de Conta
-		// Conta novaConta = new Conta(numero, hoje);
+		Conta novaConta = new Conta(numero, hoje);
 		
 		novaConta.setTitular(titular);
 		

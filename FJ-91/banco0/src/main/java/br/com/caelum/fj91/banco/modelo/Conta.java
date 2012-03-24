@@ -12,13 +12,16 @@ public class Conta {
 	private int numero;
 	private Calendar dataAbertura;
 	
-	// FIXME vamos poder mudar o numero da conta depois de criada?
-	public void setNumero(int numero) {
+	public Conta(int numero, Calendar dataAbertura) {
+		setNumero(numero);
+		setDataAbertura(dataAbertura);
+	}
+	
+	private void setNumero(int numero) {
 		this.numero = numero;
 	}
 	
-	// FIXME podemos mudar a data de abertura depois de aberta?
-	public void setDataAbertura(Calendar dataAbertura) {
+	private void setDataAbertura(Calendar dataAbertura) {
 		this.dataAbertura = dataAbertura;
 	}
 	

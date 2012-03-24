@@ -10,11 +10,7 @@ public class Programa {
 
 	public static void main(String[] args) {
 		
-		Conta conta = new Conta();
-		conta.setDataAbertura(Calendar.getInstance());
-		
-		// TODO vamos precisar usar o construtor de Conta
-		// Conta conta = new Conta(123, Calendar.getInstance());
+		Conta conta = new Conta(123, Calendar.getInstance());
 		
 		conta.setLimite(new BigDecimal(100));
 
