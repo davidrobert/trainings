@@ -22,6 +22,7 @@ public class TesteComparaClassesImportantes {
 		System.out.println("Classes são iguais? " + (classe == outraClasse));
 
 		Object o = classe.newInstance();
+		
 
 	}
 }

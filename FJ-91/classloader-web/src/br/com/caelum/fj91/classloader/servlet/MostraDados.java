@@ -17,7 +17,9 @@ public class MostraDados extends HttpServlet {
 		
 		out.printf("Request path: %s", request.getRequestURI());
 		out.printf("Request headers: %s", request.getHeaderNames());
-		out.printf("Response headers: %s", response.getHeaderNames());
+		//out.printf("Response headers: %s", response.getHeaderNames());
+		
+		out.print(" Valdemort!!");
 		
 		out.println("</html>");
 	}

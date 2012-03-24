@@ -20,8 +20,11 @@ public class TesteComparaClasses {
 		System.out.println("ClassLoader da 1a classe: " + classe.getClassLoader());
 		System.out.println("ClassLoader da 2a classe: " + outraClasse.getClassLoader());
 		System.out.println("Classes são iguais? " + (classe == outraClasse));
-
+		
 		Object o = classe.newInstance();
-
+		
+		// A mensagem de erro gerada pela linha abaixo é bem interessante!
+		// ObjetoTeste ot = (ObjetoTeste) classe.newInstance();
+		
 	}
 }
