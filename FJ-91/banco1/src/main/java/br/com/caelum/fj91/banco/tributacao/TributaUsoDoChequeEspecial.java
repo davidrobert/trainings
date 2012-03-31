@@ -8,7 +8,7 @@ import br.com.caelum.fj91.banco.modelo.Conta;
  * Todas as contas com saldo negativo devem pagar uma taxa mensal
  * de 50 reais pelo uso do Cheque Especial. 
  */
-public class TributaUsoDoChequeEspecial {
+public class TributaUsoDoChequeEspecial implements Tributavel {
 	
 	/**
 	 * Calcula o desconto que deve ser aplicado a essa Conta

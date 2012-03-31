@@ -3,8 +3,7 @@ package br.com.caelum.fj91.banco.modelo;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
-import br.com.caelum.fj91.banco.tributacao.DescontaJuros;
-import br.com.caelum.fj91.banco.tributacao.TributaUsoDoChequeEspecial;
+import br.com.caelum.fj91.banco.tributacao.Tributavel;
 
 public class Conta {
 
@@ -97,12 +96,9 @@ public class Conta {
 	 * Desconta o valor devido do tributo
 	 * @param tributo Regra do tributo a ser aplicado
 	 */
-	public void aplica(TributaUsoDoChequeEspecial tributo) {
+	public void aplica(Tributavel tributo) {
 		this.saldo = saldo.subtract(tributo.calculaDesconto(this));
 	}
 
-	public void aplica(DescontaJuros juros) {
-		this.saldo = saldo.subtract(juros.calculaDesconto(this));		
-	}
 	
 }
