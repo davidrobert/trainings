@@ -37,5 +37,5 @@ Ruby/Rails
 ![logo](http://www.caelum.com.br/imagens/cursos/icones/100/RR-75.png) 
 
 
-"!http://api.coderwall.com/while42/endorsecount.png!":http://coderwall.com/while42
+[![endorse](http://api.coderwall.com/while42/endorsecount.png)](http://coderwall.com/while42)
 
