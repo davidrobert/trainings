@@ -1,4 +1,3 @@
-
 Trainings
 =================
 Materials of different trainings
@@ -36,4 +35,7 @@ Ruby/Rails
 
 ### RR-75 - Advanced Ruby and Rails: dealing with problems ###
 ![logo](http://www.caelum.com.br/imagens/cursos/icones/100/RR-75.png) 
+
+
+"!http://api.coderwall.com/while42/endorsecount.png!":http://coderwall.com/while42
 
